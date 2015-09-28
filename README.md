@@ -1,2 +1,5 @@
 # barnehagefakta_osm_data
-Data for importing/conflating data about kindergartens ("barnehager") in Norway to openstreetmap
+git branches are confusing, this 'master' branch is not used, the code can be found here:
+https://github.com/obtitus/barnehagefakta_osm
+while the data is in the gp-pages branch:
+https://github.com/obtitus/barnehagefakta_osm_data/tree/gh-pages
