@@ -265,3 +265,4 @@
   marker-fill: darken(@poi_text, 3);
   }
 }
+

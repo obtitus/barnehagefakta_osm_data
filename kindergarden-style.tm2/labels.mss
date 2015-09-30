@@ -560,4 +560,16 @@
       text-min-distance: 200; // only for labels w/ the same name
       [zoom>=15] { text-fill: @road_text_high; }
     }   
- }  
+ } 
+
+// ---------------------------------------------------------------------
+// House numbers
+
+#housenum_label[zoom>=18] {
+  text-name: [house_num];
+  text-face-name: @sans_it;
+  text-fill: #cba;
+  text-size: 8;
+  [zoom=19] { text-size: 10; }
+  [zoom>=20] { text-size: 12; }
+}

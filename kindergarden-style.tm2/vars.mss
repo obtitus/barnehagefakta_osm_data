@@ -51,9 +51,9 @@
 @industrial:        darken(@land, 5);
 @aeroway:           lighten(@land,4);
 @glacier:           darken(@snow, 10);
-@parking: lighten(@building, 1); // temp, need to change
+@parking: mix(@yellow, @building, 30);
 
-@building:          @land;
+@building:          @gray-1;
 @building_line:     @gray-3;
 
 @fence:             @building_line;
