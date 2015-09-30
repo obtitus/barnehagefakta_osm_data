@@ -6,6 +6,13 @@
 @main: #d8b8b0;
 @street: #fff;
 
+// Points right...
+//#road[oneway=1] {
+//  marker-file: url("img/road/oneway.svg");
+//  marker-fill: red;
+//}
+
+
 #road,
 #tunnel,
 #bridge {

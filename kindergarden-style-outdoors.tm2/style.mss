@@ -23,7 +23,7 @@
 @playground:        #CAFDEF;
 
 @place_halo: fadeout(@land, 90);
-@poi_halo: fadeout(#fff, 95);
+@poi_halo: fadeout(@land, 95);
 @bold: "Meta Offc Pro Bold", "Arial Unicode MS Bold";
 @parking: mix(#fff800, @land, 30);
 // Background //
