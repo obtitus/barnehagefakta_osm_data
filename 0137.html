@@ -14,18 +14,35 @@
 
   <body>
 
-    <script src="javascripts/leaflet.js"></script>
+    <script src='https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.js'></script>
+    <!-- For ajax call -->
+    <script src='https://code.jquery.com/jquery-1.11.0.min.js'></script>
+    <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-osm/v0.1.0/leaflet-osm.js'></script>
+
     <script>
-function create_map(name, lat, lon) {
-    var map = L.map(name).setView([lat, lon], 17);
-    
-    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-	attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
-	maxZoom: 19,
-	id: 'obtitus.nif9f06n',
-	accessToken: 'pk.eyJ1Ijoib2J0aXR1cyIsImEiOiJjaWYzbXF1M3IwMGtuc3ZsdmhhYXR4d2hpIn0.tQQLwWt3e_NhGtTdUYLzwQ'
-    }).addTo(map);
-}
+    function create_map(name, lat, lon, osm_id) {
+	L.mapbox.accessToken = 'pk.eyJ1Ijoib2J0aXR1cyIsImEiOiJjaWYzbXF1M3IwMGtuc3ZsdmhhYXR4d2hpIn0.tQQLwWt3e_NhGtTdUYLzwQ'
+	var map = L.mapbox.map(name, 'obtitus.00ebefa1');
+	map.setView([lat, lon], 17);
+
+	// Highlight osm object, does not align correctly
+	// use the overpass xml instead?	
+	// if ((typeof osm_xml !== 'undefined') && (osm_xml !== null)) {
+	//     var layer = new L.OSM.DataLayer(osm_xml).addTo(map);
+	// }
+	
+	if ((typeof osm_id !== 'undefined') && (osm_id !== null)) {
+	    $.ajax({
+		url: "https://www.openstreetmap.org/api/0.6/" + osm_id,
+		dataType: "xml",
+		success: function (xml) {
+		    var layer = new L.OSM.DataLayer(xml).addTo(map);
+		    map.fitBounds(layer.getBounds());
+		    map.setZoom(17);
+		}
+	    });
+	}
+    }
     </script>
     
 
@@ -69,57 +86,30 @@ data/0137/barnehagefakta_familiebarnehager.osm</a>
     </thead>
     <tbody>
     <tr>
-      <td>Svinndal barnehage</td>
+      <td>Augerød barnehage</td>
       <td><pre>amenity = kindergarten
-capacity = 49
+capacity = 71
 max_age = 5
 min_age = 1
-name = Svinndal barnehage
-no-barnehage:nsrid = 1017522
+name = Augerød barnehage
+no-barnehage:nsrid = 1014169
 operator = Våler kommune
 operator:type = public
-start_date = 1988-04-01
+start_date = 2010-06-01
 </pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1017522</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1017522"
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1014169</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1014169"
 title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/59.4232/11.0133"
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/59.4675/10.7829"
 title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1017522"
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1014169"
 title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/59.4232/11.0133"
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/59.4675/10.7829"
 title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=59.4232&lon=11.0133&zoom=17"
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=59.4675&lon=10.7829&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1017522" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1017522, 59.4232, 11.0133)</script></div></td>
-    </tr>
-    <tr>
-      <td>Nlm Barnehagene AS Avd Våk Barnehage</td>
-      <td><pre>amenity = kindergarten
-capacity = 57
-contact:phone = 69 28 83 38
-max_age = 5
-min_age = 1
-name = Nlm Barnehagene AS Avd Våk Barnehage
-no-barnehage:nsrid = 1016187
-operator = Nlm-Barnehagene AS
-operator:type = private
-start_date = 1982-01-01
-</pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1016187</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1016187"
-title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/59.4607/10.7995"
-title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1016187"
-title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/59.4607/10.7995"
-title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=59.4607&lon=10.7995&zoom=17"
-title="Du blir sendt til openstreetmap sin web-editor">
-Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1016187" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1016187, 59.4607, 10.7995)</script></div></td>
+      <td><div id="map1014169" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1014169, 59.4675, 10.7829, null)</script></td>
     </tr>
     <tr>
       <td>Læringsverkstedet barnehage Avd Doremi Våler</td>
@@ -146,7 +136,7 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=59.4951&lon=10.8516&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1017755" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1017755, 59.4951, 10.8516)</script></div></td>
+      <td><div id="map1017755" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1017755, 59.4951, 10.8516, null)</script></td>
     </tr>
     <tr>
       <td>Kirkebygden barnehage</td>
@@ -175,33 +165,60 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=59.49125&lon=10.85514&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1019984" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1019984, 59.49125, 10.85514)</script></div></td>
+      <td><div id="map1019984" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1019984, 59.49125, 10.85514, null)</script></td>
     </tr>
     <tr>
-      <td>Augerød barnehage</td>
+      <td>Nlm Barnehagene AS Avd Våk Barnehage</td>
       <td><pre>amenity = kindergarten
-capacity = 71
+capacity = 57
+contact:phone = 69 28 83 38
 max_age = 5
 min_age = 1
-name = Augerød barnehage
-no-barnehage:nsrid = 1014169
-operator = Våler kommune
-operator:type = public
-start_date = 2010-06-01
+name = Nlm Barnehagene AS Avd Våk Barnehage
+no-barnehage:nsrid = 1016187
+operator = Nlm-Barnehagene AS
+operator:type = private
+start_date = 1982-01-01
 </pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1014169</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1014169"
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1016187</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1016187"
 title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/59.4675/10.7829"
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/59.4607/10.7995"
 title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1014169"
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1016187"
 title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/59.4675/10.7829"
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/59.4607/10.7995"
 title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=59.4675&lon=10.7829&zoom=17"
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=59.4607&lon=10.7995&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1014169" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1014169, 59.4675, 10.7829)</script></div></td>
+      <td><div id="map1016187" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1016187, 59.4607, 10.7995, null)</script></td>
+    </tr>
+    <tr>
+      <td>Svinndal barnehage</td>
+      <td><pre>amenity = kindergarten
+capacity = 49
+max_age = 5
+min_age = 1
+name = Svinndal barnehage
+no-barnehage:nsrid = 1017522
+operator = Våler kommune
+operator:type = public
+start_date = 1988-04-01
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1017522</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1017522"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/59.4232/11.0133"
+title="Se posisjonen i openstreetmap">
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1017522"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/59.4232/11.0133"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=59.4232&lon=11.0133&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">
+Editer OSM</a></pre></td>
+      <td><div id="map1017522" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1017522, 59.4232, 11.0133, null)</script></td>
     </tr>
     <tr>
       <td>Våler Åpen barnehage</td>
@@ -224,7 +241,7 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=59.5003&lon=10.8443&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1013482" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013482, 59.5003, 10.8443)</script></div></td>
+      <td><div id="map1013482" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013482, 59.5003, 10.8443, null)</script></td>
     </tr>
     <tr>
       <td>Sperbund Familiebarnehage V/ Ellen Nyhus</td>
@@ -251,7 +268,7 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=59.45293&lon=10.81109&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1021921" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1021921, 59.45293, 10.81109)</script></div></td>
+      <td><div id="map1021921" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1021921, 59.45293, 10.81109, null)</script></td>
     </tr>
   </table>
   

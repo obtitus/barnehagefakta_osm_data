@@ -14,18 +14,35 @@
 
   <body>
 
-    <script src="javascripts/leaflet.js"></script>
+    <script src='https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.js'></script>
+    <!-- For ajax call -->
+    <script src='https://code.jquery.com/jquery-1.11.0.min.js'></script>
+    <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-osm/v0.1.0/leaflet-osm.js'></script>
+
     <script>
-function create_map(name, lat, lon) {
-    var map = L.map(name).setView([lat, lon], 17);
-    
-    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-	attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
-	maxZoom: 19,
-	id: 'obtitus.nif9f06n',
-	accessToken: 'pk.eyJ1Ijoib2J0aXR1cyIsImEiOiJjaWYzbXF1M3IwMGtuc3ZsdmhhYXR4d2hpIn0.tQQLwWt3e_NhGtTdUYLzwQ'
-    }).addTo(map);
-}
+    function create_map(name, lat, lon, osm_id) {
+	L.mapbox.accessToken = 'pk.eyJ1Ijoib2J0aXR1cyIsImEiOiJjaWYzbXF1M3IwMGtuc3ZsdmhhYXR4d2hpIn0.tQQLwWt3e_NhGtTdUYLzwQ'
+	var map = L.mapbox.map(name, 'obtitus.00ebefa1');
+	map.setView([lat, lon], 17);
+
+	// Highlight osm object, does not align correctly
+	// use the overpass xml instead?	
+	// if ((typeof osm_xml !== 'undefined') && (osm_xml !== null)) {
+	//     var layer = new L.OSM.DataLayer(osm_xml).addTo(map);
+	// }
+	
+	if ((typeof osm_id !== 'undefined') && (osm_id !== null)) {
+	    $.ajax({
+		url: "https://www.openstreetmap.org/api/0.6/" + osm_id,
+		dataType: "xml",
+		success: function (xml) {
+		    var layer = new L.OSM.DataLayer(xml).addTo(map);
+		    map.fitBounds(layer.getBounds());
+		    map.setZoom(17);
+		}
+	    });
+	}
+    }
     </script>
     
 
@@ -95,36 +112,7 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=61.8748&lon=8.37421&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1015863" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1015863, 61.8748, 8.37421)</script></div></td>
-    </tr>
-    <tr>
-      <td>Dønfoss Naturbarnehage</td>
-      <td><pre>amenity = kindergarten
-capacity = 19
-contact:email = anne.gro.skjakodegard@skjaak.kommune.no
-contact:phone = 61 21 48 32
-contact:website = http://www.skjaak.kommune.no/artikkel.aspx?MId1=6&AId=20133
-max_age = 5
-min_age = 1
-name = Dønfoss Naturbarnehage
-no-barnehage:nsrid = 1014716
-operator = Skjåk kommune
-operator:type = public
-start_date = 1992-08-01
-</pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1014716</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1014716"
-title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/61.8748/8.37421"
-title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1014716"
-title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/61.8748/8.37421"
-title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=61.8748&lon=8.37421&zoom=17"
-title="Du blir sendt til openstreetmap sin web-editor">
-Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1014716" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1014716, 61.8748, 8.37421)</script></div></td>
+      <td><div id="map1015863" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1015863, 61.8748, 8.37421, null)</script></td>
     </tr>
     <tr>
       <td>Bismo barnehage</td>
@@ -153,7 +141,36 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=61.8748&lon=8.37421&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1017609" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1017609, 61.8748, 8.37421)</script></div></td>
+      <td><div id="map1017609" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1017609, 61.8748, 8.37421, null)</script></td>
+    </tr>
+    <tr>
+      <td>Dønfoss Naturbarnehage</td>
+      <td><pre>amenity = kindergarten
+capacity = 19
+contact:email = anne.gro.skjakodegard@skjaak.kommune.no
+contact:phone = 61 21 48 32
+contact:website = http://www.skjaak.kommune.no/artikkel.aspx?MId1=6&AId=20133
+max_age = 5
+min_age = 1
+name = Dønfoss Naturbarnehage
+no-barnehage:nsrid = 1014716
+operator = Skjåk kommune
+operator:type = public
+start_date = 1992-08-01
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1014716</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1014716"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/61.8748/8.37421"
+title="Se posisjonen i openstreetmap">
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1014716"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/61.8748/8.37421"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=61.8748&lon=8.37421&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">
+Editer OSM</a></pre></td>
+      <td><div id="map1014716" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1014716, 61.8748, 8.37421, null)</script></td>
     </tr>
     <tr>
       <td>Furuly Familiebarnehage Asta Irene Aamodt</td>
@@ -180,7 +197,7 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=61.87476&lon=8.374211&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1020419" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1020419, 61.87476, 8.374211)</script></div></td>
+      <td><div id="map1020419" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1020419, 61.87476, 8.374211, null)</script></td>
     </tr>
   </table>
   

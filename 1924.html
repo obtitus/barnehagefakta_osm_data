@@ -14,18 +14,35 @@
 
   <body>
 
-    <script src="javascripts/leaflet.js"></script>
+    <script src='https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.js'></script>
+    <!-- For ajax call -->
+    <script src='https://code.jquery.com/jquery-1.11.0.min.js'></script>
+    <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-osm/v0.1.0/leaflet-osm.js'></script>
+
     <script>
-function create_map(name, lat, lon) {
-    var map = L.map(name).setView([lat, lon], 17);
-    
-    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-	attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
-	maxZoom: 19,
-	id: 'obtitus.nif9f06n',
-	accessToken: 'pk.eyJ1Ijoib2J0aXR1cyIsImEiOiJjaWYzbXF1M3IwMGtuc3ZsdmhhYXR4d2hpIn0.tQQLwWt3e_NhGtTdUYLzwQ'
-    }).addTo(map);
-}
+    function create_map(name, lat, lon, osm_id) {
+	L.mapbox.accessToken = 'pk.eyJ1Ijoib2J0aXR1cyIsImEiOiJjaWYzbXF1M3IwMGtuc3ZsdmhhYXR4d2hpIn0.tQQLwWt3e_NhGtTdUYLzwQ'
+	var map = L.mapbox.map(name, 'obtitus.00ebefa1');
+	map.setView([lat, lon], 17);
+
+	// Highlight osm object, does not align correctly
+	// use the overpass xml instead?	
+	// if ((typeof osm_xml !== 'undefined') && (osm_xml !== null)) {
+	//     var layer = new L.OSM.DataLayer(osm_xml).addTo(map);
+	// }
+	
+	if ((typeof osm_id !== 'undefined') && (osm_id !== null)) {
+	    $.ajax({
+		url: "https://www.openstreetmap.org/api/0.6/" + osm_id,
+		dataType: "xml",
+		success: function (xml) {
+		    var layer = new L.OSM.DataLayer(xml).addTo(map);
+		    map.fitBounds(layer.getBounds());
+		    map.setZoom(17);
+		}
+	    });
+	}
+    }
     </script>
     
 
@@ -92,171 +109,7 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=69.1304&lon=18.6123&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1012539" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1012539, 69.1304, 18.6123)</script></div></td>
-    </tr>
-    <tr>
-      <td>Mellembygd Kultur og Oppvekstsenter Avd Barnehage</td>
-      <td><pre>amenity = kindergarten
-capacity = 35
-contact:phone = 77 83 75 90
-max_age = 5
-min_age = 1
-name = Mellembygd Kultur og Oppvekstsenter Avd Barnehage
-no-barnehage:nsrid = 1016904
-operator = Målselv kommune
-operator:type = public
-start_date = 1976-12-24
-</pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1016904</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1016904"
-title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/69.0236/18.8726"
-title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1016904"
-title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/69.0236/18.8726"
-title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=69.0236&lon=18.8726&zoom=17"
-title="Du blir sendt til openstreetmap sin web-editor">
-Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1016904" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1016904, 69.0236, 18.8726)</script></div></td>
-    </tr>
-    <tr>
-      <td>Málatvuomi Sámi Mánáidgárdi Sa</td>
-      <td><pre>amenity = kindergarten
-capacity = 13
-contact:email = anne.oskal-rorslett@sameskuvla.no
-contact:phone = 77 83 28 35
-max_age = 5
-min_age = 1
-name = Málatvuomi Sámi Mánáidgárdi Sa
-no-barnehage:nsrid = 1021875
-operator = Málatvuomi Sámi Mánáidgárdi Sa
-operator:type = private
-start_date = 2008-10-18
-</pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1021875</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1021875"
-title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/69.0907/18.58244"
-title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1021875"
-title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/69.0907/18.58244"
-title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=69.0907&lon=18.58244&zoom=17"
-title="Du blir sendt til openstreetmap sin web-editor">
-Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1021875" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1021875, 69.0907, 18.58244)</script></div></td>
-    </tr>
-    <tr>
-      <td>Karlstad Oppvekstsenter Avd Barnehage</td>
-      <td><pre>amenity = kindergarten
-capacity = 32
-contact:phone = 77832631
-max_age = 5
-min_age = 1
-name = Karlstad Oppvekstsenter Avd Barnehage
-no-barnehage:nsrid = 1014757
-operator = Målselv kommune
-operator:type = public
-start_date = 1992-01-01
-</pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1014757</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1014757"
-title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/69.2134/18.4702"
-title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1014757"
-title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/69.2134/18.4702"
-title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=69.2134&lon=18.4702&zoom=17"
-title="Du blir sendt til openstreetmap sin web-editor">
-Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1014757" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1014757, 69.2134, 18.4702)</script></div></td>
-    </tr>
-    <tr>
-      <td>Heggelia/noraførr barnehage</td>
-      <td><pre>amenity = kindergarten
-capacity = 39
-contact:phone = 77834490
-max_age = 5
-min_age = 1
-name = Heggelia/noraførr barnehage
-no-barnehage:nsrid = 1013910
-operator = Målselv kommune
-operator:type = public
-start_date = 1989-01-01
-</pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1013910</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1013910"
-title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/69.0441/18.5007"
-title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1013910"
-title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/69.0441/18.5007"
-title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=69.0441&lon=18.5007&zoom=17"
-title="Du blir sendt til openstreetmap sin web-editor">
-Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1013910" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013910, 69.0441, 18.5007)</script></div></td>
-    </tr>
-    <tr>
-      <td>Heggelia barnehage</td>
-      <td><pre>amenity = kindergarten
-capacity = 35
-contact:email = ellinor.christensen@malselv.kommune.no
-contact:phone = 77833306
-max_age = 5
-min_age = 1
-name = Heggelia barnehage
-no-barnehage:nsrid = 1013704
-operator = Målselv kommune
-operator:type = public
-start_date = 1989-01-01
-</pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1013704</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1013704"
-title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/69.0448/18.5067"
-title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1013704"
-title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/69.0448/18.5067"
-title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=69.0448&lon=18.5067&zoom=17"
-title="Du blir sendt til openstreetmap sin web-editor">
-Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1013704" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013704, 69.0448, 18.5067)</script></div></td>
-    </tr>
-    <tr>
-      <td>Bjørkeng Oppvekstsenter Avd Barnehage</td>
-      <td><pre>amenity = kindergarten
-capacity = 37
-contact:phone = 908 15957
-max_age = 5
-min_age = 1
-name = Bjørkeng Oppvekstsenter Avd Barnehage
-no-barnehage:nsrid = 1016952
-operator = Målselv kommune
-operator:type = public
-start_date = 2005-08-01
-</pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1016952</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1016952"
-title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/69.0244/19.2961"
-title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1016952"
-title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/69.0244/19.2961"
-title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=69.0244&lon=19.2961&zoom=17"
-title="Du blir sendt til openstreetmap sin web-editor">
-Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1016952" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1016952, 69.0244, 19.2961)</script></div></td>
+      <td><div id="map1012539" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1012539, 69.1304, 18.6123, null)</script></td>
     </tr>
     <tr>
       <td>Andslimoen barnehage</td>
@@ -284,7 +137,171 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=69.0907&lon=18.5824&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1013785" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013785, 69.0907, 18.5824)</script></div></td>
+      <td><div id="map1013785" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013785, 69.0907, 18.5824, null)</script></td>
+    </tr>
+    <tr>
+      <td>Heggelia/noraførr barnehage</td>
+      <td><pre>amenity = kindergarten
+capacity = 39
+contact:phone = 77834490
+max_age = 5
+min_age = 1
+name = Heggelia/noraførr barnehage
+no-barnehage:nsrid = 1013910
+operator = Målselv kommune
+operator:type = public
+start_date = 1989-01-01
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1013910</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1013910"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/69.0441/18.5007"
+title="Se posisjonen i openstreetmap">
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1013910"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/69.0441/18.5007"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=69.0441&lon=18.5007&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">
+Editer OSM</a></pre></td>
+      <td><div id="map1013910" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013910, 69.0441, 18.5007, null)</script></td>
+    </tr>
+    <tr>
+      <td>Bjørkeng Oppvekstsenter Avd Barnehage</td>
+      <td><pre>amenity = kindergarten
+capacity = 37
+contact:phone = 908 15957
+max_age = 5
+min_age = 1
+name = Bjørkeng Oppvekstsenter Avd Barnehage
+no-barnehage:nsrid = 1016952
+operator = Målselv kommune
+operator:type = public
+start_date = 2005-08-01
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1016952</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1016952"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/69.0244/19.2961"
+title="Se posisjonen i openstreetmap">
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1016952"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/69.0244/19.2961"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=69.0244&lon=19.2961&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">
+Editer OSM</a></pre></td>
+      <td><div id="map1016952" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1016952, 69.0244, 19.2961, null)</script></td>
+    </tr>
+    <tr>
+      <td>Mellembygd Kultur og Oppvekstsenter Avd Barnehage</td>
+      <td><pre>amenity = kindergarten
+capacity = 35
+contact:phone = 77 83 75 90
+max_age = 5
+min_age = 1
+name = Mellembygd Kultur og Oppvekstsenter Avd Barnehage
+no-barnehage:nsrid = 1016904
+operator = Målselv kommune
+operator:type = public
+start_date = 1976-12-24
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1016904</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1016904"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/69.0236/18.8726"
+title="Se posisjonen i openstreetmap">
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1016904"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/69.0236/18.8726"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=69.0236&lon=18.8726&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">
+Editer OSM</a></pre></td>
+      <td><div id="map1016904" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1016904, 69.0236, 18.8726, null)</script></td>
+    </tr>
+    <tr>
+      <td>Heggelia barnehage</td>
+      <td><pre>amenity = kindergarten
+capacity = 35
+contact:email = ellinor.christensen@malselv.kommune.no
+contact:phone = 77833306
+max_age = 5
+min_age = 1
+name = Heggelia barnehage
+no-barnehage:nsrid = 1013704
+operator = Målselv kommune
+operator:type = public
+start_date = 1989-01-01
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1013704</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1013704"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/69.0448/18.5067"
+title="Se posisjonen i openstreetmap">
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1013704"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/69.0448/18.5067"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=69.0448&lon=18.5067&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">
+Editer OSM</a></pre></td>
+      <td><div id="map1013704" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013704, 69.0448, 18.5067, null)</script></td>
+    </tr>
+    <tr>
+      <td>Karlstad Oppvekstsenter Avd Barnehage</td>
+      <td><pre>amenity = kindergarten
+capacity = 32
+contact:phone = 77832631
+max_age = 5
+min_age = 1
+name = Karlstad Oppvekstsenter Avd Barnehage
+no-barnehage:nsrid = 1014757
+operator = Målselv kommune
+operator:type = public
+start_date = 1992-01-01
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1014757</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1014757"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/69.2134/18.4702"
+title="Se posisjonen i openstreetmap">
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1014757"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/69.2134/18.4702"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=69.2134&lon=18.4702&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">
+Editer OSM</a></pre></td>
+      <td><div id="map1014757" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1014757, 69.2134, 18.4702, null)</script></td>
+    </tr>
+    <tr>
+      <td>Málatvuomi Sámi Mánáidgárdi Sa</td>
+      <td><pre>amenity = kindergarten
+capacity = 13
+contact:email = anne.oskal-rorslett@sameskuvla.no
+contact:phone = 77 83 28 35
+max_age = 5
+min_age = 1
+name = Málatvuomi Sámi Mánáidgárdi Sa
+no-barnehage:nsrid = 1021875
+operator = Málatvuomi Sámi Mánáidgárdi Sa
+operator:type = private
+start_date = 2008-10-18
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1021875</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1021875"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/69.0907/18.58244"
+title="Se posisjonen i openstreetmap">
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1021875"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/69.0907/18.58244"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=69.0907&lon=18.58244&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">
+Editer OSM</a></pre></td>
+      <td><div id="map1021875" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1021875, 69.0907, 18.58244, null)</script></td>
     </tr>
   </table>
   

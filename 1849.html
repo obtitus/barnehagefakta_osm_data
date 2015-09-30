@@ -14,18 +14,35 @@
 
   <body>
 
-    <script src="javascripts/leaflet.js"></script>
+    <script src='https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.js'></script>
+    <!-- For ajax call -->
+    <script src='https://code.jquery.com/jquery-1.11.0.min.js'></script>
+    <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-osm/v0.1.0/leaflet-osm.js'></script>
+
     <script>
-function create_map(name, lat, lon) {
-    var map = L.map(name).setView([lat, lon], 17);
-    
-    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-	attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
-	maxZoom: 19,
-	id: 'obtitus.nif9f06n',
-	accessToken: 'pk.eyJ1Ijoib2J0aXR1cyIsImEiOiJjaWYzbXF1M3IwMGtuc3ZsdmhhYXR4d2hpIn0.tQQLwWt3e_NhGtTdUYLzwQ'
-    }).addTo(map);
-}
+    function create_map(name, lat, lon, osm_id) {
+	L.mapbox.accessToken = 'pk.eyJ1Ijoib2J0aXR1cyIsImEiOiJjaWYzbXF1M3IwMGtuc3ZsdmhhYXR4d2hpIn0.tQQLwWt3e_NhGtTdUYLzwQ'
+	var map = L.mapbox.map(name, 'obtitus.00ebefa1');
+	map.setView([lat, lon], 17);
+
+	// Highlight osm object, does not align correctly
+	// use the overpass xml instead?	
+	// if ((typeof osm_xml !== 'undefined') && (osm_xml !== null)) {
+	//     var layer = new L.OSM.DataLayer(osm_xml).addTo(map);
+	// }
+	
+	if ((typeof osm_id !== 'undefined') && (osm_id !== null)) {
+	    $.ajax({
+		url: "https://www.openstreetmap.org/api/0.6/" + osm_id,
+		dataType: "xml",
+		success: function (xml) {
+		    var layer = new L.OSM.DataLayer(xml).addTo(map);
+		    map.fitBounds(layer.getBounds());
+		    map.setZoom(17);
+		}
+	    });
+	}
+    }
     </script>
     
 
@@ -67,6 +84,32 @@ data/1849/barnehagefakta.osm</a>.
     </thead>
     <tbody>
     <tr>
+      <td>Skutvik Oppvekstsenter Avd Barnehage</td>
+      <td><pre>amenity = kindergarten
+capacity = 24
+max_age = 5
+min_age = 1
+name = Skutvik Oppvekstsenter Avd Barnehage
+no-barnehage:nsrid = 1013678
+operator = Hamarøy kommune
+operator:type = public
+start_date = 1989-01-01
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1013678</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1013678"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/68.0168/15.3276"
+title="Se posisjonen i openstreetmap">
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1013678"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/68.0168/15.3276"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=68.0168&lon=15.3276&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">
+Editer OSM</a></pre></td>
+      <td><div id="map1013678" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013678, 68.0168, 15.3276, null)</script></td>
+    </tr>
+    <tr>
       <td>Marielund barnehage</td>
       <td><pre>amenity = kindergarten
 capacity = 23
@@ -92,89 +135,7 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=68.08114&lon=15.61707&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1016224" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1016224, 68.08114, 15.61707)</script></div></td>
-    </tr>
-    <tr>
-      <td>Innhavet Oppvekstsenter Avd Barnehage</td>
-      <td><pre>amenity = kindergarten
-capacity = 9
-contact:email = ellen.ediassen@hamaroy.kommune.no
-contact:phone = 75772586
-max_age = 5
-min_age = 1
-name = Innhavet Oppvekstsenter Avd Barnehage
-no-barnehage:nsrid = 1016813
-operator = Hamarøy kommune
-operator:type = public
-start_date = 1989-01-01
-</pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1016813</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1016813"
-title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/67.9633/15.9319"
-title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1016813"
-title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/67.9633/15.9319"
-title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=67.9633&lon=15.9319&zoom=17"
-title="Du blir sendt til openstreetmap sin web-editor">
-Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1016813" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1016813, 67.9633, 15.9319)</script></div></td>
-    </tr>
-    <tr>
-      <td>Ulvsvåg Oppvekstsenter Avd Barnehage</td>
-      <td><pre>amenity = kindergarten
-capacity = 13
-contact:email = inger.bakkeli@hamaroy.kommune.no
-contact:phone = 75 77 16 40
-max_age = 5
-min_age = 1
-name = Ulvsvåg Oppvekstsenter Avd Barnehage
-no-barnehage:nsrid = 1013679
-operator = Hamarøy kommune
-operator:type = public
-start_date = 1989-01-01
-</pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1013679</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1013679"
-title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/68.117/15.8658"
-title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1013679"
-title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/68.117/15.8658"
-title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=68.117&lon=15.8658&zoom=17"
-title="Du blir sendt til openstreetmap sin web-editor">
-Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1013679" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013679, 68.117, 15.8658)</script></div></td>
-    </tr>
-    <tr>
-      <td>Skutvik Oppvekstsenter Avd Barnehage</td>
-      <td><pre>amenity = kindergarten
-capacity = 24
-max_age = 5
-min_age = 1
-name = Skutvik Oppvekstsenter Avd Barnehage
-no-barnehage:nsrid = 1013678
-operator = Hamarøy kommune
-operator:type = public
-start_date = 1989-01-01
-</pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1013678</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1013678"
-title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/68.0168/15.3276"
-title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1013678"
-title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/68.0168/15.3276"
-title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=68.0168&lon=15.3276&zoom=17"
-title="Du blir sendt til openstreetmap sin web-editor">
-Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1013678" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013678, 68.0168, 15.3276)</script></div></td>
+      <td><div id="map1016224" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1016224, 68.08114, 15.61707, null)</script></td>
     </tr>
     <tr>
       <td>Mellombygda barnehage</td>
@@ -202,7 +163,63 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=68.0842&lon=15.6327&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1016141" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1016141, 68.0842, 15.6327)</script></div></td>
+      <td><div id="map1016141" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1016141, 68.0842, 15.6327, null)</script></td>
+    </tr>
+    <tr>
+      <td>Ulvsvåg Oppvekstsenter Avd Barnehage</td>
+      <td><pre>amenity = kindergarten
+capacity = 13
+contact:email = inger.bakkeli@hamaroy.kommune.no
+contact:phone = 75 77 16 40
+max_age = 5
+min_age = 1
+name = Ulvsvåg Oppvekstsenter Avd Barnehage
+no-barnehage:nsrid = 1013679
+operator = Hamarøy kommune
+operator:type = public
+start_date = 1989-01-01
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1013679</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1013679"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/68.117/15.8658"
+title="Se posisjonen i openstreetmap">
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1013679"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/68.117/15.8658"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=68.117&lon=15.8658&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">
+Editer OSM</a></pre></td>
+      <td><div id="map1013679" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013679, 68.117, 15.8658, null)</script></td>
+    </tr>
+    <tr>
+      <td>Innhavet Oppvekstsenter Avd Barnehage</td>
+      <td><pre>amenity = kindergarten
+capacity = 9
+contact:email = ellen.ediassen@hamaroy.kommune.no
+contact:phone = 75772586
+max_age = 5
+min_age = 1
+name = Innhavet Oppvekstsenter Avd Barnehage
+no-barnehage:nsrid = 1016813
+operator = Hamarøy kommune
+operator:type = public
+start_date = 1989-01-01
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1016813</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1016813"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/67.9633/15.9319"
+title="Se posisjonen i openstreetmap">
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1016813"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/67.9633/15.9319"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=67.9633&lon=15.9319&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">
+Editer OSM</a></pre></td>
+      <td><div id="map1016813" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1016813, 67.9633, 15.9319, null)</script></td>
     </tr>
   </table>
   

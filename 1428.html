@@ -14,18 +14,35 @@
 
   <body>
 
-    <script src="javascripts/leaflet.js"></script>
+    <script src='https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.js'></script>
+    <!-- For ajax call -->
+    <script src='https://code.jquery.com/jquery-1.11.0.min.js'></script>
+    <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-osm/v0.1.0/leaflet-osm.js'></script>
+
     <script>
-function create_map(name, lat, lon) {
-    var map = L.map(name).setView([lat, lon], 17);
-    
-    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-	attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
-	maxZoom: 19,
-	id: 'obtitus.nif9f06n',
-	accessToken: 'pk.eyJ1Ijoib2J0aXR1cyIsImEiOiJjaWYzbXF1M3IwMGtuc3ZsdmhhYXR4d2hpIn0.tQQLwWt3e_NhGtTdUYLzwQ'
-    }).addTo(map);
-}
+    function create_map(name, lat, lon, osm_id) {
+	L.mapbox.accessToken = 'pk.eyJ1Ijoib2J0aXR1cyIsImEiOiJjaWYzbXF1M3IwMGtuc3ZsdmhhYXR4d2hpIn0.tQQLwWt3e_NhGtTdUYLzwQ'
+	var map = L.mapbox.map(name, 'obtitus.00ebefa1');
+	map.setView([lat, lon], 17);
+
+	// Highlight osm object, does not align correctly
+	// use the overpass xml instead?	
+	// if ((typeof osm_xml !== 'undefined') && (osm_xml !== null)) {
+	//     var layer = new L.OSM.DataLayer(osm_xml).addTo(map);
+	// }
+	
+	if ((typeof osm_id !== 'undefined') && (osm_id !== null)) {
+	    $.ajax({
+		url: "https://www.openstreetmap.org/api/0.6/" + osm_id,
+		dataType: "xml",
+		success: function (xml) {
+		    var layer = new L.OSM.DataLayer(xml).addTo(map);
+		    map.fitBounds(layer.getBounds());
+		    map.setZoom(17);
+		}
+	    });
+	}
+    }
     </script>
     
 
@@ -67,34 +84,6 @@ data/1428/barnehagefakta.osm</a>.
     </thead>
     <tbody>
     <tr>
-      <td>Stongfjorden barnehage</td>
-      <td><pre>amenity = kindergarten
-capacity = 10
-contact:email = barnehagen@stongfjordenskule-bhg.no
-contact:phone = 57731658
-max_age = 5
-min_age = 1
-name = Stongfjorden barnehage
-no-barnehage:nsrid = 1017388
-operator = Askvoll kommune
-operator:type = public
-start_date = 1978-09-21
-</pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1017388</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1017388"
-title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/61.4234/5.16673"
-title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1017388"
-title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/61.4234/5.16673"
-title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=61.4234&lon=5.16673&zoom=17"
-title="Du blir sendt til openstreetmap sin web-editor">
-Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1017388" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1017388, 61.4234, 5.16673)</script></div></td>
-    </tr>
-    <tr>
       <td>Røverompa barnehage</td>
       <td><pre>amenity = kindergarten
 capacity = 51
@@ -120,63 +109,7 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=61.3467&lon=5.0623&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1016901" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1016901, 61.3467, 5.0623)</script></div></td>
-    </tr>
-    <tr>
-      <td>Nipa barnehage</td>
-      <td><pre>amenity = kindergarten
-capacity = 25
-contact:email = nipa.bhg@enivest.net
-contact:phone = 57733052
-max_age = 5
-min_age = 1
-name = Nipa barnehage
-no-barnehage:nsrid = 1025478
-operator = Askvoll kommune
-operator:type = public
-start_date = 1989-01-02
-</pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1025478</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1025478"
-title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/61.35/4.95"
-title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1025478"
-title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/61.35/4.95"
-title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=61.35&lon=4.95&zoom=17"
-title="Du blir sendt til openstreetmap sin web-editor">
-Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1025478" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1025478, 61.35, 4.95)</script></div></td>
-    </tr>
-    <tr>
-      <td>Holmedal barnehage</td>
-      <td><pre>amenity = kindergarten
-capacity = 21
-contact:email = holmedal.barnehage@enivest.com
-contact:phone = 57734122
-max_age = 5
-min_age = 1
-name = Holmedal barnehage
-no-barnehage:nsrid = 1018155
-operator = Askvoll kommune
-operator:type = public
-start_date = 1989-01-01
-</pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1018155</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1018155"
-title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/61.3558/5.18053"
-title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1018155"
-title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/61.3558/5.18053"
-title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=61.3558&lon=5.18053&zoom=17"
-title="Du blir sendt til openstreetmap sin web-editor">
-Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1018155" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1018155, 61.3558, 5.18053)</script></div></td>
+      <td><div id="map1016901" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1016901, 61.3467, 5.0623, null)</script></td>
     </tr>
     <tr>
       <td>Gjelsvik barnehage</td>
@@ -204,7 +137,63 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=61.4596&lon=5.42001&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1017407" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1017407, 61.4596, 5.42001)</script></div></td>
+      <td><div id="map1017407" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1017407, 61.4596, 5.42001, null)</script></td>
+    </tr>
+    <tr>
+      <td>Nipa barnehage</td>
+      <td><pre>amenity = kindergarten
+capacity = 25
+contact:email = nipa.bhg@enivest.net
+contact:phone = 57733052
+max_age = 5
+min_age = 1
+name = Nipa barnehage
+no-barnehage:nsrid = 1025478
+operator = Askvoll kommune
+operator:type = public
+start_date = 1989-01-02
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1025478</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1025478"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/61.35/4.95"
+title="Se posisjonen i openstreetmap">
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1025478"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/61.35/4.95"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=61.35&lon=4.95&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">
+Editer OSM</a></pre></td>
+      <td><div id="map1025478" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1025478, 61.35, 4.95, null)</script></td>
+    </tr>
+    <tr>
+      <td>Holmedal barnehage</td>
+      <td><pre>amenity = kindergarten
+capacity = 21
+contact:email = holmedal.barnehage@enivest.com
+contact:phone = 57734122
+max_age = 5
+min_age = 1
+name = Holmedal barnehage
+no-barnehage:nsrid = 1018155
+operator = Askvoll kommune
+operator:type = public
+start_date = 1989-01-01
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1018155</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1018155"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/61.3558/5.18053"
+title="Se posisjonen i openstreetmap">
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1018155"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/61.3558/5.18053"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=61.3558&lon=5.18053&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">
+Editer OSM</a></pre></td>
+      <td><div id="map1018155" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1018155, 61.3558, 5.18053, null)</script></td>
     </tr>
     <tr>
       <td>Bulandet barnehage</td>
@@ -232,7 +221,35 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=61.2746&lon=4.53297&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1017489" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1017489, 61.2746, 4.53297)</script></div></td>
+      <td><div id="map1017489" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1017489, 61.2746, 4.53297, null)</script></td>
+    </tr>
+    <tr>
+      <td>Stongfjorden barnehage</td>
+      <td><pre>amenity = kindergarten
+capacity = 10
+contact:email = barnehagen@stongfjordenskule-bhg.no
+contact:phone = 57731658
+max_age = 5
+min_age = 1
+name = Stongfjorden barnehage
+no-barnehage:nsrid = 1017388
+operator = Askvoll kommune
+operator:type = public
+start_date = 1978-09-21
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1017388</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1017388"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/61.4234/5.16673"
+title="Se posisjonen i openstreetmap">
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1017388"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/61.4234/5.16673"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=61.4234&lon=5.16673&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">
+Editer OSM</a></pre></td>
+      <td><div id="map1017388" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1017388, 61.4234, 5.16673, null)</script></td>
     </tr>
   </table>
   

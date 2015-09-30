@@ -14,18 +14,35 @@
 
   <body>
 
-    <script src="javascripts/leaflet.js"></script>
+    <script src='https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.js'></script>
+    <!-- For ajax call -->
+    <script src='https://code.jquery.com/jquery-1.11.0.min.js'></script>
+    <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-osm/v0.1.0/leaflet-osm.js'></script>
+
     <script>
-function create_map(name, lat, lon) {
-    var map = L.map(name).setView([lat, lon], 17);
-    
-    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-	attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
-	maxZoom: 19,
-	id: 'obtitus.nif9f06n',
-	accessToken: 'pk.eyJ1Ijoib2J0aXR1cyIsImEiOiJjaWYzbXF1M3IwMGtuc3ZsdmhhYXR4d2hpIn0.tQQLwWt3e_NhGtTdUYLzwQ'
-    }).addTo(map);
-}
+    function create_map(name, lat, lon, osm_id) {
+	L.mapbox.accessToken = 'pk.eyJ1Ijoib2J0aXR1cyIsImEiOiJjaWYzbXF1M3IwMGtuc3ZsdmhhYXR4d2hpIn0.tQQLwWt3e_NhGtTdUYLzwQ'
+	var map = L.mapbox.map(name, 'obtitus.00ebefa1');
+	map.setView([lat, lon], 17);
+
+	// Highlight osm object, does not align correctly
+	// use the overpass xml instead?	
+	// if ((typeof osm_xml !== 'undefined') && (osm_xml !== null)) {
+	//     var layer = new L.OSM.DataLayer(osm_xml).addTo(map);
+	// }
+	
+	if ((typeof osm_id !== 'undefined') && (osm_id !== null)) {
+	    $.ajax({
+		url: "https://www.openstreetmap.org/api/0.6/" + osm_id,
+		dataType: "xml",
+		success: function (xml) {
+		    var layer = new L.OSM.DataLayer(xml).addTo(map);
+		    map.fitBounds(layer.getBounds());
+		    map.setZoom(17);
+		}
+	    });
+	}
+    }
     </script>
     
 
@@ -67,30 +84,32 @@ data/0420/barnehagefakta.osm</a>.
     </thead>
     <tbody>
     <tr>
-      <td>Matrand barnehage</td>
+      <td>Skotterud barnehage</td>
       <td><pre>amenity = kindergarten
-capacity = 51
+capacity = 67
+contact:email = postmottak@eidskog.kommune.no
+contact:phone = 62 83 37 70
 max_age = 5
 min_age = 1
-name = Matrand barnehage
-no-barnehage:nsrid = 1017580
+name = Skotterud barnehage
+no-barnehage:nsrid = 1017581
 operator = Eidskog kommune
 operator:type = public
 start_date = 1988-04-01
 </pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1017580</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1017580"
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1017581</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1017581"
 title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/60.0292/12.1245"
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/59.9803/12.1117"
 title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1017580"
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1017581"
 title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/60.0292/12.1245"
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/59.9803/12.1117"
 title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=60.0292&lon=12.1245&zoom=17"
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=59.9803&lon=12.1117&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1017580" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1017580, 60.0292, 12.1245)</script></div></td>
+      <td><div id="map1017581" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1017581, 59.9803, 12.1117, null)</script></td>
     </tr>
     <tr>
       <td>Magnor barnehage</td>
@@ -118,33 +137,33 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=59.9485&lon=12.193&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1017365" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1017365, 59.9485, 12.193)</script></div></td>
+      <td><div id="map1017365" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1017365, 59.9485, 12.193, null)</script></td>
     </tr>
     <tr>
-      <td>Eidskog Naturbarnehage Sa</td>
+      <td>Matrand barnehage</td>
       <td><pre>amenity = kindergarten
-capacity = 16
+capacity = 51
 max_age = 5
 min_age = 1
-name = Eidskog Naturbarnehage Sa
-no-barnehage:nsrid = 1022433
-operator = Eidskog Naturbarnehage Sa
-operator:type = private
-start_date = 2013-10-17
+name = Matrand barnehage
+no-barnehage:nsrid = 1017580
+operator = Eidskog kommune
+operator:type = public
+start_date = 1988-04-01
 </pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1022433</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1022433"
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1017580</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1017580"
 title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/59.93588/11.99152"
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/60.0292/12.1245"
 title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1022433"
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1017580"
 title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/59.93588/11.99152"
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/60.0292/12.1245"
 title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=59.93588&lon=11.99152&zoom=17"
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=60.0292&lon=12.1245&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1022433" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1022433, 59.93588, 11.99152)</script></div></td>
+      <td><div id="map1017580" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1017580, 60.0292, 12.1245, null)</script></td>
     </tr>
     <tr>
       <td>Skotterudløkka barnehage AS</td>
@@ -171,35 +190,33 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=59.98281&lon=12.12825&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1022239" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1022239, 59.98281, 12.12825)</script></div></td>
+      <td><div id="map1022239" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1022239, 59.98281, 12.12825, null)</script></td>
     </tr>
     <tr>
-      <td>Skotterud barnehage</td>
+      <td>Eidskog Naturbarnehage Sa</td>
       <td><pre>amenity = kindergarten
-capacity = 67
-contact:email = postmottak@eidskog.kommune.no
-contact:phone = 62 83 37 70
+capacity = 16
 max_age = 5
 min_age = 1
-name = Skotterud barnehage
-no-barnehage:nsrid = 1017581
-operator = Eidskog kommune
-operator:type = public
-start_date = 1988-04-01
+name = Eidskog Naturbarnehage Sa
+no-barnehage:nsrid = 1022433
+operator = Eidskog Naturbarnehage Sa
+operator:type = private
+start_date = 2013-10-17
 </pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1017581</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1017581"
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1022433</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1022433"
 title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/59.9803/12.1117"
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/59.93588/11.99152"
 title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1017581"
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1022433"
 title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/59.9803/12.1117"
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/59.93588/11.99152"
 title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=59.9803&lon=12.1117&zoom=17"
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=59.93588&lon=11.99152&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1017581" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1017581, 59.9803, 12.1117)</script></div></td>
+      <td><div id="map1022433" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1022433, 59.93588, 11.99152, null)</script></td>
     </tr>
   </table>
   

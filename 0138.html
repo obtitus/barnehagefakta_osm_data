@@ -14,18 +14,35 @@
 
   <body>
 
-    <script src="javascripts/leaflet.js"></script>
+    <script src='https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.js'></script>
+    <!-- For ajax call -->
+    <script src='https://code.jquery.com/jquery-1.11.0.min.js'></script>
+    <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-osm/v0.1.0/leaflet-osm.js'></script>
+
     <script>
-function create_map(name, lat, lon) {
-    var map = L.map(name).setView([lat, lon], 17);
-    
-    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-	attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
-	maxZoom: 19,
-	id: 'obtitus.nif9f06n',
-	accessToken: 'pk.eyJ1Ijoib2J0aXR1cyIsImEiOiJjaWYzbXF1M3IwMGtuc3ZsdmhhYXR4d2hpIn0.tQQLwWt3e_NhGtTdUYLzwQ'
-    }).addTo(map);
-}
+    function create_map(name, lat, lon, osm_id) {
+	L.mapbox.accessToken = 'pk.eyJ1Ijoib2J0aXR1cyIsImEiOiJjaWYzbXF1M3IwMGtuc3ZsdmhhYXR4d2hpIn0.tQQLwWt3e_NhGtTdUYLzwQ'
+	var map = L.mapbox.map(name, 'obtitus.00ebefa1');
+	map.setView([lat, lon], 17);
+
+	// Highlight osm object, does not align correctly
+	// use the overpass xml instead?	
+	// if ((typeof osm_xml !== 'undefined') && (osm_xml !== null)) {
+	//     var layer = new L.OSM.DataLayer(osm_xml).addTo(map);
+	// }
+	
+	if ((typeof osm_id !== 'undefined') && (osm_id !== null)) {
+	    $.ajax({
+		url: "https://www.openstreetmap.org/api/0.6/" + osm_id,
+		dataType: "xml",
+		success: function (xml) {
+		    var layer = new L.OSM.DataLayer(xml).addTo(map);
+		    map.fitBounds(layer.getBounds());
+		    map.setZoom(17);
+		}
+	    });
+	}
+    }
     </script>
     
 
@@ -67,60 +84,32 @@ data/0138/barnehagefakta.osm</a>.
     </thead>
     <tbody>
     <tr>
-      <td>Symrelunden barnehage</td>
+      <td>Bekkeblomen barnehage</td>
       <td><pre>amenity = kindergarten
-capacity = 32
-contact:email = kristin.bjelland@hobol.kommune.no
-contact:phone = 69 92 39 00
+capacity = 94
+contact:email = heidi.lovdal@hobol.kommune.no
+contact:phone = 69 68 18 90
 max_age = 5
 min_age = 1
-name = Symrelunden barnehage
-no-barnehage:nsrid = 1018526
+name = Bekkeblomen barnehage
+no-barnehage:nsrid = 1015538
 operator = Hobøl kommune
 operator:type = public
-start_date = 2008-10-01
+start_date = 1978-08-26
 </pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1018526</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1018526"
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1015538</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1015538"
 title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/59.6597/10.9976"
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/59.6268/11.0233"
 title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1018526"
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1015538"
 title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/59.6597/10.9976"
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/59.6268/11.0233"
 title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=59.6597&lon=10.9976&zoom=17"
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=59.6268&lon=11.0233&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1018526" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1018526, 59.6597, 10.9976)</script></div></td>
-    </tr>
-    <tr>
-      <td>Ringvoll barnehage</td>
-      <td><pre>amenity = kindergarten
-capacity = 43
-contact:email = bodil.lilleng@hobol.kommune.no
-contact:phone = 69924400
-max_age = 5
-min_age = 1
-name = Ringvoll barnehage
-no-barnehage:nsrid = 1025480
-operator = Hobøl kommune
-operator:type = public
-start_date = 1988-04-01
-</pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1025480</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1025480"
-title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/59.5572/10.8458"
-title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1025480"
-title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/59.5572/10.8458"
-title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=59.5572&lon=10.8458&zoom=17"
-title="Du blir sendt til openstreetmap sin web-editor">
-Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1025480" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1025480, 59.5572, 10.8458)</script></div></td>
+      <td><div id="map1015538" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1015538, 59.6268, 11.0233, null)</script></td>
     </tr>
     <tr>
       <td>Nordre Øyen barnehage</td>
@@ -148,34 +137,63 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=59.66493&lon=10.9978&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1021258" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1021258, 59.66493, 10.9978)</script></div></td>
+      <td><div id="map1021258" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1021258, 59.66493, 10.9978, null)</script></td>
     </tr>
     <tr>
-      <td>Knoll og Tott barnehage Jørn-Thomas Gaaseby</td>
+      <td>Ringvoll barnehage</td>
       <td><pre>amenity = kindergarten
-capacity = 17
-contact:phone = 069922228
+capacity = 43
+contact:email = bodil.lilleng@hobol.kommune.no
+contact:phone = 69924400
 max_age = 5
 min_age = 1
-name = Knoll og Tott barnehage Jørn-Thomas Gaaseby
-no-barnehage:nsrid = 1020236
-operator = Knoll og Tott barnehage Jørn-Thomas Gaaseby
-operator:type = private
-start_date = 1994-08-01
+name = Ringvoll barnehage
+no-barnehage:nsrid = 1025480
+operator = Hobøl kommune
+operator:type = public
+start_date = 1988-04-01
 </pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1020236</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1020236"
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1025480</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1025480"
 title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/59.6591/10.99487"
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/59.5572/10.8458"
 title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1020236"
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1025480"
 title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/59.6591/10.99487"
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/59.5572/10.8458"
 title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=59.6591&lon=10.99487&zoom=17"
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=59.5572&lon=10.8458&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1020236" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1020236, 59.6591, 10.99487)</script></div></td>
+      <td><div id="map1025480" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1025480, 59.5572, 10.8458, null)</script></td>
+    </tr>
+    <tr>
+      <td>Symrelunden barnehage</td>
+      <td><pre>amenity = kindergarten
+capacity = 32
+contact:email = kristin.bjelland@hobol.kommune.no
+contact:phone = 69 92 39 00
+max_age = 5
+min_age = 1
+name = Symrelunden barnehage
+no-barnehage:nsrid = 1018526
+operator = Hobøl kommune
+operator:type = public
+start_date = 2008-10-01
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1018526</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1018526"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/59.6597/10.9976"
+title="Se posisjonen i openstreetmap">
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1018526"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/59.6597/10.9976"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=59.6597&lon=10.9976&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">
+Editer OSM</a></pre></td>
+      <td><div id="map1018526" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1018526, 59.6597, 10.9976, null)</script></td>
     </tr>
     <tr>
       <td>Knapstad barnehage</td>
@@ -202,35 +220,34 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=59.62423&lon=11.03275&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1020237" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1020237, 59.62423, 11.03275)</script></div></td>
+      <td><div id="map1020237" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1020237, 59.62423, 11.03275, null)</script></td>
     </tr>
     <tr>
-      <td>Bekkeblomen barnehage</td>
+      <td>Knoll og Tott barnehage Jørn-Thomas Gaaseby</td>
       <td><pre>amenity = kindergarten
-capacity = 94
-contact:email = heidi.lovdal@hobol.kommune.no
-contact:phone = 69 68 18 90
+capacity = 17
+contact:phone = 069922228
 max_age = 5
 min_age = 1
-name = Bekkeblomen barnehage
-no-barnehage:nsrid = 1015538
-operator = Hobøl kommune
-operator:type = public
-start_date = 1978-08-26
+name = Knoll og Tott barnehage Jørn-Thomas Gaaseby
+no-barnehage:nsrid = 1020236
+operator = Knoll og Tott barnehage Jørn-Thomas Gaaseby
+operator:type = private
+start_date = 1994-08-01
 </pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1015538</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1015538"
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1020236</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1020236"
 title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/59.6268/11.0233"
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/59.6591/10.99487"
 title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1015538"
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1020236"
 title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/59.6268/11.0233"
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/59.6591/10.99487"
 title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=59.6268&lon=11.0233&zoom=17"
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=59.6591&lon=10.99487&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1015538" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1015538, 59.6268, 11.0233)</script></div></td>
+      <td><div id="map1020236" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1020236, 59.6591, 10.99487, null)</script></td>
     </tr>
   </table>
   

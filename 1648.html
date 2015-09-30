@@ -14,18 +14,35 @@
 
   <body>
 
-    <script src="javascripts/leaflet.js"></script>
+    <script src='https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.js'></script>
+    <!-- For ajax call -->
+    <script src='https://code.jquery.com/jquery-1.11.0.min.js'></script>
+    <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-osm/v0.1.0/leaflet-osm.js'></script>
+
     <script>
-function create_map(name, lat, lon) {
-    var map = L.map(name).setView([lat, lon], 17);
-    
-    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-	attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
-	maxZoom: 19,
-	id: 'obtitus.nif9f06n',
-	accessToken: 'pk.eyJ1Ijoib2J0aXR1cyIsImEiOiJjaWYzbXF1M3IwMGtuc3ZsdmhhYXR4d2hpIn0.tQQLwWt3e_NhGtTdUYLzwQ'
-    }).addTo(map);
-}
+    function create_map(name, lat, lon, osm_id) {
+	L.mapbox.accessToken = 'pk.eyJ1Ijoib2J0aXR1cyIsImEiOiJjaWYzbXF1M3IwMGtuc3ZsdmhhYXR4d2hpIn0.tQQLwWt3e_NhGtTdUYLzwQ'
+	var map = L.mapbox.map(name, 'obtitus.00ebefa1');
+	map.setView([lat, lon], 17);
+
+	// Highlight osm object, does not align correctly
+	// use the overpass xml instead?	
+	// if ((typeof osm_xml !== 'undefined') && (osm_xml !== null)) {
+	//     var layer = new L.OSM.DataLayer(osm_xml).addTo(map);
+	// }
+	
+	if ((typeof osm_id !== 'undefined') && (osm_id !== null)) {
+	    $.ajax({
+		url: "https://www.openstreetmap.org/api/0.6/" + osm_id,
+		dataType: "xml",
+		success: function (xml) {
+		    var layer = new L.OSM.DataLayer(xml).addTo(map);
+		    map.fitBounds(layer.getBounds());
+		    map.setZoom(17);
+		}
+	    });
+	}
+    }
     </script>
     
 
@@ -91,33 +108,7 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=63.0391&lon=10.285&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1018246" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1018246, 63.0391, 10.285)</script></div></td>
-    </tr>
-    <tr>
-      <td>Singsaas Oppvekstområde Avd Barnehage</td>
-      <td><pre>amenity = kindergarten
-capacity = 44
-max_age = 5
-min_age = 1
-name = Singsaas Oppvekstområde Avd Barnehage
-no-barnehage:nsrid = 1018245
-operator = Midtre Gauldal kommune
-operator:type = public
-start_date = 1989-01-01
-</pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1018245</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1018245"
-title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/62.9562/10.7308"
-title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1018245"
-title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/62.9562/10.7308"
-title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=62.9562&lon=10.7308&zoom=17"
-title="Du blir sendt til openstreetmap sin web-editor">
-Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1018245" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1018245, 62.9562, 10.7308)</script></div></td>
+      <td><div id="map1018246" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1018246, 63.0391, 10.285, null)</script></td>
     </tr>
     <tr>
       <td>Liøya barnehage Sa</td>
@@ -146,33 +137,7 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=63.02973&lon=10.26271&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1021163" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1021163, 63.02973, 10.26271)</script></div></td>
-    </tr>
-    <tr>
-      <td>Hauka Villmarksbarnehage</td>
-      <td><pre>amenity = kindergarten
-capacity = 18
-max_age = 5
-min_age = 1
-name = Hauka Villmarksbarnehage
-no-barnehage:nsrid = 1020503
-operator = Hauka Villmarksbarnehage
-operator:type = private
-start_date = 1997-12-15
-</pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1020503</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1020503"
-title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/62.95115/10.18859"
-title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1020503"
-title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/62.95115/10.18859"
-title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=62.95115&lon=10.18859&zoom=17"
-title="Du blir sendt til openstreetmap sin web-editor">
-Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1020503" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1020503, 62.95115, 10.18859)</script></div></td>
+      <td><div id="map1021163" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1021163, 63.02973, 10.26271, null)</script></td>
     </tr>
     <tr>
       <td>Hauka og Soknedal Oppvekstområde Avd Fagerlia Barnehage</td>
@@ -198,7 +163,59 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=62.9511&lon=10.1886&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1013961" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013961, 62.9511, 10.1886)</script></div></td>
+      <td><div id="map1013961" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013961, 62.9511, 10.1886, null)</script></td>
+    </tr>
+    <tr>
+      <td>Singsaas Oppvekstområde Avd Barnehage</td>
+      <td><pre>amenity = kindergarten
+capacity = 44
+max_age = 5
+min_age = 1
+name = Singsaas Oppvekstområde Avd Barnehage
+no-barnehage:nsrid = 1018245
+operator = Midtre Gauldal kommune
+operator:type = public
+start_date = 1989-01-01
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1018245</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1018245"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/62.9562/10.7308"
+title="Se posisjonen i openstreetmap">
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1018245"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/62.9562/10.7308"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=62.9562&lon=10.7308&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">
+Editer OSM</a></pre></td>
+      <td><div id="map1018245" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1018245, 62.9562, 10.7308, null)</script></td>
+    </tr>
+    <tr>
+      <td>Hauka Villmarksbarnehage</td>
+      <td><pre>amenity = kindergarten
+capacity = 18
+max_age = 5
+min_age = 1
+name = Hauka Villmarksbarnehage
+no-barnehage:nsrid = 1020503
+operator = Hauka Villmarksbarnehage
+operator:type = private
+start_date = 1997-12-15
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1020503</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1020503"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/62.95115/10.18859"
+title="Se posisjonen i openstreetmap">
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1020503"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/62.95115/10.18859"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=62.95115&lon=10.18859&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">
+Editer OSM</a></pre></td>
+      <td><div id="map1020503" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1020503, 62.95115, 10.18859, null)</script></td>
     </tr>
     <tr>
       <td>Budal Oppvekstområde Avd Barnehage</td>
@@ -224,7 +241,7 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=62.7852&lon=10.5382&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1018244" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1018244, 62.7852, 10.5382)</script></div></td>
+      <td><div id="map1018244" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1018244, 62.7852, 10.5382, null)</script></td>
     </tr>
   </table>
   

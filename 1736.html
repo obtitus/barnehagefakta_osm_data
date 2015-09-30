@@ -14,18 +14,35 @@
 
   <body>
 
-    <script src="javascripts/leaflet.js"></script>
+    <script src='https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.js'></script>
+    <!-- For ajax call -->
+    <script src='https://code.jquery.com/jquery-1.11.0.min.js'></script>
+    <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-osm/v0.1.0/leaflet-osm.js'></script>
+
     <script>
-function create_map(name, lat, lon) {
-    var map = L.map(name).setView([lat, lon], 17);
-    
-    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-	attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
-	maxZoom: 19,
-	id: 'obtitus.nif9f06n',
-	accessToken: 'pk.eyJ1Ijoib2J0aXR1cyIsImEiOiJjaWYzbXF1M3IwMGtuc3ZsdmhhYXR4d2hpIn0.tQQLwWt3e_NhGtTdUYLzwQ'
-    }).addTo(map);
-}
+    function create_map(name, lat, lon, osm_id) {
+	L.mapbox.accessToken = 'pk.eyJ1Ijoib2J0aXR1cyIsImEiOiJjaWYzbXF1M3IwMGtuc3ZsdmhhYXR4d2hpIn0.tQQLwWt3e_NhGtTdUYLzwQ'
+	var map = L.mapbox.map(name, 'obtitus.00ebefa1');
+	map.setView([lat, lon], 17);
+
+	// Highlight osm object, does not align correctly
+	// use the overpass xml instead?	
+	// if ((typeof osm_xml !== 'undefined') && (osm_xml !== null)) {
+	//     var layer = new L.OSM.DataLayer(osm_xml).addTo(map);
+	// }
+	
+	if ((typeof osm_id !== 'undefined') && (osm_id !== null)) {
+	    $.ajax({
+		url: "https://www.openstreetmap.org/api/0.6/" + osm_id,
+		dataType: "xml",
+		success: function (xml) {
+		    var layer = new L.OSM.DataLayer(xml).addTo(map);
+		    map.fitBounds(layer.getBounds());
+		    map.setZoom(17);
+		}
+	    });
+	}
+    }
     </script>
     
 
@@ -69,33 +86,6 @@ data/1736/barnehagefakta_familiebarnehager.osm</a>
     </thead>
     <tbody>
     <tr>
-      <td>Snåsa Montessoribarnehage Sa</td>
-      <td><pre>amenity = kindergarten
-capacity = 23
-contact:phone = 74 15 16 63
-max_age = 5
-min_age = 1
-name = Snåsa Montessoribarnehage Sa
-no-barnehage:nsrid = 1021106
-operator = Snåsa Montessoribarnehage Sa
-operator:type = private
-start_date = 2004-07-06
-</pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1021106</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1021106"
-title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/64.27541/12.51863"
-title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1021106"
-title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/64.27541/12.51863"
-title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=64.27541&lon=12.51863&zoom=17"
-title="Du blir sendt til openstreetmap sin web-editor">
-Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1021106" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1021106, 64.27541, 12.51863)</script></div></td>
-    </tr>
-    <tr>
       <td>Snåsa barnehage Avd Vinjebakken</td>
       <td><pre>amenity = kindergarten
 capacity = 48
@@ -121,7 +111,34 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=64.2457&lon=12.3778&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1014938" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1014938, 64.2457, 12.3778)</script></div></td>
+      <td><div id="map1014938" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1014938, 64.2457, 12.3778, null)</script></td>
+    </tr>
+    <tr>
+      <td>Snåsa Montessoribarnehage Sa</td>
+      <td><pre>amenity = kindergarten
+capacity = 23
+contact:phone = 74 15 16 63
+max_age = 5
+min_age = 1
+name = Snåsa Montessoribarnehage Sa
+no-barnehage:nsrid = 1021106
+operator = Snåsa Montessoribarnehage Sa
+operator:type = private
+start_date = 2004-07-06
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1021106</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1021106"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/64.27541/12.51863"
+title="Se posisjonen i openstreetmap">
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1021106"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/64.27541/12.51863"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=64.27541&lon=12.51863&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">
+Editer OSM</a></pre></td>
+      <td><div id="map1021106" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1021106, 64.27541, 12.51863, null)</script></td>
     </tr>
     <tr>
       <td>Snåsa barnehage Avd Breide</td>
@@ -149,7 +166,7 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=64.2032&lon=12.257&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1025338" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1025338, 64.2032, 12.257)</script></div></td>
+      <td><div id="map1025338" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1025338, 64.2032, 12.257, null)</script></td>
     </tr>
     <tr>
       <td>Suaja Maanagierte</td>
@@ -175,7 +192,7 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=64.2481&lon=12.3622&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1013208" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013208, 64.2481, 12.3622)</script></div></td>
+      <td><div id="map1013208" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013208, 64.2481, 12.3622, null)</script></td>
     </tr>
     <tr>
       <td>Lillemarka Familiebarnehage</td>
@@ -201,7 +218,7 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=64.2457&lon=12.37779&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1020521" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1020521, 64.2457, 12.37779)</script></div></td>
+      <td><div id="map1020521" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1020521, 64.2457, 12.37779, null)</script></td>
     </tr>
   </table>
   

@@ -14,18 +14,35 @@
 
   <body>
 
-    <script src="javascripts/leaflet.js"></script>
+    <script src='https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.js'></script>
+    <!-- For ajax call -->
+    <script src='https://code.jquery.com/jquery-1.11.0.min.js'></script>
+    <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-osm/v0.1.0/leaflet-osm.js'></script>
+
     <script>
-function create_map(name, lat, lon) {
-    var map = L.map(name).setView([lat, lon], 17);
-    
-    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-	attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
-	maxZoom: 19,
-	id: 'obtitus.nif9f06n',
-	accessToken: 'pk.eyJ1Ijoib2J0aXR1cyIsImEiOiJjaWYzbXF1M3IwMGtuc3ZsdmhhYXR4d2hpIn0.tQQLwWt3e_NhGtTdUYLzwQ'
-    }).addTo(map);
-}
+    function create_map(name, lat, lon, osm_id) {
+	L.mapbox.accessToken = 'pk.eyJ1Ijoib2J0aXR1cyIsImEiOiJjaWYzbXF1M3IwMGtuc3ZsdmhhYXR4d2hpIn0.tQQLwWt3e_NhGtTdUYLzwQ'
+	var map = L.mapbox.map(name, 'obtitus.00ebefa1');
+	map.setView([lat, lon], 17);
+
+	// Highlight osm object, does not align correctly
+	// use the overpass xml instead?	
+	// if ((typeof osm_xml !== 'undefined') && (osm_xml !== null)) {
+	//     var layer = new L.OSM.DataLayer(osm_xml).addTo(map);
+	// }
+	
+	if ((typeof osm_id !== 'undefined') && (osm_id !== null)) {
+	    $.ajax({
+		url: "https://www.openstreetmap.org/api/0.6/" + osm_id,
+		dataType: "xml",
+		success: function (xml) {
+		    var layer = new L.OSM.DataLayer(xml).addTo(map);
+		    map.fitBounds(layer.getBounds());
+		    map.setZoom(17);
+		}
+	    });
+	}
+    }
     </script>
     
 
@@ -67,27 +84,86 @@ data/1942/barnehagefakta.osm</a>.
     </thead>
     <tbody>
     <tr>
-      <td>Årviksand barnehage</td>
+      <td>Høgegga barnehage</td>
       <td><pre>amenity = kindergarten
-name = Årviksand barnehage
-no-barnehage:nsrid = 1026032
-operator = Skjervøy kommune
+capacity = 50
+contact:email = hogegga.barnehage@nordreisa.kommune.no
+contact:phone = 77 76 74 07
+max_age = 5
+min_age = 1
+name = Høgegga barnehage
+no-barnehage:nsrid = 1014697
+operator = Nordreisa kommune
 operator:type = public
-start_date = 2015-08-01
+start_date = 1991-01-01
 </pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1026032</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1026032"
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1014697</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1014697"
 title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/69.78852/20.56716"
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/69.7651/21.052"
 title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1026032"
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1014697"
 title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/69.78852/20.56716"
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/69.7651/21.052"
 title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=69.78852&lon=20.56716&zoom=17"
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=69.7651&lon=21.052&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1026032" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1026032, 69.78852, 20.56716)</script></div></td>
+      <td><div id="map1014697" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1014697, 69.7651, 21.052, null)</script></td>
+    </tr>
+    <tr>
+      <td>Sonjatun barnehage</td>
+      <td><pre>amenity = kindergarten
+capacity = 48
+contact:phone = 77 58 83 95
+max_age = 5
+min_age = 1
+name = Sonjatun barnehage
+no-barnehage:nsrid = 1013765
+operator = Nordreisa kommune
+operator:type = public
+start_date = 1989-01-02
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1013765</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1013765"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/69.7661/21.039"
+title="Se posisjonen i openstreetmap">
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1013765"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/69.7661/21.039"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=69.7661&lon=21.039&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">
+Editer OSM</a></pre></td>
+      <td><div id="map1013765" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013765, 69.7661, 21.039, null)</script></td>
+    </tr>
+    <tr>
+      <td>Leirbukt barnehage</td>
+      <td><pre>amenity = kindergarten
+capacity = 41
+contact:phone = 40 48 08 29
+max_age = 5
+min_age = 1
+name = Leirbukt barnehage
+no-barnehage:nsrid = 1014048
+operator = Nordreisa kommune
+operator:type = public
+start_date = 2009-08-12
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1014048</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1014048"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/69.7704/20.9922"
+title="Se posisjonen i openstreetmap">
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1014048"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/69.7704/20.9922"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=69.7704&lon=20.9922&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">
+Editer OSM</a></pre></td>
+      <td><div id="map1014048" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1014048, 69.7704, 20.9922, null)</script></td>
     </tr>
     <tr>
       <td>Sørkjosen barnehage</td>
@@ -114,7 +190,118 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=69.7835&lon=20.9482&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1013712" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013712, 69.7835, 20.9482)</script></div></td>
+      <td><div id="map1013712" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013712, 69.7835, 20.9482, null)</script></td>
+    </tr>
+    <tr>
+      <td>Storslett barnehage</td>
+      <td><pre>amenity = kindergarten
+capacity = 25
+contact:email = storslett.barnehage@nordreisa.kommune.no
+contact:phone = 77767641
+max_age = 5
+min_age = 1
+name = Storslett barnehage
+no-barnehage:nsrid = 1013711
+operator = Nordreisa kommune
+operator:type = public
+start_date = 1989-01-01
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1013711</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1013711"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/69.7635/21.0315"
+title="Se posisjonen i openstreetmap">
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1013711"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/69.7635/21.0315"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=69.7635&lon=21.0315&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">
+Editer OSM</a></pre></td>
+      <td><div id="map1013711" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013711, 69.7635, 21.0315, null)</script></td>
+    </tr>
+    <tr>
+      <td>Rotsundelv Barnehagedrift AS</td>
+      <td><pre>amenity = kindergarten
+capacity = 18
+contact:phone = 92222004
+max_age = 5
+min_age = 1
+name = Rotsundelv Barnehagedrift AS
+no-barnehage:nsrid = 1021121
+operator = Rotsundelv Barnehagedrift AS
+operator:type = private
+start_date = 2004-08-20
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1021121</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1021121"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/69.81806/20.77642"
+title="Se posisjonen i openstreetmap">
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1021121"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/69.81806/20.77642"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=69.81806&lon=20.77642&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">
+Editer OSM</a></pre></td>
+      <td><div id="map1021121" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1021121, 69.81806, 20.77642, null)</script></td>
+    </tr>
+    <tr>
+      <td>Reisa Montessoribarnehage</td>
+      <td><pre>amenity = kindergarten
+capacity = 17
+contact:email = rmb@nordtroms.net
+contact:phone = 98866501
+max_age = 5
+min_age = 1
+name = Reisa Montessoribarnehage
+no-barnehage:nsrid = 1021240
+operator = Reisa Montessoriforening
+operator:type = private
+start_date = 2006-01-01
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1021240</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1021240"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/69.74386/21.11533"
+title="Se posisjonen i openstreetmap">
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1021240"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/69.74386/21.11533"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=69.74386&lon=21.11533&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">
+Editer OSM</a></pre></td>
+      <td><div id="map1021240" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1021240, 69.74386, 21.11533, null)</script></td>
+    </tr>
+    <tr>
+      <td>Oksfjord Oppvekstsenter Avd Barnehage</td>
+      <td><pre>amenity = kindergarten
+capacity = 14
+contact:email = oksfjord.barnehage@nordreisa.kommune.no
+contact:phone = 77 76 53 22
+max_age = 5
+min_age = 1
+name = Oksfjord Oppvekstsenter Avd Barnehage
+no-barnehage:nsrid = 1013710
+operator = Nordreisa kommune
+operator:type = public
+start_date = 1989-01-01
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1013710</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1013710"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/69.9091/21.329"
+title="Se posisjonen i openstreetmap">
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1013710"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/69.9091/21.329"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=69.9091&lon=21.329&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">
+Editer OSM</a></pre></td>
+      <td><div id="map1013710" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013710, 69.9091, 21.329, null)</script></td>
     </tr>
     <tr>
       <td>Stranda barnehage</td>
@@ -143,145 +330,30 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=69.77959&lon=20.96346&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1019989" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1019989, 69.77959, 20.96346)</script></div></td>
+      <td><div id="map1019989" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1019989, 69.77959, 20.96346, null)</script></td>
     </tr>
     <tr>
-      <td>Storslett barnehage</td>
+      <td>Årviksand barnehage</td>
       <td><pre>amenity = kindergarten
-capacity = 25
-contact:email = storslett.barnehage@nordreisa.kommune.no
-contact:phone = 77767641
-max_age = 5
-min_age = 1
-name = Storslett barnehage
-no-barnehage:nsrid = 1013711
-operator = Nordreisa kommune
+name = Årviksand barnehage
+no-barnehage:nsrid = 1026032
+operator = Skjervøy kommune
 operator:type = public
-start_date = 1989-01-01
+start_date = 2015-08-01
 </pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1013711</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1013711"
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1026032</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1026032"
 title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/69.7635/21.0315"
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/69.78852/20.56716"
 title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1013711"
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1026032"
 title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/69.7635/21.0315"
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/69.78852/20.56716"
 title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=69.7635&lon=21.0315&zoom=17"
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=69.78852&lon=20.56716&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1013711" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013711, 69.7635, 21.0315)</script></div></td>
-    </tr>
-    <tr>
-      <td>Sonjatun barnehage</td>
-      <td><pre>amenity = kindergarten
-capacity = 48
-contact:phone = 77 58 83 95
-max_age = 5
-min_age = 1
-name = Sonjatun barnehage
-no-barnehage:nsrid = 1013765
-operator = Nordreisa kommune
-operator:type = public
-start_date = 1989-01-02
-</pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1013765</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1013765"
-title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/69.7661/21.039"
-title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1013765"
-title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/69.7661/21.039"
-title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=69.7661&lon=21.039&zoom=17"
-title="Du blir sendt til openstreetmap sin web-editor">
-Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1013765" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013765, 69.7661, 21.039)</script></div></td>
-    </tr>
-    <tr>
-      <td>Rotsundelv Barnehagedrift AS</td>
-      <td><pre>amenity = kindergarten
-capacity = 18
-contact:phone = 92222004
-max_age = 5
-min_age = 1
-name = Rotsundelv Barnehagedrift AS
-no-barnehage:nsrid = 1021121
-operator = Rotsundelv Barnehagedrift AS
-operator:type = private
-start_date = 2004-08-20
-</pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1021121</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1021121"
-title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/69.81806/20.77642"
-title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1021121"
-title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/69.81806/20.77642"
-title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=69.81806&lon=20.77642&zoom=17"
-title="Du blir sendt til openstreetmap sin web-editor">
-Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1021121" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1021121, 69.81806, 20.77642)</script></div></td>
-    </tr>
-    <tr>
-      <td>Reisa Montessoribarnehage</td>
-      <td><pre>amenity = kindergarten
-capacity = 17
-contact:email = rmb@nordtroms.net
-contact:phone = 98866501
-max_age = 5
-min_age = 1
-name = Reisa Montessoribarnehage
-no-barnehage:nsrid = 1021240
-operator = Reisa Montessoriforening
-operator:type = private
-start_date = 2006-01-01
-</pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1021240</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1021240"
-title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/69.74386/21.11533"
-title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1021240"
-title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/69.74386/21.11533"
-title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=69.74386&lon=21.11533&zoom=17"
-title="Du blir sendt til openstreetmap sin web-editor">
-Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1021240" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1021240, 69.74386, 21.11533)</script></div></td>
-    </tr>
-    <tr>
-      <td>Oksfjord Oppvekstsenter Avd Barnehage</td>
-      <td><pre>amenity = kindergarten
-capacity = 14
-contact:email = oksfjord.barnehage@nordreisa.kommune.no
-contact:phone = 77 76 53 22
-max_age = 5
-min_age = 1
-name = Oksfjord Oppvekstsenter Avd Barnehage
-no-barnehage:nsrid = 1013710
-operator = Nordreisa kommune
-operator:type = public
-start_date = 1989-01-01
-</pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1013710</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1013710"
-title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/69.9091/21.329"
-title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1013710"
-title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/69.9091/21.329"
-title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=69.9091&lon=21.329&zoom=17"
-title="Du blir sendt til openstreetmap sin web-editor">
-Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1013710" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013710, 69.9091, 21.329)</script></div></td>
+      <td><div id="map1026032" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1026032, 69.78852, 20.56716, null)</script></td>
     </tr>
     <tr>
       <td>Nordreisa Familiesenter/ Åpen barnehage</td>
@@ -305,62 +377,7 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=69.7702&lon=20.9938&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1012990" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1012990, 69.7702, 20.9938)</script></div></td>
-    </tr>
-    <tr>
-      <td>Leirbukt barnehage</td>
-      <td><pre>amenity = kindergarten
-capacity = 41
-contact:phone = 40 48 08 29
-max_age = 5
-min_age = 1
-name = Leirbukt barnehage
-no-barnehage:nsrid = 1014048
-operator = Nordreisa kommune
-operator:type = public
-start_date = 2009-08-12
-</pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1014048</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1014048"
-title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/69.7704/20.9922"
-title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1014048"
-title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/69.7704/20.9922"
-title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=69.7704&lon=20.9922&zoom=17"
-title="Du blir sendt til openstreetmap sin web-editor">
-Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1014048" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1014048, 69.7704, 20.9922)</script></div></td>
-    </tr>
-    <tr>
-      <td>Høgegga barnehage</td>
-      <td><pre>amenity = kindergarten
-capacity = 50
-contact:email = hogegga.barnehage@nordreisa.kommune.no
-contact:phone = 77 76 74 07
-max_age = 5
-min_age = 1
-name = Høgegga barnehage
-no-barnehage:nsrid = 1014697
-operator = Nordreisa kommune
-operator:type = public
-start_date = 1991-01-01
-</pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1014697</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1014697"
-title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/69.7651/21.052"
-title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1014697"
-title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/69.7651/21.052"
-title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=69.7651&lon=21.052&zoom=17"
-title="Du blir sendt til openstreetmap sin web-editor">
-Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1014697" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1014697, 69.7651, 21.052)</script></div></td>
+      <td><div id="map1012990" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1012990, 69.7702, 20.9938, null)</script></td>
     </tr>
   </table>
   

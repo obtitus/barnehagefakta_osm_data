@@ -14,18 +14,35 @@
 
   <body>
 
-    <script src="javascripts/leaflet.js"></script>
+    <script src='https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.js'></script>
+    <!-- For ajax call -->
+    <script src='https://code.jquery.com/jquery-1.11.0.min.js'></script>
+    <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-osm/v0.1.0/leaflet-osm.js'></script>
+
     <script>
-function create_map(name, lat, lon) {
-    var map = L.map(name).setView([lat, lon], 17);
-    
-    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-	attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
-	maxZoom: 19,
-	id: 'obtitus.nif9f06n',
-	accessToken: 'pk.eyJ1Ijoib2J0aXR1cyIsImEiOiJjaWYzbXF1M3IwMGtuc3ZsdmhhYXR4d2hpIn0.tQQLwWt3e_NhGtTdUYLzwQ'
-    }).addTo(map);
-}
+    function create_map(name, lat, lon, osm_id) {
+	L.mapbox.accessToken = 'pk.eyJ1Ijoib2J0aXR1cyIsImEiOiJjaWYzbXF1M3IwMGtuc3ZsdmhhYXR4d2hpIn0.tQQLwWt3e_NhGtTdUYLzwQ'
+	var map = L.mapbox.map(name, 'obtitus.00ebefa1');
+	map.setView([lat, lon], 17);
+
+	// Highlight osm object, does not align correctly
+	// use the overpass xml instead?	
+	// if ((typeof osm_xml !== 'undefined') && (osm_xml !== null)) {
+	//     var layer = new L.OSM.DataLayer(osm_xml).addTo(map);
+	// }
+	
+	if ((typeof osm_id !== 'undefined') && (osm_id !== null)) {
+	    $.ajax({
+		url: "https://www.openstreetmap.org/api/0.6/" + osm_id,
+		dataType: "xml",
+		success: function (xml) {
+		    var layer = new L.OSM.DataLayer(xml).addTo(map);
+		    map.fitBounds(layer.getBounds());
+		    map.setZoom(17);
+		}
+	    });
+	}
+    }
     </script>
     
 
@@ -93,7 +110,7 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=60.43676&lon=12.10007&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1020043" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1020043, 60.43676, 12.10007)</script></div></td>
+      <td><div id="map1020043" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1020043, 60.43676, 12.10007, null)</script></td>
     </tr>
     <tr>
       <td>Solungen barnehage</td>
@@ -121,7 +138,7 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=60.4525&lon=12.06&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1025497" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1025497, 60.4525, 12.06)</script></div></td>
+      <td><div id="map1025497" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1025497, 60.4525, 12.06, null)</script></td>
     </tr>
     <tr>
       <td>Gromungen barnehage Avdeling Namnå</td>
@@ -148,7 +165,7 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=60.4993&lon=12.0746&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1015862" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1015862, 60.4993, 12.0746)</script></div></td>
+      <td><div id="map1015862" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1015862, 60.4993, 12.0746, null)</script></td>
     </tr>
     <tr>
       <td>Gromungen barnehage Avdeling Grinder</td>
@@ -176,7 +193,7 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=60.4076&lon=12.0498&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1014704" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1014704, 60.4076, 12.0498)</script></div></td>
+      <td><div id="map1014704" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1014704, 60.4076, 12.0498, null)</script></td>
     </tr>
     <tr>
       <td>Finnskogen Oppvekstsenter Avdeling Barnehage</td>
@@ -204,7 +221,7 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=60.4216&lon=12.4003&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1013781" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013781, 60.4216, 12.4003)</script></div></td>
+      <td><div id="map1013781" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013781, 60.4216, 12.4003, null)</script></td>
     </tr>
   </table>
   

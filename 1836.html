@@ -14,18 +14,35 @@
 
   <body>
 
-    <script src="javascripts/leaflet.js"></script>
+    <script src='https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.js'></script>
+    <!-- For ajax call -->
+    <script src='https://code.jquery.com/jquery-1.11.0.min.js'></script>
+    <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-osm/v0.1.0/leaflet-osm.js'></script>
+
     <script>
-function create_map(name, lat, lon) {
-    var map = L.map(name).setView([lat, lon], 17);
-    
-    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-	attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
-	maxZoom: 19,
-	id: 'obtitus.nif9f06n',
-	accessToken: 'pk.eyJ1Ijoib2J0aXR1cyIsImEiOiJjaWYzbXF1M3IwMGtuc3ZsdmhhYXR4d2hpIn0.tQQLwWt3e_NhGtTdUYLzwQ'
-    }).addTo(map);
-}
+    function create_map(name, lat, lon, osm_id) {
+	L.mapbox.accessToken = 'pk.eyJ1Ijoib2J0aXR1cyIsImEiOiJjaWYzbXF1M3IwMGtuc3ZsdmhhYXR4d2hpIn0.tQQLwWt3e_NhGtTdUYLzwQ'
+	var map = L.mapbox.map(name, 'obtitus.00ebefa1');
+	map.setView([lat, lon], 17);
+
+	// Highlight osm object, does not align correctly
+	// use the overpass xml instead?	
+	// if ((typeof osm_xml !== 'undefined') && (osm_xml !== null)) {
+	//     var layer = new L.OSM.DataLayer(osm_xml).addTo(map);
+	// }
+	
+	if ((typeof osm_id !== 'undefined') && (osm_id !== null)) {
+	    $.ajax({
+		url: "https://www.openstreetmap.org/api/0.6/" + osm_id,
+		dataType: "xml",
+		success: function (xml) {
+		    var layer = new L.OSM.DataLayer(xml).addTo(map);
+		    map.fitBounds(layer.getBounds());
+		    map.setZoom(17);
+		}
+	    });
+	}
+    }
     </script>
     
 
@@ -90,59 +107,7 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=66.6835&lon=13.4756&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1015592" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1015592, 66.6835, 13.4756)</script></div></td>
-    </tr>
-    <tr>
-      <td>Rødøy barnehage</td>
-      <td><pre>amenity = kindergarten
-capacity = 7
-max_age = 5
-min_age = 1
-name = Rødøy barnehage
-no-barnehage:nsrid = 1013668
-operator = Rødøy kommune
-operator:type = public
-start_date = 1989-01-01
-</pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1013668</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1013668"
-title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/66.666/13.0811"
-title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1013668"
-title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/66.666/13.0811"
-title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=66.666&lon=13.0811&zoom=17"
-title="Du blir sendt til openstreetmap sin web-editor">
-Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1013668" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013668, 66.666, 13.0811)</script></div></td>
-    </tr>
-    <tr>
-      <td>Nordnesøy barnehage</td>
-      <td><pre>amenity = kindergarten
-capacity = 7
-max_age = 5
-min_age = 1
-name = Nordnesøy barnehage
-no-barnehage:nsrid = 1017498
-operator = Rødøy kommune
-operator:type = public
-start_date = 1989-01-02
-</pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1017498</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1017498"
-title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/66.5904/12.6494"
-title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1017498"
-title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/66.5904/12.6494"
-title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=66.5904&lon=12.6494&zoom=17"
-title="Du blir sendt til openstreetmap sin web-editor">
-Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1017498" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1017498, 66.5904, 12.6494)</script></div></td>
+      <td><div id="map1015592" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1015592, 66.6835, 13.4756, null)</script></td>
     </tr>
     <tr>
       <td>Jektvik barnehage</td>
@@ -168,7 +133,59 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=66.6261&lon=13.292&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1015591" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1015591, 66.6261, 13.292)</script></div></td>
+      <td><div id="map1015591" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1015591, 66.6261, 13.292, null)</script></td>
+    </tr>
+    <tr>
+      <td>Rødøy barnehage</td>
+      <td><pre>amenity = kindergarten
+capacity = 7
+max_age = 5
+min_age = 1
+name = Rødøy barnehage
+no-barnehage:nsrid = 1013668
+operator = Rødøy kommune
+operator:type = public
+start_date = 1989-01-01
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1013668</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1013668"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/66.666/13.0811"
+title="Se posisjonen i openstreetmap">
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1013668"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/66.666/13.0811"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=66.666&lon=13.0811&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">
+Editer OSM</a></pre></td>
+      <td><div id="map1013668" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013668, 66.666, 13.0811, null)</script></td>
+    </tr>
+    <tr>
+      <td>Nordnesøy barnehage</td>
+      <td><pre>amenity = kindergarten
+capacity = 7
+max_age = 5
+min_age = 1
+name = Nordnesøy barnehage
+no-barnehage:nsrid = 1017498
+operator = Rødøy kommune
+operator:type = public
+start_date = 1989-01-02
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1017498</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1017498"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/66.5904/12.6494"
+title="Se posisjonen i openstreetmap">
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1017498"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/66.5904/12.6494"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=66.5904&lon=12.6494&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">
+Editer OSM</a></pre></td>
+      <td><div id="map1017498" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1017498, 66.5904, 12.6494, null)</script></td>
     </tr>
     <tr>
       <td>Gjerøy barnehage</td>
@@ -194,7 +211,7 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=66.6166&lon=13.03381&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1019532" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1019532, 66.6166, 13.03381)</script></div></td>
+      <td><div id="map1019532" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1019532, 66.6166, 13.03381, null)</script></td>
     </tr>
   </table>
   

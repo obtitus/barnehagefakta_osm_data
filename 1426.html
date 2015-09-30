@@ -14,18 +14,35 @@
 
   <body>
 
-    <script src="javascripts/leaflet.js"></script>
+    <script src='https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.js'></script>
+    <!-- For ajax call -->
+    <script src='https://code.jquery.com/jquery-1.11.0.min.js'></script>
+    <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-osm/v0.1.0/leaflet-osm.js'></script>
+
     <script>
-function create_map(name, lat, lon) {
-    var map = L.map(name).setView([lat, lon], 17);
-    
-    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-	attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
-	maxZoom: 19,
-	id: 'obtitus.nif9f06n',
-	accessToken: 'pk.eyJ1Ijoib2J0aXR1cyIsImEiOiJjaWYzbXF1M3IwMGtuc3ZsdmhhYXR4d2hpIn0.tQQLwWt3e_NhGtTdUYLzwQ'
-    }).addTo(map);
-}
+    function create_map(name, lat, lon, osm_id) {
+	L.mapbox.accessToken = 'pk.eyJ1Ijoib2J0aXR1cyIsImEiOiJjaWYzbXF1M3IwMGtuc3ZsdmhhYXR4d2hpIn0.tQQLwWt3e_NhGtTdUYLzwQ'
+	var map = L.mapbox.map(name, 'obtitus.00ebefa1');
+	map.setView([lat, lon], 17);
+
+	// Highlight osm object, does not align correctly
+	// use the overpass xml instead?	
+	// if ((typeof osm_xml !== 'undefined') && (osm_xml !== null)) {
+	//     var layer = new L.OSM.DataLayer(osm_xml).addTo(map);
+	// }
+	
+	if ((typeof osm_id !== 'undefined') && (osm_id !== null)) {
+	    $.ajax({
+		url: "https://www.openstreetmap.org/api/0.6/" + osm_id,
+		dataType: "xml",
+		success: function (xml) {
+		    var layer = new L.OSM.DataLayer(xml).addTo(map);
+		    map.fitBounds(layer.getBounds());
+		    map.setZoom(17);
+		}
+	    });
+	}
+    }
     </script>
     
 
@@ -67,118 +84,6 @@ data/1426/barnehagefakta.osm</a>.
     </thead>
     <tbody>
     <tr>
-      <td>Luster Oppvekstsenter Avd Barnehage</td>
-      <td><pre>amenity = kindergarten
-capacity = 24
-contact:email = lena.stai.bolstad@luster.kommune.no
-contact:phone = 57685935
-max_age = 5
-min_age = 1
-name = Luster Oppvekstsenter Avd Barnehage
-no-barnehage:nsrid = 1018153
-operator = Luster kommune
-operator:type = public
-start_date = 1989-01-01
-</pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1018153</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1018153"
-title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/61.4448/7.45815"
-title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1018153"
-title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/61.4448/7.45815"
-title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=61.4448&lon=7.45815&zoom=17"
-title="Du blir sendt til openstreetmap sin web-editor">
-Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1018153" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1018153, 61.4448, 7.45815)</script></div></td>
-    </tr>
-    <tr>
-      <td>Jostedal Oppvekstsenter Avd Barnehage</td>
-      <td><pre>amenity = kindergarten
-capacity = 13
-contact:email = oddbjorg.ese@luster.kommune.no
-contact:phone = 57685965
-max_age = 5
-min_age = 1
-name = Jostedal Oppvekstsenter Avd Barnehage
-no-barnehage:nsrid = 1013908
-operator = Luster kommune
-operator:type = public
-start_date = 1989-01-01
-</pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1013908</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1013908"
-title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/61.5875/7.28327"
-title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1013908"
-title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/61.5875/7.28327"
-title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=61.5875&lon=7.28327&zoom=17"
-title="Du blir sendt til openstreetmap sin web-editor">
-Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1013908" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013908, 61.5875, 7.28327)</script></div></td>
-    </tr>
-    <tr>
-      <td>Indre Hafslo Oppvekstsenter Avd Barnehage</td>
-      <td><pre>amenity = kindergarten
-capacity = 21
-contact:email = heidi.karin.njos@luster.kommune.no
-contact:phone = 57685980
-max_age = 5
-min_age = 1
-name = Indre Hafslo Oppvekstsenter Avd Barnehage
-no-barnehage:nsrid = 1013955
-operator = Luster kommune
-operator:type = public
-start_date = 1990-01-01
-</pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1013955</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1013955"
-title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/61.3821/7.30343"
-title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1013955"
-title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/61.3821/7.30343"
-title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=61.3821&lon=7.30343&zoom=17"
-title="Du blir sendt til openstreetmap sin web-editor">
-Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1013955" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013955, 61.3821, 7.30343)</script></div></td>
-    </tr>
-    <tr>
-      <td>Hafslo barnehage</td>
-      <td><pre>amenity = kindergarten
-capacity = 41
-contact:email = solveig.lokkebo@luster.kommune.no
-contact:phone = 57685835
-max_age = 5
-min_age = 1
-name = Hafslo barnehage
-no-barnehage:nsrid = 1018152
-operator = Luster kommune
-operator:type = public
-start_date = 1989-01-01
-</pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1018152</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1018152"
-title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/61.3145/7.20009"
-title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1018152"
-title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/61.3145/7.20009"
-title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=61.3145&lon=7.20009&zoom=17"
-title="Du blir sendt til openstreetmap sin web-editor">
-Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1018152" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1018152, 61.3145, 7.20009)</script></div></td>
-    </tr>
-    <tr>
       <td>Gaupne barnehage</td>
       <td><pre>amenity = kindergarten
 capacity = 78
@@ -204,7 +109,7 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=61.4083&lon=7.2856&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1018151" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1018151, 61.4083, 7.2856)</script></div></td>
+      <td><div id="map1018151" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1018151, 61.4083, 7.2856, null)</script></td>
     </tr>
     <tr>
       <td>Gamlestova barnehage</td>
@@ -232,34 +137,91 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=61.3153&lon=7.20096&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1013907" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013907, 61.3153, 7.20096)</script></div></td>
+      <td><div id="map1013907" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013907, 61.3153, 7.20096, null)</script></td>
     </tr>
     <tr>
-      <td>Veitastrond barnehage</td>
+      <td>Hafslo barnehage</td>
       <td><pre>amenity = kindergarten
-capacity = 5
-contact:phone = 57 68 58 63
+capacity = 41
+contact:email = solveig.lokkebo@luster.kommune.no
+contact:phone = 57685835
 max_age = 5
 min_age = 1
-name = Veitastrond barnehage
-no-barnehage:nsrid = 1018488
+name = Hafslo barnehage
+no-barnehage:nsrid = 1018152
 operator = Luster kommune
 operator:type = public
-start_date = 2008-08-01
+start_date = 1989-01-01
 </pre></td>
-      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1018488</td>
-      <td><pre><a href="http://barnehagefakta.no/barnehage/1018488"
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1018152</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1018152"
 title="Du blir sendt til barnehagens side på barnehagefakta.no">
-Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/61.5048/6.98581"
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/61.3145/7.20009"
 title="Se posisjonen i openstreetmap">
-Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1018488"
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1018152"
 title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
-Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/61.5048/6.98581"
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/61.3145/7.20009"
 title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
-Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=61.5048&lon=6.98581&zoom=17"
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=61.3145&lon=7.20009&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1018488" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1018488, 61.5048, 6.98581)</script></div></td>
+      <td><div id="map1018152" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1018152, 61.3145, 7.20009, null)</script></td>
+    </tr>
+    <tr>
+      <td>Luster Oppvekstsenter Avd Barnehage</td>
+      <td><pre>amenity = kindergarten
+capacity = 24
+contact:email = lena.stai.bolstad@luster.kommune.no
+contact:phone = 57685935
+max_age = 5
+min_age = 1
+name = Luster Oppvekstsenter Avd Barnehage
+no-barnehage:nsrid = 1018153
+operator = Luster kommune
+operator:type = public
+start_date = 1989-01-01
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1018153</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1018153"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/61.4448/7.45815"
+title="Se posisjonen i openstreetmap">
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1018153"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/61.4448/7.45815"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=61.4448&lon=7.45815&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">
+Editer OSM</a></pre></td>
+      <td><div id="map1018153" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1018153, 61.4448, 7.45815, null)</script></td>
+    </tr>
+    <tr>
+      <td>Indre Hafslo Oppvekstsenter Avd Barnehage</td>
+      <td><pre>amenity = kindergarten
+capacity = 21
+contact:email = heidi.karin.njos@luster.kommune.no
+contact:phone = 57685980
+max_age = 5
+min_age = 1
+name = Indre Hafslo Oppvekstsenter Avd Barnehage
+no-barnehage:nsrid = 1013955
+operator = Luster kommune
+operator:type = public
+start_date = 1990-01-01
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1013955</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1013955"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/61.3821/7.30343"
+title="Se posisjonen i openstreetmap">
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1013955"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/61.3821/7.30343"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=61.3821&lon=7.30343&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">
+Editer OSM</a></pre></td>
+      <td><div id="map1013955" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013955, 61.3821, 7.30343, null)</script></td>
     </tr>
     <tr>
       <td>Solvorn Oppvekstsenter Avd Barnehage</td>
@@ -287,7 +249,7 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=61.3014&lon=7.23764&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1013956" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013956, 61.3014, 7.23764)</script></div></td>
+      <td><div id="map1013956" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013956, 61.3014, 7.23764, null)</script></td>
     </tr>
     <tr>
       <td>Skjolden Oppvekstsenter Avd Barnehage</td>
@@ -315,7 +277,62 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
 Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=61.4913&lon=7.60261&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">
 Editer OSM</a></pre></td>
-      <td><div id="wrapper" style="width:256px;"><div id="map1013909" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013909, 61.4913, 7.60261)</script></div></td>
+      <td><div id="map1013909" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013909, 61.4913, 7.60261, null)</script></td>
+    </tr>
+    <tr>
+      <td>Jostedal Oppvekstsenter Avd Barnehage</td>
+      <td><pre>amenity = kindergarten
+capacity = 13
+contact:email = oddbjorg.ese@luster.kommune.no
+contact:phone = 57685965
+max_age = 5
+min_age = 1
+name = Jostedal Oppvekstsenter Avd Barnehage
+no-barnehage:nsrid = 1013908
+operator = Luster kommune
+operator:type = public
+start_date = 1989-01-01
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1013908</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1013908"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/61.5875/7.28327"
+title="Se posisjonen i openstreetmap">
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1013908"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/61.5875/7.28327"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=61.5875&lon=7.28327&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">
+Editer OSM</a></pre></td>
+      <td><div id="map1013908" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013908, 61.5875, 7.28327, null)</script></td>
+    </tr>
+    <tr>
+      <td>Veitastrond barnehage</td>
+      <td><pre>amenity = kindergarten
+capacity = 5
+contact:phone = 57 68 58 63
+max_age = 5
+min_age = 1
+name = Veitastrond barnehage
+no-barnehage:nsrid = 1018488
+operator = Luster kommune
+operator:type = public
+start_date = 2008-08-01
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1018488</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1018488"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">
+Besøk på barnehagefakta.no</a><a href="http://www.openstreetmap.org/#map=17/61.5048/6.98581"
+title="Se posisjonen i openstreetmap">
+Besøk på openstreetmap.org</a><a href="https://nbr.udir.no/status/rapporterfeil/1018488"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">
+Meld feil til NBR</a><a href="http://www.openstreetmap.org/note/new#map=17/61.5048/6.98581"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">
+Meld feil til OSM</a><a href="http://www.openstreetmap.org/edit?editor=id&lat=61.5048&lon=6.98581&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">
+Editer OSM</a></pre></td>
+      <td><div id="map1018488" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1018488, 61.5048, 6.98581, null)</script></td>
     </tr>
   </table>
   
