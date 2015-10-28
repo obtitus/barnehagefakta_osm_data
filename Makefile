@@ -7,7 +7,7 @@ all:
 	$(MAKE) update_poi
 
 update_data:
-	$(python) ../barnehagefakta_osm.py --kommune ALL --update_kommune
+	$(python) ../barnehagefakta_osm.py --kommune ALL --update_kommune -q
 
 update_osm_batch:
 	$(python) ../update_osm.py --batch
