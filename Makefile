@@ -1,9 +1,11 @@
 python=/opt/local/bin/python2.7
+git=/usr/bin/git
 
 all:
 	$(MAKE) update_data
 	$(MAKE) update_osm_batch
 	$(MAKE) update_html
+	$(MAKE) push_html
 	$(MAKE) update_poi
 
 update_data:
@@ -16,6 +18,10 @@ update_osm:
 
 update_html:
 	$(python) ../generate_html.py
+push_html:
+	$(git) add *
+	$(git) commit -am "data update"
+	$(git) push
 
 update_poi:
 	(cd ..;./to_poi_importer.sh)
