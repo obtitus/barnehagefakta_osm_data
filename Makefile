@@ -19,9 +19,9 @@ update_osm:
 update_html:
 	$(python) ../generate_html.py
 push_html:
-	$(git) add *
-	$(git) commit -am "data update"
-	$(git) push
+	-$(git) add *
+	-$(git) commit -am "data update"
+	-$(git) push
 
 update_poi:
 	(cd ..;./to_poi_importer.sh)
