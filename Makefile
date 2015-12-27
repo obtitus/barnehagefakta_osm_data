@@ -7,6 +7,7 @@ all:
 	$(MAKE) update_html
 	$(MAKE) push_html
 	$(MAKE) update_poi
+	$(MAKE) logrotate
 
 update_data:
 	$(python) ../barnehagefakta_osm.py --kommune ALL --update_kommune -q
@@ -25,3 +26,6 @@ push_html:
 
 update_poi:
 	(cd ..;./to_poi_importer.sh)
+
+logrotate:
+	/opt/local/sbin/logrotate logrotate.conf --state=logrotate.state
