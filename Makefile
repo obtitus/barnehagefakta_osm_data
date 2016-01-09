@@ -7,7 +7,7 @@ all:
 	$(MAKE) update_html
 	$(MAKE) push_html
 	$(MAKE) update_poi
-	$(MAKE) logrotate
+	$(MAKE) rotate_logs
 
 update_data:
 	$(python) ../barnehagefakta_osm.py --kommune ALL --update_kommune -q
@@ -20,12 +20,12 @@ update_osm:
 update_html:
 	$(python) ../generate_html.py
 push_html:
-	-$(git) add *
+	-$(git) add -A
 	-$(git) commit -am "data update"
 	-$(git) push
 
 update_poi:
 	(cd ..;./to_poi_importer.sh)
 
-logrotate:
+rotate_logs:
 	/opt/local/sbin/logrotate logrotate.conf --state=logrotate.state
