@@ -13,7 +13,7 @@ update_data:
 	$(python) ../barnehagefakta_osm.py --kommune ALL --update_kommune -q
 
 update_osm_batch:
-	$(python) ../update_osm.py --batch
+	$(python) ../update_osm.py --batch --log_filename="/Users/ob/Library/Logs/local.barnahagefakta.update_osm.log"
 update_osm:
 	$(python) ../update_osm.py
 
