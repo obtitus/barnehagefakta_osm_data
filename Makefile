@@ -15,7 +15,7 @@ update_data:
 update_osm_batch:
 	$(python) ../update_osm.py --batch --log_filename="/Users/ob/Library/Logs/local.barnahagefakta.update_osm.log"
 update_osm:
-	$(python) ../update_osm.py
+	$(python) ../update_osm.py -v
 
 update_html:
 	$(python) ../generate_html.py
