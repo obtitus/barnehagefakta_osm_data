@@ -23,8 +23,10 @@
             }); </script>     
         <meta name="viewport" content="width=device-width" />
         <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
-    	
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        
+
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
@@ -119,6 +121,7 @@
                     <ul class="nav nav-tab">
                         <li class="first "><a href="https://nsr.udir.no">Skoleregister</a></li>
                         <li class="selected"><a href="https://nbr.udir.no">Barnehageregister</a></li>
+                        <li class=""><a href="https://nlr.udir.no">Lærebedrifter</a></li>
                         <li class="last "><a href="https://nor.udir.no">Opplæringskontorer</a></li>
                     </ul>
                 </nav>
@@ -127,11 +130,11 @@
 
                  <div class="nav-main-wrapper open">
             <div class="row collapse">
-                <form class="search-form">
-                    <ul class="nav">
-                        <li class="search-label"><label for="">Finn barnehage:</label></li>
-                        <li class="searchfield">
-                            <input type="text" autocomplete="off" id="LiveSokBox"/>
+                    <form class="search-form">
+                        <ul class="nav">
+                            <li class="search-label"><label for="">Finn barnehage:</label></li>
+                            <li class="searchfield">
+                                <input type="text" autocomplete="off" id="LiveSokBox"/>
 
 <script type="text/javascript">    
 
@@ -215,17 +218,17 @@
     });
 
 </script>
-                        </li>
-                        <li class="advanced-search"><a tabindex="1" class="toggle" href="#" data-text="Søk">Utvid søket<span class="arrow"></span></a></li>
-                    </ul>
-                    <ul id="LiveSokEnheter" class="live-search">
-                    </ul>
-                </form>
+                            </li>
+                            <li class="advanced-search"><a tabindex="1" class="toggle" href="#" data-text="Søk">Utvid søket<span class="arrow"></span></a></li>
+                        </ul>
+                        <ul id="LiveSokEnheter" class="live-search">
+                        </ul>
+                    </form>
                 <nav>
                     <ul class="nav nav-main">
                     </ul>
                 </nav>
-                <div class="large-12 columns advanced-search-form-wrapper">
+<div class="large-12 columns advanced-search-form-wrapper">
 
 <form action="/sok/sokresultat" class="custom advanced-search-form row collapse" method="get">        <div class="large-12 columns">
 
@@ -282,7 +285,7 @@
 </form></div>
 
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
         if (document.getElementById("NedlagteEnheter").checked == false && document.getElementById("AktiveEnheter").checked == false) {
             document.getElementById("NedlagteEnheter").checked = "checked";
             document.getElementById("AktiveEnheter").checked = "checked";
@@ -293,15 +296,13 @@
         }
 
             if (document.getElementById("Skoler").checked == false && document.getElementById("Eiere").checked == false)
-             {
-            document.getElementById("Skoler").checked = "checked";
-            document.getElementById("Eiere").checked = "checked";
-             }
+                        document.getElementById("Skoler").checked = "checked";
+                        document.getElementById("Eiere").checked = "checked";
+                        
             if (document.getElementById("Skoler").checked && document.getElementById("Eiere").checked)
-             {
-               $("#Skoler").parent().find(".checkbox").addClass("checked");
-               $("#Eiere").parent().find(".checkbox").addClass("checked");
-            }
+                           $("#Skoler").parent().find(".checkbox").addClass("checked");
+                           $("#Eiere").parent().find(".checkbox").addClass("checked");
+                        
 
         var selectedItem = $("#Fylke_Id").val();
         var kommuneList = $("#Kommune_Id");
@@ -309,7 +310,7 @@
         var kommune = url.substring(url.indexOf('Kommune.Id=') + 11);
         var kommuneNr = kommune.substring(0, kommune.indexOf('&'));
 
-        $.get('/api/enhet/kommunelist/?fylkeId=' + selectedItem).success(function(data) {
+        $.get('/api/enhet/kommunelist/?fylkeId=' + selectedItem).success(function (data) {
             kommuneList.html('');
             kommuneList.append($('<option></option>').val("").html("Velg kommune"));
             if (selectedItem == (0)) {
@@ -318,7 +319,7 @@
                 populateCriteriaList();
                 return;
             }
-            $.each(data, function(id, option) {
+            $.each(data, function (id, option) {
                 kommuneList.append($('<option></option>').val(option.Id).html(option.Navn));
             });
             $("#Kommune_Id").val(kommuneNr);
@@ -331,76 +332,74 @@
             if (url.indexOf('/sok')) {
                 populateCriteriaList();
             }
-        }).error(function() {
+        }).error(function () {
             console.log("error in kommunelist");
         });
     });
 
-        function populateCriteriaList() {
-            var fritekstSok = $("#FritekstSok").val();
-            var aktive = $("#AktiveEnheter").is(':checked');
-            var nedlagte = $("#NedlagteEnheter").is(':checked');
-            var skoler = $("#Skoler").is(':checked');
-            var eiere = $("#Eiere").is(':checked');
-            var andre = $("#AndreEnheter").is(':checked');
-            var fylke = $("#Fylke_Id option:selected").text();
-            var nacekode = $("#NaceKode_Id option:selected").text();
-            var skoletype = $("#SkoleType_Id option:selected").text();
-            var kommune = $("#Kommune_Id option:selected").text();
-            var sb = "";
-            if (fritekstSok.length != 0)
-                sb += "Søk: " + fritekstSok + " / ";
-            if (aktive && !nedlagte)
-                sb += "Søk i aktive" + " / ";
-            if (nedlagte && !aktive)
-                sb += "Søk i nedlagte" + " / ";
-            if (skoler) {
+    function populateCriteriaList() {
+        var fritekstSok = $("#FritekstSok").val();
+        var aktive = $("#AktiveEnheter").is(':checked');
+        var nedlagte = $("#NedlagteEnheter").is(':checked');
+        var skoler = $("#Skoler").is(':checked');
+        var eiere = $("#Eiere").is(':checked');
+        var andre = $("#AndreEnheter").is(':checked');
+        var fylke = $("#Fylke_Id option:selected").text();
+        var nacekode = $("#NaceKode_Id option:selected").text();
+        var skoletype = $("#SkoleType_Id option:selected").text();
+        var kommune = $("#Kommune_Id option:selected").text();
+        var sb = "";
+        if (fritekstSok.length != 0)
+            sb += "Søk: " + fritekstSok + " / ";
+        if (aktive && !nedlagte)
+            sb += "Søk i aktive" + " / ";
+        if (nedlagte && !aktive)
+            sb += "Søk i nedlagte" + " / ";
+        if (skoler) {
                     sb += "Søk i barnehager " + " / ";
-            }
-            if (eiere)
-                sb += "Søk i eiere" + " / ";
-            if (andre)
-                sb += "Søk i andre" + " / ";
-            if (fylke != null && fylke.length > 0 && fylke.indexOf('Velg') < 0)
-                sb += "Fylke: " + fylke + " / ";
-            if (kommune != null && kommune.length > 0 && kommune.indexOf('Velg') < 0)
-                sb += "Kommune: " + kommune + " / ";
-            if (nacekode != null && nacekode.length > 0 && nacekode.indexOf('Velg') < 0)
-                sb += "Næringsgruppering: " + nacekode + " / ";
-            if (skoletype != null && skoletype.length > 0 && skoletype.indexOf('Velg') < 0)
-                sb += "Skoletype: " + skoletype + " / ";
-            if ($("#sokeKriterier") != null) {
-                $('#sokeKriterier').append(sb);
-            }
         }
+        if (eiere)
+            sb += "Søk i eiere" + " / ";
+        if (andre)
+            sb += "Søk i andre" + " / ";
+        if (fylke != null && fylke.length > 0 && fylke.indexOf('Velg') < 0)
+            sb += "Fylke: " + fylke + " / ";
+        if (kommune != null && kommune.length > 0 && kommune.indexOf('Velg') < 0)
+            sb += "Kommune: " + kommune + " / ";
+        if (nacekode != null && nacekode.length > 0 && nacekode.indexOf('Velg') < 0)
+            sb += "Næringsgruppering: " + nacekode + " / ";
+        if (skoletype != null && skoletype.length > 0 && skoletype.indexOf('Velg') < 0)
+            sb += "Skoletype: " + skoletype + " / ";
+        if ($("#sokeKriterier") != null) {
+            $('#sokeKriterier').append(sb);
+        }
+    }
 
-        $(function() {
-            $("#Fylke_Id").change(function() {
-                var selectedItem = $(this).val();
-                var kommuneList = $("#Kommune_Id");
-                if (selectedItem == (0)) {
-                    kommuneList.html('');
-                    kommuneList.append($('<option></option>').val("").html("Velg kommune"));
-                    Foundation.libs.forms.refresh_custom_select($('#Kommune_Id'), true);
-                    return;
-                }
-                $.get('/api/enhet/kommunelist/?fylkeId=' + selectedItem).success(function(data) {
-                    kommuneList.html('');
-                    kommuneList.append($('<option></option>').val("").html("Velg kommune"));
-                    $.each(data, function(id, option) {
-                        kommuneList.append($('<option></option>').val(option.Id).html(option.Navn));
-                    });
-                    Foundation.libs.forms.refresh_custom_select($('#Kommune_Id'), true);
-                }).error(function() {
-                    console.log("error in kommunelist");
+    $(function () {
+        $("#Fylke_Id").change(function () {
+            var selectedItem = $(this).val();
+            var kommuneList = $("#Kommune_Id");
+            if (selectedItem == (0)) {
+                kommuneList.html('');
+                kommuneList.append($('<option></option>').val("").html("Velg kommune"));
+                Foundation.libs.forms.refresh_custom_select($('#Kommune_Id'), true);
+                return;
+            }
+            $.get('/api/enhet/kommunelist/?fylkeId=' + selectedItem).success(function (data) {
+                kommuneList.html('');
+                kommuneList.append($('<option></option>').val("").html("Velg kommune"));
+                $.each(data, function (id, option) {
+                    kommuneList.append($('<option></option>').val(option.Id).html(option.Navn));
                 });
+                Foundation.libs.forms.refresh_custom_select($('#Kommune_Id'), true);
+            }).error(function () {
+                console.log("error in kommunelist");
             });
-
         });
 
-</script>
-                   
-            </div>
+    });
+
+</script>            </div>
         </div>
         </header>
         
@@ -435,7 +434,7 @@
             <p class="result-header">
                 <span class="query" id="sokeKriterier"></span>
                 ga
-                <span class="hits">130</span> treff.
+                <span class="hits">129</span> treff.
             </p>
         <p class="pages">Side <span class="current">13</span> av <span class="total">13</span></p>
         <ul class="pagination no-bullets">
@@ -444,16 +443,6 @@
         </div>
     <ul class="large-12 columns search-result">
                  <li class="first">
-                    <h2><a href="/enhet/1025321">Veslefrikk barnehage </a></h2>
-            <span class="org-number"><strong>Org.nummer:</strong>873831472</span>
-                 <span>Ligger i
-<a href="/fylke/10">Vest-Agder</a>                         , 
-<a href="/enhet/kommune/1001?side=1">Kristiansand</a>                    </span>
-                <span>88.911 - Barnehager</span>
-            <span><strong>Type:</strong>Bedrift</span>
-                <span><strong>Eier:</strong><a href="/enhet/eier/1001767?side=1">Kristiansand kommune </a></span>
-             </li>
-                 <li>
                     <h2><a href="/enhet/1020738">Voie barnehage Merete Frigstad </a></h2>
             <span class="org-number"><strong>Org.nummer:</strong>975183548</span>
                  <span>Ligger i
