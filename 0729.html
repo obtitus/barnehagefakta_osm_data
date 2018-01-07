@@ -1,0 +1,786 @@
+﻿<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Barnehagefakta til openstreetmap : Data for import/fletting av barnehageinformasjon til openstreetmap">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+    <!-- <link href="https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.css" rel="stylesheet" /> -->    
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/leaflet.css"/>
+
+    <title>Barnehagefakta til openstreetmap 0729</title>
+  </head>
+
+  <body>
+
+    <!-- <script src='https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.js'></script> -->
+    <script src="javascripts/mapbox.js"></script>
+    <!-- For ajax call -->
+    <!-- <script src='https://code.jquery.com/jquery-1.11.0.min.js'></script> -->
+    <script src="javascripts/jquery-1.11.0.min.js"></script>
+    <!-- <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-osm/v0.1.0/leaflet-osm.js'></script> -->    
+    <script src="javascripts/leaflet-osm.js"></script>
+
+    <script>
+    function create_map(name, lat, lon, osm_url) {
+	L.mapbox.accessToken = 'pk.eyJ1Ijoib2J0aXR1cyIsImEiOiJjaWYzbXF1M3IwMGtuc3ZsdmhhYXR4d2hpIn0.tQQLwWt3e_NhGtTdUYLzwQ'
+	var map = L.mapbox.map(name, 'obtitus.7bc4b48e');
+	map.setView([lat, lon], 17);
+
+	// Highlight osm object
+	// Fixme use the overpass xml:
+	// if ((typeof osm_xml !== 'undefined') && (osm_xml !== null)) {
+	//     var layer = new L.OSM.DataLayer(osm_xml).addTo(map);
+	// }
+	
+	if ((typeof osm_url !== 'undefined') && (osm_url !== null)) {
+	    $.ajax({
+		url: osm_url, // on the form: "https://www.openstreetmap.org/api/0.6/[node/way/relation]/<id>[/full]"
+		dataType: "xml",
+		success: function (xml) {
+		    var layer = new L.OSM.DataLayer(xml).addTo(map);
+		    map.fitBounds(layer.getBounds(), {maxZoom:17});
+		}
+	    });
+	}
+    }
+    </script>
+    
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/obtitus/barnehagefakta_osm_data">View on GitHub</a>
+
+	  <h1 id="project_title">Barnehagefakta til openstreetmap</h1>
+          <h2 id="project_tagline">Barnehagefakta til openstreetmap : Data for import/fletting av barnehageinformasjon til openstreetmap</h2>
+
+	  <a href="index.html" title="Tilbake til kommuneoversikt">
+            <section id="back">
+              Tilbake til kommuneoversikt
+            </section>
+	  </a>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+	  Barnehager i Færder kommune (0729)
+	</h1>
+	
+	<p>Under finner du alle barnehagene i Færder kommune, sist oppdatert 2018-01-07 13:11.</p>
+	<p>Tag-verdier på barnehager, som blir lagt inn i openstreetmap med taggen
+	  <a href="http://wiki.openstreetmap.org/wiki/Key:no-barnehage:nsrid" title="Informasjon om taggen no-barnehage:nsrid på den engelske openstreetmap wikien.">no-barnehage:nsrid</a>
+	  vil bli holdt automatisk oppdatert med endringer fra NBR.
+	  Når du legger inn en barnehage er det viktig at du får med alle taggene fra NBR.
+	  Merk at address-noder skal holdes som separate noder i Norge, da disse vedlikeholdes av en egen
+	  <a href="http://wiki.openstreetmap.org/wiki/Import/Catalogue/Address_import_for_Norway" title=import> import</a>.</p>
+	<p>NBR dataene kan inneholde feil, særlig i posisjon,
+	  det er derfor viktig å være litt lokalkjent når man legger inn data.
+	OBS: Vær spesielt varsom hvis du besøker barnehagen i åpningstid, med kamera (og gps), din adfærd kan misforståes...</p>
+	
+	<h3>
+	  Åpne i JOSM (Java OpenStreetmap Editor)
+	</h3>
+	<p><a href="data/0729/0729_barnehagefakta.osm"
+title="Trykk for å laste ned 0729_barnehagefakta.osm">
+0729_barnehagefakta.osm</a> inneholder data fra NBR som noder, denne kan åpnes i JOSM.</p><p>Familiebarnehager er vanskeligere å kartlegge, disse ligger derfor i sin egen fil: <a href="data/0729/0729_barnehagefakta_familiebarnehager.osm"
+title="Trykk for å laste ned 0729_barnehagefakta_familiebarnehager.osm">
+0729_barnehagefakta_familiebarnehager.osm</a></p>
+
+	<h3>
+	  Tabell med NBR (nasjonalt barnehageregister) og OSM (OpenStreetMap) data
+	</h3>
+  <table> <!--  class="layout display responsive-table" -->
+    <thead>
+        <tr>
+            <th>Navn</th>
+            <th>Tags fra NBR</th>
+            <th>Tags fra OSM</th>	    
+	    <th>Linker</th>
+	    <th>Kart</th>
+        </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>Brattås barnehage AS</td>
+      <td><pre>amenity = kindergarten
+capacity = 150
+contact:email = annemarte@brattaasbarnehage.no
+contact:phone = +47 33 40 10 10
+max_age = 5
+min_age = 1
+name = Brattås barnehage AS
+no-barnehage:nsrid = 1022004
+operator = Brattås barnehage AS
+operator:type = private
+start_date = 2009-11-05
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1022004</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1022004"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/59.19615/10.39096"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1022004"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.19615/10.39096"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.19615&lon=10.39096&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1022004" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1022004, 59.19615, 10.39096, null)</script></td>
+    </tr>
+    <tr>
+      <td>Teiehøyden barnehage</td>
+      <td><pre>amenity = kindergarten
+capacity = 110
+contact:email = marit.fyhn@notteroy.kommune.no
+contact:phone = +47 97134005
+max_age = 5
+min_age = 1
+name = Teiehøyden barnehage
+no-barnehage:nsrid = 1016931
+<diff_value>operator = <span class="delete">Nøtterøy</span><span class="insert">Færder</span> kommune
+</diff_value>operator:type = public
+start_date = 1971-12-29
+</pre></td>
+      <td><pre>amenity = kindergarten
+capacity = 110
+contact:email = marit.fyhn@notteroy.kommune.no
+contact:phone = +47 97134005
+max_age = 5
+min_age = 1
+name = Teiehøyden barnehage
+no-barnehage:nsrid = 1016931
+<diff_value>operator = <span class="delete">Færder</span><span class="insert">Nøtterøy</span> kommune
+</diff_value>operator:type = public
+start_date = 1971-12-29
+</pre></td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1016931"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/node/305506527"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1016931"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.254396/10.4093708"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.254396&lon=10.4093708&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1016931" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1016931, 59.254396, 10.4093708, "https://www.openstreetmap.org/api/0.6/node/305506527")</script></td>
+    </tr>
+    <tr>
+      <td>Tiriltoppen barnehage Nøtterøy AS</td>
+      <td><pre>amenity = kindergarten
+capacity = 94
+contact:email = marion.kolpus@tiriltoppen.no
+contact:phone = +47 33 30 40 50
+max_age = 5
+min_age = 1
+name = Tiriltoppen barnehage Nøtterøy AS
+no-barnehage:nsrid = 1020650
+operator = Tiriltoppen barnehage Nøtterøy AS
+operator:type = private
+start_date = 1990-10-01
+</pre></td>
+      <td><pre>amenity = kindergarten
+capacity = 94
+contact:email = marion.kolpus@tiriltoppen.no
+contact:phone = +47 33 30 40 50
+max_age = 5
+min_age = 1
+name = Tiriltoppen barnehage Nøtterøy AS
+no-barnehage:nsrid = 1020650
+operator = Tiriltoppen barnehage Nøtterøy AS
+operator:type = private
+start_date = 1990-10-01
+</pre></td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1020650"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/node/461299149"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1020650"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.25135/10.4015"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.25135&lon=10.4015&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1020650" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1020650, 59.25135, 10.4015, "https://www.openstreetmap.org/api/0.6/node/461299149")</script></td>
+    </tr>
+    <tr>
+      <td>Smidsrød Fus barnehage AS</td>
+      <td><pre>amenity = kindergarten
+capacity = 78
+contact:email = dl.smidsrod@bhg.no
+contact:phone = +47 33 50 17 00
+contact:website = http://www.smidsrød.bhg.no
+max_age = 5
+min_age = 1
+name = Smidsrød Fus barnehage AS
+no-barnehage:nsrid = 1021858
+operator = Smidsrød Fus barnehage AS
+operator:type = private
+start_date = 2008-08-06
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1021858</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1021858"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/59.23829/10.42336"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1021858"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.23829/10.42336"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.23829&lon=10.42336&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1021858" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1021858, 59.23829, 10.42336, null)</script></td>
+    </tr>
+    <tr>
+      <td>Stiftelsen Barnas Have</td>
+      <td><pre>amenity = kindergarten
+capacity = 76
+contact:email = birte@bjornhaug.no
+contact:phone = +47 33 38 77 73
+max_age = 5
+min_age = 1
+name = Stiftelsen Barnas Have
+no-barnehage:nsrid = 1020343
+operator = Stiftelsen Barnas Have
+operator:type = private
+start_date = 1996-08-01
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1020343</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1020343"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/59.20711/10.44566"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1020343"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.20711/10.44566"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.20711&lon=10.44566&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1020343" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1020343, 59.20711, 10.44566, null)</script></td>
+    </tr>
+    <tr>
+      <td>Læringsverkstedet barnehage Avd Randineborg</td>
+      <td><pre>amenity = kindergarten
+capacity = 75
+contact:email = randineborg@laringsverkstedet.no
+contact:phone = +47 33 38 96 60
+contact:website = http://www.laringsverkstedet.no
+max_age = 5
+min_age = 1
+name = Læringsverkstedet barnehage Avd Randineborg
+no-barnehage:nsrid = 1021358
+operator = Læringsverkstedet AS
+operator:type = private
+start_date = 2006-01-01
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1021358</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1021358"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/59.15835/10.38583"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1021358"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.15835/10.38583"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.15835&lon=10.38583&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1021358" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1021358, 59.15835, 10.38583, null)</script></td>
+    </tr>
+    <tr>
+      <td>Stiftelsen Steinerbarnehagen på Nøtterøy Avd Labakken</td>
+      <td><pre>amenity = kindergarten
+capacity = 67
+contact:email = notteroy@steinerbarnehage.no
+contact:phone = +47 33 35 22 24
+max_age = 5
+min_age = 1
+name = Stiftelsen Steinerbarnehagen på Nøtterøy Avd Labakken
+no-barnehage:nsrid = 1021520
+operator = Stiftelsen Steinerbarnehagen på Nøtterøy
+operator:type = private
+start_date = 2007-01-01
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1021520</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1021520"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/59.23914/10.39427"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1021520"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.23914/10.39427"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.23914&lon=10.39427&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1021520" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1021520, 59.23914, 10.39427, null)</script></td>
+    </tr>
+    <tr>
+      <td>Oserød barnehage</td>
+      <td><pre>amenity = kindergarten
+capacity = 60
+contact:email = RITA.ELMAN@NOTTEROY.KOMMUNE.NO
+contact:phone = +47 33 40 28 20
+max_age = 5
+min_age = 1
+name = Oserød barnehage
+no-barnehage:nsrid = 1013250
+operator = Færder kommune
+operator:type = public
+start_date = 2005-08-01
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1013250</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1013250"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/59.1987/10.4394"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1013250"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.1987/10.4394"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.1987&lon=10.4394&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1013250" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013250, 59.1987, 10.4394, null)</script></td>
+    </tr>
+    <tr>
+      <td>Knerten barnehage</td>
+      <td><pre>amenity = kindergarten
+capacity = 60
+contact:email = post@dataknerten.no
+contact:phone = +47 33 40 10 15
+contact:website = http://www.dataknerten.no
+max_age = 5
+min_age = 1
+name = Knerten barnehage
+no-barnehage:nsrid = 1021683
+operator = Knerten Føynland AS
+operator:type = private
+start_date = 2007-07-06
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1021683</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1021683"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/59.23482/10.44685"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1021683"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.23482/10.44685"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.23482&lon=10.44685&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1021683" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1021683, 59.23482, 10.44685, null)</script></td>
+    </tr>
+    <tr>
+      <td>Hårkollen barnehage</td>
+      <td><pre>amenity = kindergarten
+capacity = 60
+contact:email = minda.boro@notteroy.kommune.no
+contact:phone = +47 33 40 29 90
+max_age = 5
+min_age = 1
+name = Hårkollen barnehage
+no-barnehage:nsrid = 1017116
+operator = Færder kommune
+operator:type = public
+start_date = 2006-04-18
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1017116</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1017116"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/59.2047/10.4415"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1017116"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.2047/10.4415"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.2047&lon=10.4415&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1017116" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1017116, 59.2047, 10.4415, null)</script></td>
+    </tr>
+    <tr>
+      <td>Vestskogen barnehage</td>
+      <td><pre>amenity = kindergarten
+capacity = 58
+contact:email = arne.veierod@notteroy.kommune.no
+contact:phone = +47 33 40 29 30
+max_age = 5
+min_age = 1
+name = Vestskogen barnehage
+no-barnehage:nsrid = 1018032
+operator = Færder kommune
+operator:type = public
+start_date = 1989-01-01
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1018032</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1018032"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/59.2426/10.3928"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1018032"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.2426/10.3928"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.2426&lon=10.3928&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1018032" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1018032, 59.2426, 10.3928, null)</script></td>
+    </tr>
+    <tr>
+      <td>Torød barnehage</td>
+      <td><pre>amenity = kindergarten
+capacity = 54
+contact:email = vigdis.duesund@notteroy.kommune.no
+contact:phone = +47 33 40 26 80
+max_age = 5
+min_age = 1
+name = Torød barnehage
+no-barnehage:nsrid = 1013337
+operator = Færder kommune
+operator:type = public
+start_date = 2004-06-01
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1013337</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1013337"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/59.179/10.4408"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1013337"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.179/10.4408"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.179&lon=10.4408&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1013337" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013337, 59.179, 10.4408, null)</script></td>
+    </tr>
+    <tr>
+      <td>Tjøme barnehage</td>
+      <td><pre>amenity = kindergarten
+capacity = 49
+contact:email = ajb@tjome.kommune.no
+contact:phone = +47 33 39 28 55
+max_age = 5
+min_age = 1
+name = Tjøme barnehage
+no-barnehage:nsrid = 1016371
+operator = Tjøme kommune
+operator:type = public
+start_date = 2002-03-04
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1016371</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1016371"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/59.1161/10.3968"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1016371"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.1161/10.3968"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.1161&lon=10.3968&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1016371" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1016371, 59.1161, 10.3968, null)</script></td>
+    </tr>
+    <tr>
+      <td>Lindøy barnehage</td>
+      <td><pre>amenity = kindergarten
+capacity = 49
+contact:email = gne@tjome.kommune.no
+contact:phone = +47 33067970
+max_age = 5
+min_age = 1
+name = Lindøy barnehage
+no-barnehage:nsrid = 1012883
+operator = Færder kommune
+operator:type = public
+start_date = 1989-01-01
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1012883</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1012883"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/59.1105/10.4035"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1012883"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.1105/10.4035"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.1105&lon=10.4035&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1012883" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1012883, 59.1105, 10.4035, null)</script></td>
+    </tr>
+    <tr>
+      <td>Føynland barnehage</td>
+      <td><pre>amenity = kindergarten
+capacity = 45
+contact:email = sonja.bjune@notteroy.kommune.no
+contact:phone = +47 415 98 701
+max_age = 5
+min_age = 1
+name = Føynland barnehage
+no-barnehage:nsrid = 1018030
+operator = Færder kommune
+operator:type = public
+start_date = 1989-01-01
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1018030</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1018030"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/59.2366/10.4485"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1018030"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.2366/10.4485"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.2366&lon=10.4485&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1018030" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1018030, 59.2366, 10.4485, null)</script></td>
+    </tr>
+    <tr>
+      <td>Labakken barnehage</td>
+      <td><pre>amenity = kindergarten
+capacity = 42
+contact:email = karen-ingrid.hovland@notteroy.kommune.no
+contact:phone = +47 33 40 31 40
+max_age = 5
+min_age = 1
+name = Labakken barnehage
+no-barnehage:nsrid = 1014693
+operator = Færder kommune
+operator:type = public
+start_date = 1991-08-15
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1014693</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1014693"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/59.2388/10.3951"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1014693"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.2388/10.3951"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.2388&lon=10.3951&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1014693" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1014693, 59.2388, 10.3951, null)</script></td>
+    </tr>
+    <tr>
+      <td>Herstadløkka barnehage</td>
+      <td><pre>amenity = kindergarten
+capacity = 40
+contact:email = sonja.bjune@notteroy.kommune.no
+contact:phone = +47 971 70 525
+max_age = 5
+min_age = 1
+name = Herstadløkka barnehage
+no-barnehage:nsrid = 1013804
+operator = Færder kommune
+operator:type = public
+start_date = 1989-01-02
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1013804</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1013804"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/59.2338/10.4096"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1013804"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.2338/10.4096"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.2338&lon=10.4096&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1013804" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013804, 59.2338, 10.4096, null)</script></td>
+    </tr>
+    <tr>
+      <td>Gipø barnehage</td>
+      <td><pre>amenity = kindergarten
+capacity = 27
+contact:email = rita.elman@notteroy.kommune.no
+contact:phone = +47 33 40 23 24
+max_age = 5
+min_age = 1
+name = Gipø barnehage
+no-barnehage:nsrid = 1018031
+operator = Færder kommune
+operator:type = public
+start_date = 1989-01-01
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1018031</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1018031"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/59.2223/10.4171"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1018031"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.2223/10.4171"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.2223&lon=10.4171&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1018031" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1018031, 59.2223, 10.4171, null)</script></td>
+    </tr>
+    <tr>
+      <td>Teie Kirkes barnehage</td>
+      <td><pre>amenity = kindergarten
+capacity = 27
+contact:email = olaug.pladsen@faerder.kirken.no
+contact:phone = +47 47 97 49 39
+contact:website = http://teiekirkes.barnehage.no
+max_age = 5
+min_age = 1
+name = Teie Kirkes barnehage
+no-barnehage:nsrid = 1016036
+operator = Nøtterøy Kirkelige Fellesråd
+operator:type = private
+start_date = 1995-02-22
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1016036</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1016036"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/59.2512/10.4169"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1016036"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.2512/10.4169"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.2512&lon=10.4169&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1016036" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1016036, 59.2512, 10.4169, null)</script></td>
+    </tr>
+    <tr>
+      <td>Hundremeterskogen Barnehage, Nøtterøy Da</td>
+      <td><pre>amenity = kindergarten
+capacity = 20
+contact:email = tonevhagen@hotmail.no
+contact:phone = +47 95009695
+max_age = 5
+min_age = 1
+name = Hundremeterskogen Barnehage, Nøtterøy Da
+no-barnehage:nsrid = 1020814
+operator = Hundremeterskogen Barnehage, Nøtterøy Da
+operator:type = private
+start_date = 2002-08-01
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1020814</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1020814"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/59.24287/10.3952"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1020814"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.24287/10.3952"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.24287&lon=10.3952&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1020814" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1020814, 59.24287, 10.3952, null)</script></td>
+    </tr>
+    <tr>
+      <td>Tripp Trapp Åpen barnehage</td>
+      <td><pre>amenity = kindergarten
+contact:email = tripptrapp@kirken.notteroy.no
+contact:phone = +47 40034881
+contact:website = http://www.kirken.notteroy.no/index.phtml?pid=4389
+name = Tripp Trapp Åpen barnehage
+no-barnehage:nsrid = 1014007
+operator = Nøtterøy Kirkelige Fellesråd
+operator:type = private
+start_date = 2009-01-01
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1014007</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1014007"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/59.1817/10.4407"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1014007"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.1817/10.4407"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.1817&lon=10.4407&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1014007" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1014007, 59.1817, 10.4407, null)</script></td>
+    </tr>
+    <tr>
+      <td>Stabburet Familiebarnehage AS</td>
+      <td><pre>amenity = kindergarten
+capacity = 18
+contact:email = agnetjo@online.no
+contact:phone = +47 33 34 54 79
+max_age = 5
+min_age = 1
+name = Stabburet Familiebarnehage AS
+no-barnehage:nsrid = 1020745
+operator = Stabburet Familiebarnehage AS
+operator:type = private
+start_date = 2001-08-01
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1020745</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1020745"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/59.22712/10.40756"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1020745"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.22712/10.40756"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.22712&lon=10.40756&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1020745" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1020745, 59.22712, 10.40756, null)</script></td>
+    </tr>
+    <tr>
+      <td>Stiftelsen Steinerbarnehagen på Nøtterøy Avd Stjerneskudd</td>
+      <td><pre>amenity = kindergarten
+capacity = 7
+contact:email = notteroy@steinerbarnehage.no
+max_age = 2
+min_age = 1
+name = Stiftelsen Steinerbarnehagen på Nøtterøy Avd Stjerneskudd
+no-barnehage:nsrid = 1025595
+operator = Stiftelsen Steinerbarnehagen på Nøtterøy
+operator:type = private
+start_date = 2007-08-01
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1025595</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1025595"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/59.24694/10.39676"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1025595"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.24694/10.39676"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.24694&lon=10.39676&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1025595" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1025595, 59.24694, 10.39676, null)</script></td>
+    </tr>
+  </table>
+
+  
+  
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">This page is maintained by <a href="https://github.com/obtitus">obtitus</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>	
+        <p class="copyright">Map data &copy;<a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>	
+	</p>
+	<p class="copyright">NBR data &copy;<a href="http://data.udir.no/baf/">Utdanningsdirektoratet</a>, <a href="http://data.norge.no/nlod/en/1.0">NLOD</a>	
+	</p>
+      </footer>
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-2401814-5");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+    
+
+  </body>
+</html>
