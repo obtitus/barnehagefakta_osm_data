@@ -2,6 +2,7 @@ python=/opt/local/bin/python2.7
 git=/usr/bin/git
 
 all:
+	which python
 	$(MAKE) update_data
 	$(MAKE) update_osm_batch
 	$(MAKE) update_html
