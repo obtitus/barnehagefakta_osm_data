@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Barnehagefakta til openstreetmap : Data for import/fletting av barnehageinformasjon til openstreetmap">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Barnehagefakta til openstreetmap</title>
+
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+
+    <script type="text/javascript">
+google.load('visualization', '1.1', {packages: ['corechart', 'controls']});
+google.setOnLoadCallback(drawChart);
+
+function getControl_wrapper(id) {
+    var control = new google.visualization.ControlWrapper({
+        'controlType': 'ChartRangeFilter',
+        'containerId': id,
+        'options': {
+	    'filterColumnIndex': 0, // Filter by the date axis.
+	    'ui': {
+		'chartType': 'LineChart',
+		'chartOptions': {
+		    'chartArea': {'left': "8%", 'width': "85%"},
+		    'hAxis': {'baselineColor': 'none'}
+		},
+		'minRangeSize': 86400000 // 1 day in milliseconds = 24 * 60 * 60 * 1000 = 86,400,000
+	    }
+        },
+        // Initial range: 1 year
+        // 'state': {'range': {'start': new Date({{now*1000-86400000*365}})}}
+    });
+    return control;
+}
+
+function drawChart() {
+{{chart}}
+}
+    </script>
+    
+    
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/obtitus/barnehagefakta_osm_data">View on GitHub</a>
+
+          <h1 id="project_title">Barnehagefakta til openstreetmap</h1>
+          <h2 id="project_tagline">Barnehagefakta til openstreetmap : Data for import/fletting av barnehageinformasjon til openstreetmap</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/obtitus/barnehagefakta_osm_data/zipball/gh-pages">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/obtitus/barnehagefakta_osm_data/tarball/gh-pages">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+
+	<div id="dashboard_progress_total">
+	  <div id="chart_id_history" style='height: 400px;'></div>
+	  <div id="control_id_history" style='height: 50px;'></div>
+	</div>
+	
+        <h1>
+<a id="barnehagefakta_osm_data" class="anchor" href="#barnehagefakta_osm_data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Kommuneoversikt</h1>
+
+	{{info}}
+
+  <table> <!--  class="layout display responsive-table" -->
+    <thead>
+      <tr>
+          <th>Kommune nr</th>	
+          <th>Kommune navn</th>
+          <th>Antall barnehager i NBR</th>
+          <th>Antall barnehager i OSM</th>
+          <th>Prosent gjenkjent</th>	  
+        </tr>
+    </thead>
+    <tbody>
+    {%- for link, link_title, row in table %}
+    <tr>
+      {%- for column in row %}
+      <td> <a href="{{link}}" title="{{link_title}}"> <div style="height:100%;width:100%">
+	  {{ column }}
+	</div></a>
+      </td>
+      {%- endfor %}
+    </tr>
+    {%- endfor %}
+    {%- for column in bottom_row %}
+    <td>
+      {{ column }}
+    </td>
+    {%- endfor %}    
+  </table>
+  
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">This page is maintained by <a href="https://github.com/obtitus">obtitus</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>	
+        <p class="copyright">Map data &copy;<a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>	
+	</p>
+	<p class="copyright">NBR data &copy;<a href="http://data.udir.no/baf/">Utdanningsdirektoratet</a>, <a href="http://data.norge.no/nlod/en/1.0">NLOD</a>	
+	</p>
+      </footer>
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-2401814-5");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+
+  </body>
+</html>
