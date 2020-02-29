@@ -1,0 +1,611 @@
+﻿<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Barnehagefakta til openstreetmap : Data for import/fletting av barnehageinformasjon til openstreetmap">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+    <!-- <link href="https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.css" rel="stylesheet" /> -->    
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/leaflet.css"/>
+
+    <title>Barnehagefakta til openstreetmap 3022</title>
+  </head>
+
+  <body>
+
+    <!-- <script src='https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.js'></script> -->
+    <script src="javascripts/mapbox.js"></script>
+    <!-- For ajax call -->
+    <!-- <script src='https://code.jquery.com/jquery-1.11.0.min.js'></script> -->
+    <script src="javascripts/jquery-1.11.0.min.js"></script>
+    <!-- <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-osm/v0.1.0/leaflet-osm.js'></script> -->    
+    <script src="javascripts/leaflet-osm.js"></script>
+
+    <script>
+    function create_map(name, lat, lon, osm_url) {
+	L.mapbox.accessToken = 'pk.eyJ1Ijoib2J0aXR1cyIsImEiOiJjaWYzbXF1M3IwMGtuc3ZsdmhhYXR4d2hpIn0.tQQLwWt3e_NhGtTdUYLzwQ'
+	var map = L.mapbox.map(name, 'obtitus.7bc4b48e');
+	map.setView([lat, lon], 17);
+
+	// Highlight osm object
+	// Fixme use the overpass xml:
+	// if ((typeof osm_xml !== 'undefined') && (osm_xml !== null)) {
+	//     var layer = new L.OSM.DataLayer(osm_xml).addTo(map);
+	// }
+	
+	if ((typeof osm_url !== 'undefined') && (osm_url !== null)) {
+	    $.ajax({
+		url: osm_url, // on the form: "https://www.openstreetmap.org/api/0.6/[node/way/relation]/<id>[/full]"
+		dataType: "xml",
+		success: function (xml) {
+		    var layer = new L.OSM.DataLayer(xml).addTo(map);
+		    map.fitBounds(layer.getBounds(), {maxZoom:17});
+		}
+	    });
+	}
+    }
+    </script>
+    
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/obtitus/barnehagefakta_osm_data">View on GitHub</a>
+
+	  <h1 id="project_title">Barnehagefakta til openstreetmap</h1>
+          <h2 id="project_tagline">Barnehagefakta til openstreetmap : Data for import/fletting av barnehageinformasjon til openstreetmap</h2>
+
+	  <a href="index.html" title="Tilbake til kommuneoversikt">
+            <section id="back">
+              Tilbake til kommuneoversikt
+            </section>
+	  </a>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+	  Barnehager i Frogn kommune (3022)
+	</h1>
+	
+	<p>Under finner du alle barnehagene i Frogn kommune, sist oppdatert 2020-02-29 14:41.</p>
+	<p>Tag-verdier på barnehager, som blir lagt inn i openstreetmap med taggen
+	  <a href="http://wiki.openstreetmap.org/wiki/Key:no-barnehage:nsrid" title="Informasjon om taggen no-barnehage:nsrid på den engelske openstreetmap wikien.">no-barnehage:nsrid</a>
+	  vil bli holdt automatisk oppdatert med endringer fra NBR.
+	  Når du legger inn en barnehage er det viktig at du får med alle taggene fra NBR.
+	  Merk at address-noder skal holdes som separate noder i Norge, da disse vedlikeholdes av en egen
+	  <a href="http://wiki.openstreetmap.org/wiki/Import/Catalogue/Address_import_for_Norway" title=import> import</a>.</p>
+	<p>NBR dataene kan inneholde feil, særlig i posisjon,
+	  det er derfor viktig å være litt lokalkjent når man legger inn data.
+	OBS: Vær spesielt varsom hvis du besøker barnehagen i åpningstid, med kamera (og gps), din adfærd kan misforståes...</p>
+	
+	<h3>
+	  Åpne i JOSM (Java OpenStreetmap Editor)
+	</h3>
+	<p><a href="data/3022/3022_barnehagefakta.osm"
+title="Trykk for å laste ned 3022_barnehagefakta.osm">
+3022_barnehagefakta.osm</a> inneholder data fra NBR som noder, denne kan åpnes i JOSM.</p><p>Familiebarnehager er vanskeligere å kartlegge, disse ligger derfor i sin egen fil: <a href="data/3022/3022_barnehagefakta_familiebarnehager.osm"
+title="Trykk for å laste ned 3022_barnehagefakta_familiebarnehager.osm">
+3022_barnehagefakta_familiebarnehager.osm</a></p>
+
+	<h3>
+	  Tabell med NBR (nasjonalt barnehageregister) og OSM (OpenStreetMap) data
+	</h3>
+  <table> <!--  class="layout display responsive-table" -->
+    <thead>
+        <tr>
+            <th>Navn</th>
+            <th>Tags fra NBR</th>
+            <th>Tags fra OSM</th>	    
+	    <th>Linker</th>
+	    <th>Kart</th>
+        </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>Ullerud barnehage</td>
+      <td><pre>ADDRESS = Ullerudveien 18, 1443 DRØBAK
+amenity = kindergarten
+capacity = 80
+max_age = 5
+min_age = 1
+name = Ullerud barnehage
+no-barnehage:nsrid = 1017526
+operator = Frogn kommune
+operator:type = public
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1017526</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1017526"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/59.66763/10.64182"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1017526"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.66763/10.64182"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.66763&lon=10.64182&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1017526" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1017526, 59.66763, 10.64182, null)</script></td>
+    </tr>
+    <tr>
+      <td>Dyrløkkeåsen barnehage</td>
+      <td><pre>ADDRESS = Hegreveien 10, 1448 DRØBAK
+amenity = kindergarten
+capacity = 80
+max_age = 5
+min_age = 1
+name = Dyrløkkeåsen barnehage
+no-barnehage:nsrid = 1015473
+operator = Frogn kommune
+operator:type = public
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1015473</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1015473"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/59.66625/10.65443"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1015473"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.66625/10.65443"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.66625&lon=10.65443&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1015473" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1015473, 59.66625, 10.65443, null)</script></td>
+    </tr>
+    <tr>
+      <td>Heer barnehage</td>
+      <td><pre>ADDRESS = Heer Alle 16, 1445 DRØBAK
+amenity = kindergarten
+capacity = 73
+max_age = 5
+min_age = 1
+name = Heer barnehage
+no-barnehage:nsrid = 1017525
+operator = Frogn kommune
+operator:type = public
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1017525</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1017525"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/59.68366/10.66119"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1017525"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.68366/10.66119"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.68366&lon=10.66119&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1017525" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1017525, 59.68366, 10.66119, null)</script></td>
+    </tr>
+    <tr>
+      <td>Bjerkeveien barnehage</td>
+      <td><pre>ADDRESS = Bjerkeveien 4, 1446 DRØBAK
+amenity = kindergarten
+capacity = 64
+contact:website = http://bjerkeveien.barnehage.no
+max_age = 5
+min_age = 1
+name = Bjerkeveien barnehage
+no-barnehage:nsrid = 1021095
+operator = Bjerkeveien barnehage Sa
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1021095</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1021095"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/59.6577/10.64351"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1021095"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.6577/10.64351"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.6577&lon=10.64351&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1021095" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1021095, 59.6577, 10.64351, null)</script></td>
+    </tr>
+    <tr>
+      <td>Sogstieika barnehage</td>
+      <td><pre>ADDRESS = Bjerkeveien 2, 1446 DRØBAK
+amenity = kindergarten
+capacity = 59
+contact:website = http://www.sogstieika.no
+max_age = 5
+min_age = 1
+name = Sogstieika barnehage
+no-barnehage:nsrid = 1020276
+operator = Sogstieika barnehage Sa
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1020276</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1020276"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/59.65748/10.64239"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1020276"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.65748/10.64239"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.65748&lon=10.64239&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1020276" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1020276, 59.65748, 10.64239, null)</script></td>
+    </tr>
+    <tr>
+      <td>Frelsesarmeens barnehager avd. Solgry</td>
+      <td><pre>ADDRESS = Niels Carlsens Gate 31, 1443 DRØBAK
+amenity = kindergarten
+capacity = 48
+max_age = 5
+min_age = 1
+name = Frelsesarmeens barnehager avd. Solgry
+no-barnehage:nsrid = 1016766
+operator = Frelsesarmeen
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1016766</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1016766"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/59.66714/10.62763"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1016766"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.66714/10.62763"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.66714&lon=10.62763&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1016766" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1016766, 59.66714, 10.62763, null)</script></td>
+    </tr>
+    <tr>
+      <td>Bilitt barnehage</td>
+      <td><pre>ADDRESS = Osloveien 251, 1449 DRØBAK
+amenity = kindergarten
+capacity = 40
+max_age = 5
+min_age = 1
+name = Bilitt barnehage
+no-barnehage:nsrid = 1017482
+operator = Frogn kommune
+operator:type = public
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1017482</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1017482"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/59.68959/10.69328"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1017482"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.68959/10.69328"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.68959&lon=10.69328&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1017482" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1017482, 59.68959, 10.69328, null)</script></td>
+    </tr>
+    <tr>
+      <td>Tertitten barnehage</td>
+      <td><pre>ADDRESS = Sogstiveien 4, 1446 DRØBAK
+amenity = kindergarten
+capacity = 37
+max_age = 5
+min_age = 1
+name = Tertitten barnehage
+no-barnehage:nsrid = 1020333
+operator = Tertitten barnehage Ans
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1020333</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1020333"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/59.66593/10.64155"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1020333"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.66593/10.64155"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.66593&lon=10.64155&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1020333" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1020333, 59.66593, 10.64155, null)</script></td>
+    </tr>
+    <tr>
+      <td>Dal barnehage</td>
+      <td><pre>ADDRESS = Nesoddveien 207, 1455 NORDRE FROGN
+amenity = kindergarten
+capacity = 37
+max_age = 5
+min_age = 1
+name = Dal barnehage
+no-barnehage:nsrid = 1016962
+operator = Frogn kommune
+operator:type = public
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1016962</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1016962"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/59.7449/10.69767"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1016962"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.7449/10.69767"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.7449&lon=10.69767&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1016962" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1016962, 59.7449, 10.69767, null)</script></td>
+    </tr>
+    <tr>
+      <td>Trollberget barnehage</td>
+      <td><pre>ADDRESS = Traneveien 39, 1447 DRØBAK
+amenity = kindergarten
+capacity = 31
+max_age = 5
+min_age = 1
+name = Trollberget barnehage
+no-barnehage:nsrid = 1013919
+operator = Frogn kommune
+operator:type = public
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1013919</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1013919"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/59.66042/10.6493"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1013919"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.66042/10.6493"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.66042&lon=10.6493&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1013919" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013919, 59.66042, 10.6493, null)</script></td>
+    </tr>
+    <tr>
+      <td>Drøbak Montessori barnehage</td>
+      <td><pre>ADDRESS = Gulliksbakken 2, 1440 DRØBAK
+amenity = kindergarten
+capacity = 29
+max_age = 5
+min_age = 1
+name = Drøbak Montessori barnehage
+no-barnehage:nsrid = 1020859
+operator = Drøbak Montessori Stiftelse
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1020859</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1020859"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/59.66263/10.6342"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1020859"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.66263/10.6342"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.66263&lon=10.6342&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1020859" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1020859, 59.66263, 10.6342, null)</script></td>
+    </tr>
+    <tr>
+      <td>Heer grendehus barnehage</td>
+      <td><pre>ADDRESS = Oberst Eriksens Vei 39, 1445 DRØBAK
+amenity = kindergarten
+capacity = 23
+max_age = 5
+min_age = 1
+name = Heer grendehus barnehage
+no-barnehage:nsrid = 1019860
+operator = Heer Grendehus barnehage Sa
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1019860</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1019860"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/59.68658/10.65032"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1019860"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.68658/10.65032"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.68658&lon=10.65032&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1019860" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1019860, 59.68658, 10.65032, null)</script></td>
+    </tr>
+    <tr>
+      <td>Lindebakken barnehage</td>
+      <td><pre>ADDRESS = Skorkebergåsen 31, 1447 DRØBAK
+amenity = kindergarten
+capacity = 12
+contact:website = http://www.lindebakkenbarnehage.com
+max_age = 5
+min_age = 1
+name = Lindebakken barnehage
+no-barnehage:nsrid = 1019855
+operator = Lindebakken barnehage
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1019855</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1019855"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/59.65879/10.64753"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1019855"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.65879/10.64753"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.65879&lon=10.64753&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1019855" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1019855, 59.65879, 10.64753, null)</script></td>
+    </tr>
+    <tr>
+      <td>Frogn/drøbak natur og gårdsbarnehage</td>
+      <td><pre>ADDRESS = Solbergveien 31, 1449 DRØBAK
+amenity = kindergarten
+name = Frogn/drøbak natur og gårdsbarnehage
+no-barnehage:nsrid = 1021580
+operator = Gry Hultgren
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1021580</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1021580"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/59.64156/10.67628"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1021580"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.64156/10.67628"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.64156&lon=10.67628&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1021580" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1021580, 59.64156, 10.67628, null)</script></td>
+    </tr>
+    <tr>
+      <td>Frogn Pedagogiske Senter</td>
+      <td><pre>ADDRESS = Solbergveien 31, 1449 DRØBAK
+amenity = kindergarten
+name = Frogn Pedagogiske Senter
+no-barnehage:nsrid = 1022431
+operator = Frogn Pedagogiske Senter AS
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1022431</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1022431"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/59.64156/10.67628"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1022431"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.64156/10.67628"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.64156&lon=10.67628&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1022431" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1022431, 59.64156, 10.67628, null)</script></td>
+    </tr>
+    <tr>
+      <td>Elleflaten barnehage</td>
+      <td><pre>ADDRESS = Arne Høilands Vei 1, 1444 DRØBAK
+amenity = kindergarten
+max_age = 5
+min_age = 1
+name = Elleflaten barnehage
+no-barnehage:nsrid = 1017524
+operator = Frogn kommune
+operator:type = public
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1017524</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1017524"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/59.64462/10.64134"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1017524"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.64462/10.64134"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.64462&lon=10.64134&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1017524" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1017524, 59.64462, 10.64134, null)</script></td>
+    </tr>
+    <tr>
+      <td>Drøbak åpen barnehage</td>
+      <td><pre>ADDRESS = Torget 4, 1440 DRØBAK
+amenity = kindergarten
+name = Drøbak åpen barnehage
+no-barnehage:nsrid = 1013357
+operator = Frogn kommune
+operator:type = public
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1013357</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1013357"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/59.66327/10.62904"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1013357"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.66327/10.62904"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.66327&lon=10.62904&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1013357" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013357, 59.66327, 10.62904, null)</script></td>
+    </tr>
+    <tr>
+      <td>Ole Brumm familiebarnehage</td>
+      <td><pre>ADDRESS = Løvsangerveien 28, 1448 DRØBAK
+amenity = kindergarten
+capacity = 4
+max_age = 2
+min_age = 1
+name = Ole Brumm familiebarnehage
+no-barnehage:nsrid = 1021008
+operator = Ole Brumm Familiebarnehage Nygård
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1021008</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1021008"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/59.66705/10.65678"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1021008"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.66705/10.65678"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.66705&lon=10.65678&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1021008" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1021008, 59.66705, 10.65678, null)</script></td>
+    </tr>
+    <tr>
+      <td>Løvspretten familiebarnehage</td>
+      <td><pre>ADDRESS = Løvsangerveien 28, 1448 DRØBAK
+amenity = kindergarten
+capacity = 4
+max_age = 2
+min_age = 1
+name = Løvspretten familiebarnehage
+no-barnehage:nsrid = 1020705
+operator = Løvspretten Familiebarnehage Brita Bæck
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1020705</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1020705"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/59.66705/10.65678"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1020705"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/59.66705/10.65678"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=59.66705&lon=10.65678&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1020705" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1020705, 59.66705, 10.65678, null)</script></td>
+    </tr>
+    </tbody>
+  </table>
+
+  
+  
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">This page is maintained by <a href="https://github.com/obtitus">obtitus</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>	
+        <p class="copyright">Map data &copy;<a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>	
+	</p>
+	<p class="copyright">NBR data &copy;<a href="http://data.udir.no/baf/">Utdanningsdirektoratet</a>, <a href="http://data.norge.no/nlod/en/1.0">NLOD</a>	
+	</p>
+      </footer>
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-2401814-5");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+    
+
+  </body>
+</html>

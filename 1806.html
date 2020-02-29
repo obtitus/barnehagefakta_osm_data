@@ -1,0 +1,870 @@
+﻿<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Barnehagefakta til openstreetmap : Data for import/fletting av barnehageinformasjon til openstreetmap">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+    <!-- <link href="https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.css" rel="stylesheet" /> -->    
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/leaflet.css"/>
+
+    <title>Barnehagefakta til openstreetmap 1806</title>
+  </head>
+
+  <body>
+
+    <!-- <script src='https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.js'></script> -->
+    <script src="javascripts/mapbox.js"></script>
+    <!-- For ajax call -->
+    <!-- <script src='https://code.jquery.com/jquery-1.11.0.min.js'></script> -->
+    <script src="javascripts/jquery-1.11.0.min.js"></script>
+    <!-- <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-osm/v0.1.0/leaflet-osm.js'></script> -->    
+    <script src="javascripts/leaflet-osm.js"></script>
+
+    <script>
+    function create_map(name, lat, lon, osm_url) {
+	L.mapbox.accessToken = 'pk.eyJ1Ijoib2J0aXR1cyIsImEiOiJjaWYzbXF1M3IwMGtuc3ZsdmhhYXR4d2hpIn0.tQQLwWt3e_NhGtTdUYLzwQ'
+	var map = L.mapbox.map(name, 'obtitus.7bc4b48e');
+	map.setView([lat, lon], 17);
+
+	// Highlight osm object
+	// Fixme use the overpass xml:
+	// if ((typeof osm_xml !== 'undefined') && (osm_xml !== null)) {
+	//     var layer = new L.OSM.DataLayer(osm_xml).addTo(map);
+	// }
+	
+	if ((typeof osm_url !== 'undefined') && (osm_url !== null)) {
+	    $.ajax({
+		url: osm_url, // on the form: "https://www.openstreetmap.org/api/0.6/[node/way/relation]/<id>[/full]"
+		dataType: "xml",
+		success: function (xml) {
+		    var layer = new L.OSM.DataLayer(xml).addTo(map);
+		    map.fitBounds(layer.getBounds(), {maxZoom:17});
+		}
+	    });
+	}
+    }
+    </script>
+    
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/obtitus/barnehagefakta_osm_data">View on GitHub</a>
+
+	  <h1 id="project_title">Barnehagefakta til openstreetmap</h1>
+          <h2 id="project_tagline">Barnehagefakta til openstreetmap : Data for import/fletting av barnehageinformasjon til openstreetmap</h2>
+
+	  <a href="index.html" title="Tilbake til kommuneoversikt">
+            <section id="back">
+              Tilbake til kommuneoversikt
+            </section>
+	  </a>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+	  Barnehager i Narvik kommune (1806)
+	</h1>
+	
+	<p>Under finner du alle barnehagene i Narvik kommune, sist oppdatert 2020-02-29 16:40.</p>
+	<p>Tag-verdier på barnehager, som blir lagt inn i openstreetmap med taggen
+	  <a href="http://wiki.openstreetmap.org/wiki/Key:no-barnehage:nsrid" title="Informasjon om taggen no-barnehage:nsrid på den engelske openstreetmap wikien.">no-barnehage:nsrid</a>
+	  vil bli holdt automatisk oppdatert med endringer fra NBR.
+	  Når du legger inn en barnehage er det viktig at du får med alle taggene fra NBR.
+	  Merk at address-noder skal holdes som separate noder i Norge, da disse vedlikeholdes av en egen
+	  <a href="http://wiki.openstreetmap.org/wiki/Import/Catalogue/Address_import_for_Norway" title=import> import</a>.</p>
+	<p>NBR dataene kan inneholde feil, særlig i posisjon,
+	  det er derfor viktig å være litt lokalkjent når man legger inn data.
+	OBS: Vær spesielt varsom hvis du besøker barnehagen i åpningstid, med kamera (og gps), din adfærd kan misforståes...</p>
+	
+	<h3>
+	  Åpne i JOSM (Java OpenStreetmap Editor)
+	</h3>
+	<p><a href="data/1806/1806_barnehagefakta.osm"
+title="Trykk for å laste ned 1806_barnehagefakta.osm">
+1806_barnehagefakta.osm</a> inneholder data fra NBR som noder, denne kan åpnes i JOSM.</p><p>Familiebarnehager er vanskeligere å kartlegge, disse ligger derfor i sin egen fil: <a href="data/1806/1806_barnehagefakta_familiebarnehager.osm"
+title="Trykk for å laste ned 1806_barnehagefakta_familiebarnehager.osm">
+1806_barnehagefakta_familiebarnehager.osm</a></p>
+
+	<h3>
+	  Tabell med NBR (nasjonalt barnehageregister) og OSM (OpenStreetMap) data
+	</h3>
+  <table> <!--  class="layout display responsive-table" -->
+    <thead>
+        <tr>
+            <th>Navn</th>
+            <th>Tags fra NBR</th>
+            <th>Tags fra OSM</th>	    
+	    <th>Linker</th>
+	    <th>Kart</th>
+        </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>Skistua barnehage</td>
+      <td><pre>ADDRESS = Skistua 18, 8515 NARVIK
+amenity = kindergarten
+capacity = 71
+max_age = 5
+min_age = 1
+name = Skistua barnehage
+no-barnehage:nsrid = 1014684
+operator = Narvik kommune
+operator:type = public
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1014684</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1014684"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/68.43595/17.44296"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1014684"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/68.43595/17.44296"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=68.43595&lon=17.44296&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1014684" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1014684, 68.43595, 17.44296, null)</script></td>
+    </tr>
+    <tr>
+      <td>Grønnlia gårdsbarnehage</td>
+      <td><pre>ADDRESS = Buveien 61, 8521 
+amenity = kindergarten
+capacity = 69
+contact:website = http://www.gronnlia.barnehage.no
+max_age = 5
+min_age = 1
+name = Grønnlia gårdsbarnehage
+no-barnehage:nsrid = 1021933
+operator = Grønnlia Gårdsbarnehage AS
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1021933</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1021933"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/68.40603/17.32604"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1021933"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/68.40603/17.32604"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=68.40603&lon=17.32604&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1021933" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1021933, 68.40603, 17.32604, null)</script></td>
+    </tr>
+    <tr>
+      <td>Norges Arktiske Studentsamskipnad Soria Moria barnehage</td>
+      <td><pre>ADDRESS = Fjellveien 58, 8515 NARVIK
+amenity = kindergarten
+capacity = 67
+max_age = 5
+min_age = 1
+name = Norges Arktiske Studentsamskipnad Soria Moria barnehage
+no-barnehage:nsrid = 1016002
+operator = Norges Arktiske Studentsamskipnad
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1016002</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1016002"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/68.43357/17.43719"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1016002"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/68.43357/17.43719"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=68.43357&lon=17.43719&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1016002" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1016002, 68.43357, 17.43719, null)</script></td>
+    </tr>
+    <tr>
+      <td>Rallarn barnehage</td>
+      <td><pre>ADDRESS = Frydenlundgata 73, 8517 NARVIK
+amenity = kindergarten
+capacity = 52
+max_age = 5
+min_age = 1
+name = Rallarn barnehage
+no-barnehage:nsrid = 1014992
+operator = Narvik kommune
+operator:type = public
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1014992</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1014992"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/68.44293/17.43518"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1014992"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/68.44293/17.43518"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=68.44293&lon=17.43518&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1014992" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1014992, 68.44293, 17.43518, null)</script></td>
+    </tr>
+    <tr>
+      <td>Skarpen barnehage</td>
+      <td><pre>ADDRESS = Tore Hunds Gate 30, 8514 NARVIK
+amenity = kindergarten
+capacity = 51
+max_age = 5
+min_age = 1
+name = Skarpen barnehage
+no-barnehage:nsrid = 1025414
+operator = Narvik kommune
+operator:type = public
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1025414</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1025414"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/68.43764/17.43314"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1025414"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/68.43764/17.43314"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=68.43764&lon=17.43314&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1025414" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1025414, 68.43764, 17.43314, null)</script></td>
+    </tr>
+    <tr>
+      <td>Måseveien barnehage</td>
+      <td><pre>ADDRESS = Måseveien 6, 8516 NARVIK
+amenity = kindergarten
+capacity = 51
+max_age = 5
+min_age = 1
+name = Måseveien barnehage
+no-barnehage:nsrid = 1013294
+operator = Narvik kommune
+operator:type = public
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1013294</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1013294"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/68.44359/17.41084"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1013294"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/68.44359/17.41084"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=68.44359&lon=17.41084&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1013294" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013294, 68.44359, 17.41084, null)</script></td>
+    </tr>
+    <tr>
+      <td>Emmenes barnehage</td>
+      <td><pre>ADDRESS = Emmenesveien 5, 8520 ANKENES
+amenity = kindergarten
+capacity = 48
+max_age = 5
+min_age = 1
+name = Emmenes barnehage
+no-barnehage:nsrid = 1013650
+operator = Narvik kommune
+operator:type = public
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1013650</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1013650"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/68.41985/17.32297"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1013650"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/68.41985/17.32297"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=68.41985&lon=17.32297&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1013650" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013650, 68.41985, 17.32297, null)</script></td>
+    </tr>
+    <tr>
+      <td>Beisfjord FUS barnehage</td>
+      <td><pre>ADDRESS = Fjordveien 144, 8522 BEISFJORD
+amenity = kindergarten
+capacity = 48
+max_age = 5
+min_age = 1
+name = Beisfjord FUS barnehage
+no-barnehage:nsrid = 1026498
+operator = Beisfjord Fus barnehage AS
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1026498</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1026498"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/68.3725/17.59562"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1026498"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/68.3725/17.59562"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=68.3725&lon=17.59562&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1026498" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1026498, 68.3725, 17.59562, null)</script></td>
+    </tr>
+    <tr>
+      <td>Barnehagen Viktoriahavn</td>
+      <td><pre>ADDRESS = Strandveien 34, 8517 NARVIK
+amenity = kindergarten
+capacity = 46
+max_age = 5
+min_age = 1
+name = Barnehagen Viktoriahavn
+no-barnehage:nsrid = 1021948
+operator = Barnehagen Victoriahavn AS
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1021948</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1021948"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/68.44678/17.43471"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1021948"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/68.44678/17.43471"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=68.44678&lon=17.43471&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1021948" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1021948, 68.44678, 17.43471, null)</script></td>
+    </tr>
+    <tr>
+      <td>Ørarampen barnehage</td>
+      <td><pre>ADDRESS = Beisfjordveien 39, 8514 NARVIK
+amenity = kindergarten
+capacity = 40
+contact:website = http://www.orarampen.no
+max_age = 5
+min_age = 1
+name = Ørarampen barnehage
+no-barnehage:nsrid = 1022172
+operator = Ørarampen barnehage AS
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1022172</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1022172"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/68.41266/17.43929"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1022172"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/68.41266/17.43929"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=68.41266&lon=17.43929&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1022172" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1022172, 68.41266, 17.43929, null)</script></td>
+    </tr>
+    <tr>
+      <td>Furutoppen barnehage</td>
+      <td><pre>ADDRESS = Minkveien 1, 8515 NARVIK
+amenity = kindergarten
+capacity = 39
+contact:website = http://www.furutoppen-barnehage.com
+max_age = 5
+min_age = 1
+name = Furutoppen barnehage
+no-barnehage:nsrid = 1020246
+operator = Narvik Foreldrelagsbarnehage Sa
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1020246</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1020246"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/68.44191/17.45608"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1020246"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/68.44191/17.45608"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=68.44191&lon=17.45608&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1020246" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1020246, 68.44191, 17.45608, null)</script></td>
+    </tr>
+    <tr>
+      <td>Barnebo barnehage</td>
+      <td><pre>ADDRESS = Mellomveien 13, 8516 NARVIK
+amenity = kindergarten
+capacity = 39
+max_age = 5
+min_age = 1
+name = Barnebo barnehage
+no-barnehage:nsrid = 1016926
+operator = Narvik kommune
+operator:type = public
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1016926</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1016926"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/68.43776/17.40481"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1016926"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/68.43776/17.40481"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=68.43776&lon=17.40481&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1016926" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1016926, 68.43776, 17.40481, null)</script></td>
+    </tr>
+    <tr>
+      <td>Pingvinn barnehage</td>
+      <td><pre>ADDRESS = Fjellveien 12, 8515 NARVIK
+amenity = kindergarten
+capacity = 38
+max_age = 5
+min_age = 1
+name = Pingvinn barnehage
+no-barnehage:nsrid = 1019667
+operator = Pingvinn barnehage Sa
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1019667</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1019667"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/68.4375/17.44123"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1019667"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/68.4375/17.44123"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=68.4375&lon=17.44123&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1019667" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1019667, 68.4375, 17.44123, null)</script></td>
+    </tr>
+    <tr>
+      <td>Jaklamyra barnehage</td>
+      <td><pre>ADDRESS = Ørnveien 34, 8516 NARVIK
+amenity = kindergarten
+capacity = 38
+max_age = 5
+min_age = 1
+name = Jaklamyra barnehage
+no-barnehage:nsrid = 1019972
+operator = Jaklamyra barnehage Sa
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1019972</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1019972"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/68.44216/17.39945"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1019972"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/68.44216/17.39945"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=68.44216&lon=17.39945&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1019972" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1019972, 68.44216, 17.39945, null)</script></td>
+    </tr>
+    <tr>
+      <td>Flåklypa barnehage</td>
+      <td><pre>ADDRESS = Bergveien 6, 8520 ANKENES
+amenity = kindergarten
+capacity = 37
+max_age = 5
+min_age = 1
+name = Flåklypa barnehage
+no-barnehage:nsrid = 1012569
+operator = Narvik kommune
+operator:type = public
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1012569</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1012569"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/68.41282/17.4045"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1012569"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/68.41282/17.4045"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=68.41282&lon=17.4045&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1012569" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1012569, 68.41282, 17.4045, null)</script></td>
+    </tr>
+    <tr>
+      <td>Bøstrand barnehage</td>
+      <td><pre>ADDRESS = Balsnes-Fv819 70, 8540 BALLANGEN
+amenity = kindergarten
+capacity = 33
+max_age = 5
+min_age = 1
+name = Bøstrand barnehage
+no-barnehage:nsrid = 1015055
+operator = Narvik kommune
+operator:type = public
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1015055</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1015055"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/68.36391/16.87966"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1015055"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/68.36391/16.87966"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=68.36391&lon=16.87966&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1015055" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1015055, 68.36391, 16.87966, null)</script></td>
+    </tr>
+    <tr>
+      <td>Bjørkvang barnehage</td>
+      <td><pre>ADDRESS = Bjørkvangveien 2, 8530 BJERKVIK
+amenity = kindergarten
+capacity = 33
+max_age = 5
+min_age = 1
+name = Bjørkvang barnehage
+no-barnehage:nsrid = 1020245
+operator = Hoppensprett Narvik AS
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1020245</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1020245"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/68.5568/17.56319"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1020245"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/68.5568/17.56319"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=68.5568&lon=17.56319&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1020245" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1020245, 68.5568, 17.56319, null)</script></td>
+    </tr>
+    <tr>
+      <td>Malmklumpen barnehage</td>
+      <td><pre>ADDRESS = Malmveien 120, 8516 NARVIK
+amenity = kindergarten
+capacity = 30
+contact:website = http://malmklumpen.barnehage.no
+max_age = 5
+min_age = 1
+name = Malmklumpen barnehage
+no-barnehage:nsrid = 1019745
+operator = Malmklumpen barnehage Sa
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1019745</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1019745"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/68.43615/17.40541"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1019745"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/68.43615/17.40541"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=68.43615&lon=17.40541&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1019745" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1019745, 68.43615, 17.40541, null)</script></td>
+    </tr>
+    <tr>
+      <td>Ballangen barnehage</td>
+      <td><pre>ADDRESS = Storhaugveien 20, 8540 BALLANGEN
+amenity = kindergarten
+capacity = 26
+max_age = 5
+min_age = 1
+name = Ballangen barnehage
+no-barnehage:nsrid = 1013684
+operator = Narvik kommune
+operator:type = public
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1013684</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1013684"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/68.34057/16.82445"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1013684"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/68.34057/16.82445"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=68.34057&lon=16.82445&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1013684" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013684, 68.34057, 16.82445, null)</script></td>
+    </tr>
+    <tr>
+      <td>Askeladden barnehage</td>
+      <td><pre>ADDRESS = Ankenesveien 175, 8520 ANKENES
+amenity = kindergarten
+capacity = 26
+max_age = 5
+min_age = 1
+name = Askeladden barnehage
+no-barnehage:nsrid = 1022027
+operator = Askeladden barnehage Sa
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1022027</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1022027"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/68.41913/17.38508"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1022027"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/68.41913/17.38508"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=68.41913&lon=17.38508&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1022027" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1022027, 68.41913, 17.38508, null)</script></td>
+    </tr>
+    <tr>
+      <td>Stollen barnehage</td>
+      <td><pre>ADDRESS = Strosseveien 14, 8540 BALLANGEN
+amenity = kindergarten
+capacity = 25
+max_age = 5
+min_age = 1
+name = Stollen barnehage
+no-barnehage:nsrid = 1013163
+operator = Narvik kommune
+operator:type = public
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1013163</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1013163"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/68.32862/16.79992"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1013163"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/68.32862/16.79992"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=68.32862&lon=16.79992&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1013163" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013163, 68.32862, 16.79992, null)</script></td>
+    </tr>
+    <tr>
+      <td>Banktrollet barnehage</td>
+      <td><pre>ADDRESS = Fjellveien 12, 8515 NARVIK
+amenity = kindergarten
+capacity = 25
+contact:website = http://www.banktrollet.no
+max_age = 5
+min_age = 1
+name = Banktrollet barnehage
+no-barnehage:nsrid = 1019822
+operator = Banktrollet barnehage Sa
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1019822</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1019822"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/68.4375/17.44123"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1019822"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/68.4375/17.44123"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=68.4375&lon=17.44123&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1019822" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1019822, 68.4375, 17.44123, null)</script></td>
+    </tr>
+    <tr>
+      <td>Pæsatun barnehage</td>
+      <td><pre>ADDRESS = Akermoveien 15, 8590 KJØPSVIK
+amenity = kindergarten
+capacity = 24
+max_age = 5
+min_age = 1
+name = Pæsatun barnehage
+no-barnehage:nsrid = 1013681
+operator = Narvik kommune
+operator:type = public
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1013681</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1013681"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/68.09718/16.37293"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1013681"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/68.09718/16.37293"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=68.09718&lon=16.37293&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1013681" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013681, 68.09718, 16.37293, null)</script></td>
+    </tr>
+    <tr>
+      <td>Hoppensprett Narvik</td>
+      <td><pre>ADDRESS = Kongleveien 42, 8515 NARVIK
+amenity = kindergarten
+capacity = 19
+max_age = 5
+min_age = 1
+name = Hoppensprett Narvik
+no-barnehage:nsrid = 1021566
+operator = Hoppensprett Narvik AS
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1021566</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1021566"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/68.44604/17.4615"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1021566"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/68.44604/17.4615"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=68.44604&lon=17.4615&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1021566" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1021566, 68.44604, 17.4615, null)</script></td>
+    </tr>
+    <tr>
+      <td>Bjerkvik barnehage</td>
+      <td><pre>ADDRESS = Kjerranveien 34, 8530 BJERKVIK
+amenity = kindergarten
+capacity = 19
+max_age = 5
+min_age = 1
+name = Bjerkvik barnehage
+no-barnehage:nsrid = 1013649
+operator = Narvik kommune
+operator:type = public
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1013649</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1013649"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/68.55452/17.55225"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1013649"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/68.55452/17.55225"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=68.55452&lon=17.55225&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1013649" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1013649, 68.55452, 17.55225, null)</script></td>
+    </tr>
+    <tr>
+      <td>Skjomen barnehage</td>
+      <td><pre>ADDRESS = Skjomenveien - Elvegård 210, 8523 ELVEGÅRD
+amenity = kindergarten
+capacity = 7
+max_age = 5
+min_age = 1
+name = Skjomen barnehage
+no-barnehage:nsrid = 1015941
+operator = Narvik kommune
+operator:type = public
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1015941</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1015941"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/68.24542/17.41188"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1015941"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/68.24542/17.41188"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=68.24542&lon=17.41188&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1015941" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1015941, 68.24542, 17.41188, null)</script></td>
+    </tr>
+    <tr>
+      <td>Bondegården familiebarnehage Sissel Myre Arntsen</td>
+      <td><pre>ADDRESS = Øvergård, 8540 BALLANGEN
+amenity = kindergarten
+name = Bondegården familiebarnehage Sissel Myre Arntsen
+no-barnehage:nsrid = 1021885
+operator = Bondegården Familiebarnehage Sissel Myre Arntsen
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1021885</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1021885"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/0.0/0.0"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1021885"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/0.0/0.0"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=0.0&lon=0.0&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1021885" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1021885, 0.0, 0.0, null)</script></td>
+    </tr>
+    <tr>
+      <td>Trollhaugen familiebarnehage</td>
+      <td><pre>ADDRESS = Trollvikveien 119, 8530 BJERKVIK
+amenity = kindergarten
+capacity = 10
+max_age = 5
+min_age = 1
+name = Trollhaugen familiebarnehage
+no-barnehage:nsrid = 1020172
+operator = Trollhaugen Familiebarnehage AS
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1020172</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1020172"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/68.54829/17.53074"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1020172"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/68.54829/17.53074"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=68.54829&lon=17.53074&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1020172" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1020172, 68.54829, 17.53074, null)</script></td>
+    </tr>
+    <tr>
+      <td>Bjørkåshøgda familiebarnehage Tove Ærø</td>
+      <td><pre>ADDRESS = Bjørkåshøgda 10, 8540 BALLANGEN
+amenity = kindergarten
+capacity = 10
+max_age = 5
+min_age = 1
+name = Bjørkåshøgda familiebarnehage Tove Ærø
+no-barnehage:nsrid = 1020265
+operator = Bjørkåshøgda Familiebarnehage Ved Tove Ærø
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1020265</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1020265"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/68.33016/16.77981"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1020265"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/68.33016/16.77981"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=68.33016&lon=16.77981&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1020265" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1020265, 68.33016, 16.77981, null)</script></td>
+    </tr>
+    </tbody>
+  </table>
+
+  
+  
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">This page is maintained by <a href="https://github.com/obtitus">obtitus</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>	
+        <p class="copyright">Map data &copy;<a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>	
+	</p>
+	<p class="copyright">NBR data &copy;<a href="http://data.udir.no/baf/">Utdanningsdirektoratet</a>, <a href="http://data.norge.no/nlod/en/1.0">NLOD</a>	
+	</p>
+      </footer>
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-2401814-5");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+    
+
+  </body>
+</html>

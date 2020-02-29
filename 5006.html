@@ -1,0 +1,928 @@
+﻿<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Barnehagefakta til openstreetmap : Data for import/fletting av barnehageinformasjon til openstreetmap">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+    <!-- <link href="https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.css" rel="stylesheet" /> -->    
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/leaflet.css"/>
+
+    <title>Barnehagefakta til openstreetmap 5006</title>
+  </head>
+
+  <body>
+
+    <!-- <script src='https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.js'></script> -->
+    <script src="javascripts/mapbox.js"></script>
+    <!-- For ajax call -->
+    <!-- <script src='https://code.jquery.com/jquery-1.11.0.min.js'></script> -->
+    <script src="javascripts/jquery-1.11.0.min.js"></script>
+    <!-- <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-osm/v0.1.0/leaflet-osm.js'></script> -->    
+    <script src="javascripts/leaflet-osm.js"></script>
+
+    <script>
+    function create_map(name, lat, lon, osm_url) {
+	L.mapbox.accessToken = 'pk.eyJ1Ijoib2J0aXR1cyIsImEiOiJjaWYzbXF1M3IwMGtuc3ZsdmhhYXR4d2hpIn0.tQQLwWt3e_NhGtTdUYLzwQ'
+	var map = L.mapbox.map(name, 'obtitus.7bc4b48e');
+	map.setView([lat, lon], 17);
+
+	// Highlight osm object
+	// Fixme use the overpass xml:
+	// if ((typeof osm_xml !== 'undefined') && (osm_xml !== null)) {
+	//     var layer = new L.OSM.DataLayer(osm_xml).addTo(map);
+	// }
+	
+	if ((typeof osm_url !== 'undefined') && (osm_url !== null)) {
+	    $.ajax({
+		url: osm_url, // on the form: "https://www.openstreetmap.org/api/0.6/[node/way/relation]/<id>[/full]"
+		dataType: "xml",
+		success: function (xml) {
+		    var layer = new L.OSM.DataLayer(xml).addTo(map);
+		    map.fitBounds(layer.getBounds(), {maxZoom:17});
+		}
+	    });
+	}
+    }
+    </script>
+    
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/obtitus/barnehagefakta_osm_data">View on GitHub</a>
+
+	  <h1 id="project_title">Barnehagefakta til openstreetmap</h1>
+          <h2 id="project_tagline">Barnehagefakta til openstreetmap : Data for import/fletting av barnehageinformasjon til openstreetmap</h2>
+
+	  <a href="index.html" title="Tilbake til kommuneoversikt">
+            <section id="back">
+              Tilbake til kommuneoversikt
+            </section>
+	  </a>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+	  Barnehager i Steinkjer kommune (5006)
+	</h1>
+	
+	<p>Under finner du alle barnehagene i Steinkjer kommune, sist oppdatert 2020-02-29 14:21.</p>
+	<p>Tag-verdier på barnehager, som blir lagt inn i openstreetmap med taggen
+	  <a href="http://wiki.openstreetmap.org/wiki/Key:no-barnehage:nsrid" title="Informasjon om taggen no-barnehage:nsrid på den engelske openstreetmap wikien.">no-barnehage:nsrid</a>
+	  vil bli holdt automatisk oppdatert med endringer fra NBR.
+	  Når du legger inn en barnehage er det viktig at du får med alle taggene fra NBR.
+	  Merk at address-noder skal holdes som separate noder i Norge, da disse vedlikeholdes av en egen
+	  <a href="http://wiki.openstreetmap.org/wiki/Import/Catalogue/Address_import_for_Norway" title=import> import</a>.</p>
+	<p>NBR dataene kan inneholde feil, særlig i posisjon,
+	  det er derfor viktig å være litt lokalkjent når man legger inn data.
+	OBS: Vær spesielt varsom hvis du besøker barnehagen i åpningstid, med kamera (og gps), din adfærd kan misforståes...</p>
+	
+	<h3>
+	  Åpne i JOSM (Java OpenStreetmap Editor)
+	</h3>
+	<p><a href="data/5006/5006_barnehagefakta.osm"
+title="Trykk for å laste ned 5006_barnehagefakta.osm">
+5006_barnehagefakta.osm</a> inneholder data fra NBR som noder, denne kan åpnes i JOSM.</p><p>Familiebarnehager er vanskeligere å kartlegge, disse ligger derfor i sin egen fil: <a href="data/5006/5006_barnehagefakta_familiebarnehager.osm"
+title="Trykk for å laste ned 5006_barnehagefakta_familiebarnehager.osm">
+5006_barnehagefakta_familiebarnehager.osm</a></p>
+
+	<h3>
+	  Tabell med NBR (nasjonalt barnehageregister) og OSM (OpenStreetMap) data
+	</h3>
+  <table> <!--  class="layout display responsive-table" -->
+    <thead>
+        <tr>
+            <th>Navn</th>
+            <th>Tags fra NBR</th>
+            <th>Tags fra OSM</th>	    
+	    <th>Linker</th>
+	    <th>Kart</th>
+        </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>Steinkjersannan barnehage</td>
+      <td><pre>ADDRESS = Steinkjersannan 6, 7713 STEINKJER
+amenity = kindergarten
+capacity = 110
+max_age = 5
+min_age = 1
+name = Steinkjersannan barnehage
+no-barnehage:nsrid = 1017109
+operator = Steinkjer kommune
+operator:type = public
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1017109</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1017109"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/64.01102/11.503"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1017109"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/64.01102/11.503"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=64.01102&lon=11.503&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1017109" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1017109, 64.01102, 11.503, null)</script></td>
+    </tr>
+    <tr>
+      <td>Beitstad barnehage</td>
+      <td><pre>ADDRESS = Fjellvegen 4, 7730 BEITSTAD
+amenity = kindergarten
+capacity = 74
+contact:website = http://www.beitstad.barnehage.no
+max_age = 5
+min_age = 1
+name = Beitstad barnehage
+no-barnehage:nsrid = 1021451
+operator = Beitstad barnehage AS
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1021451</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1021451"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/64.11346/11.38556"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1021451"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/64.11346/11.38556"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=64.11346&lon=11.38556&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1021451" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1021451, 64.11346, 11.38556, null)</script></td>
+    </tr>
+    <tr>
+      <td>Malmen barnehage</td>
+      <td><pre>ADDRESS = Kjerkbakken 1, 7790 MALM
+amenity = kindergarten
+capacity = 71
+max_age = 5
+min_age = 1
+name = Malmen barnehage
+no-barnehage:nsrid = 1018276
+operator = Steinkjer kommune
+operator:type = public
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1018276</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1018276"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/64.07011/11.21637"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1018276"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/64.07011/11.21637"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=64.07011&lon=11.21637&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1018276" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1018276, 64.07011, 11.21637, null)</script></td>
+    </tr>
+    <tr>
+      <td>Søndre Egge barnehage</td>
+      <td><pre>ADDRESS = Karolinavegen 11, 7725 STEINKJER
+amenity = kindergarten
+capacity = 65
+max_age = 5
+min_age = 1
+name = Søndre Egge barnehage
+no-barnehage:nsrid = 1018260
+operator = Steinkjer kommune
+operator:type = public
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1018260</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1018260"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/64.02155/11.45732"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1018260"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/64.02155/11.45732"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=64.02155&lon=11.45732&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1018260" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1018260, 64.02155, 11.45732, null)</script></td>
+    </tr>
+    <tr>
+      <td>Egge barnehage</td>
+      <td><pre>ADDRESS = Kvamslia 1, 7715 STEINKJER
+amenity = kindergarten
+capacity = 64
+max_age = 5
+min_age = 1
+name = Egge barnehage
+no-barnehage:nsrid = 1026340
+operator = Steinkjer kommune
+operator:type = public
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1026340</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1026340"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/64.03329/11.48321"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1026340"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/64.03329/11.48321"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=64.03329&lon=11.48321&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1026340" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1026340, 64.03329, 11.48321, null)</script></td>
+    </tr>
+    <tr>
+      <td>Poppellunden barnehage Stiftelse</td>
+      <td><pre>ADDRESS = Teglverksvegen 1, 7713 STEINKJER
+amenity = kindergarten
+capacity = 58
+contact:website = http://www.poppellunden.no
+max_age = 5
+min_age = 1
+name = Poppellunden barnehage Stiftelse
+no-barnehage:nsrid = 1020357
+operator = Poppellunden barnehage Stiftelse
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1020357</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1020357"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/64.00341/11.5049"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1020357"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/64.00341/11.5049"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=64.00341&lon=11.5049&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1020357" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1020357, 64.00341, 11.5049, null)</script></td>
+    </tr>
+    <tr>
+      <td>Byafossen Barenhage</td>
+      <td><pre>ADDRESS = Helgesvegen 87, 7716 STEINKJER
+amenity = kindergarten
+capacity = 52
+max_age = 5
+min_age = 1
+name = Byafossen Barenhage
+no-barnehage:nsrid = 1026339
+operator = Steinkjer kommune
+operator:type = public
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1026339</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1026339"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/64.02936/11.54394"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1026339"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/64.02936/11.54394"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=64.02936&lon=11.54394&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1026339" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1026339, 64.02936, 11.54394, null)</script></td>
+    </tr>
+    <tr>
+      <td>Steinkjer montessoribarnehage</td>
+      <td><pre>ADDRESS = Seilmakergata 3, 7725 STEINKJER
+amenity = kindergarten
+capacity = 51
+max_age = 5
+min_age = 1
+name = Steinkjer montessoribarnehage
+no-barnehage:nsrid = 1021366
+operator = Steinkjer Montessoribarnehage Sa
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1021366</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1021366"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/64.01455/11.4774"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1021366"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/64.01455/11.4774"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=64.01455&lon=11.4774&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1021366" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1021366, 64.01455, 11.4774, null)</script></td>
+    </tr>
+    <tr>
+      <td>Guldbergaunet Førskole</td>
+      <td><pre>ADDRESS = Grensevegen 2, 7716 STEINKJER
+amenity = kindergarten
+capacity = 49
+max_age = 5
+min_age = 1
+name = Guldbergaunet Førskole
+no-barnehage:nsrid = 1021798
+operator = Guldbergaunet Førskole AS
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1021798</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1021798"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/64.01738/11.51395"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1021798"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/64.01738/11.51395"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=64.01738&lon=11.51395&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1021798" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1021798, 64.01738, 11.51395, null)</script></td>
+    </tr>
+    <tr>
+      <td>Marisletta barnehage</td>
+      <td><pre>ADDRESS = Stodvegen 1073, 7717 STEINKJER
+amenity = kindergarten
+capacity = 46
+contact:website = http://marisletta.barnehage.no
+max_age = 5
+min_age = 1
+name = Marisletta barnehage
+no-barnehage:nsrid = 1019806
+operator = Marisletta barnehage Sa
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1019806</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1019806"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/64.09254/11.71499"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1019806"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/64.09254/11.71499"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=64.09254&lon=11.71499&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1019806" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1019806, 64.09254, 11.71499, null)</script></td>
+    </tr>
+    <tr>
+      <td>Haugtussa barnehage</td>
+      <td><pre>ADDRESS = Ystgårdskorsen, 7710 SPARBU
+amenity = kindergarten
+capacity = 41
+max_age = 5
+min_age = 1
+name = Haugtussa barnehage
+no-barnehage:nsrid = 1021097
+operator = Haugtussa barnehage AS
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1021097</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1021097"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/0.0/0.0"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1021097"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/0.0/0.0"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=0.0&lon=0.0&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1021097" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1021097, 0.0, 0.0, null)</script></td>
+    </tr>
+    <tr>
+      <td>Tufbakken barnehage</td>
+      <td><pre>ADDRESS = Mære, 7710 SPARBU
+amenity = kindergarten
+capacity = 37
+max_age = 5
+min_age = 1
+name = Tufbakken barnehage
+no-barnehage:nsrid = 1012568
+operator = Steinkjer kommune
+operator:type = public
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1012568</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1012568"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/0.0/0.0"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1012568"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/0.0/0.0"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=0.0&lon=0.0&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1012568" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1012568, 0.0, 0.0, null)</script></td>
+    </tr>
+    <tr>
+      <td>Skjefte barnehage</td>
+      <td><pre>ADDRESS = Øvre Ringveg 9, 7713 STEINKJER
+amenity = kindergarten
+capacity = 36
+max_age = 5
+min_age = 1
+name = Skjefte barnehage
+no-barnehage:nsrid = 1021213
+operator = Skjefte barnehage AS
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1021213</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1021213"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/64.01252/11.51194"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1021213"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/64.01252/11.51194"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=64.01252&lon=11.51194&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1021213" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1021213, 64.01252, 11.51194, null)</script></td>
+    </tr>
+    <tr>
+      <td>Granstubben barnehage Henning</td>
+      <td><pre>ADDRESS = Kjerkhenningvegen 146, 7711 STEINKJER
+amenity = kindergarten
+capacity = 36
+max_age = 5
+min_age = 1
+name = Granstubben barnehage Henning
+no-barnehage:nsrid = 1021897
+operator = Granstubben barnehage Henning AS
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1021897</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1021897"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/63.95752/11.61396"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1021897"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/63.95752/11.61396"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=63.95752&lon=11.61396&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1021897" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1021897, 63.95752, 11.61396, null)</script></td>
+    </tr>
+    <tr>
+      <td>Figga barnehage</td>
+      <td><pre>ADDRESS = Løsmarka 61, 7712 STEINKJER
+amenity = kindergarten
+capacity = 35
+contact:website = http://www.figgabarnehage.no
+max_age = 5
+min_age = 1
+name = Figga barnehage
+no-barnehage:nsrid = 1020619
+operator = Figga barnehage
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1020619</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1020619"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/64.00248/11.49491"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1020619"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/64.00248/11.49491"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=64.00248&lon=11.49491&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1020619" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1020619, 64.00248, 11.49491, null)</script></td>
+    </tr>
+    <tr>
+      <td>Vikingen barnehage</td>
+      <td><pre>ADDRESS = Markavegen 10, 7715 STEINKJER
+amenity = kindergarten
+capacity = 33
+contact:website = http://www.vikingenbarnehage.no
+max_age = 5
+min_age = 1
+name = Vikingen barnehage
+no-barnehage:nsrid = 1021462
+operator = Vikingen barnehage AS
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1021462</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1021462"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/64.03374/11.48107"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1021462"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/64.03374/11.48107"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=64.03374&lon=11.48107&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1021462" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1021462, 64.03374, 11.48107, null)</script></td>
+    </tr>
+    <tr>
+      <td>Kringla friluftsbarnehage</td>
+      <td><pre>ADDRESS = Kringlavegen 343, 7711 STEINKJER
+amenity = kindergarten
+capacity = 31
+contact:website = http://www.kringlabarnehage.no
+max_age = 5
+min_age = 1
+name = Kringla friluftsbarnehage
+no-barnehage:nsrid = 1021973
+operator = Kringla Friluftsbarnehage AS
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1021973</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1021973"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/63.97453/11.44128"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1021973"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/63.97453/11.44128"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=63.97453&lon=11.44128&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1021973" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1021973, 63.97453, 11.44128, null)</script></td>
+    </tr>
+    <tr>
+      <td>Sørlia barnehage</td>
+      <td><pre>ADDRESS = Kanefartsvegen 8, 7712 STEINKJER
+amenity = kindergarten
+capacity = 30
+max_age = 5
+min_age = 1
+name = Sørlia barnehage
+no-barnehage:nsrid = 1017344
+operator = Steinkjer kommune
+operator:type = public
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1017344</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1017344"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/63.99558/11.47378"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1017344"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/63.99558/11.47378"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=63.99558&lon=11.47378&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1017344" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1017344, 63.99558, 11.47378, null)</script></td>
+    </tr>
+    <tr>
+      <td>Røysing barnehage</td>
+      <td><pre>ADDRESS = Ogndalsvegen 983, 7718 STEINKJER
+amenity = kindergarten
+capacity = 29
+max_age = 5
+min_age = 1
+name = Røysing barnehage
+no-barnehage:nsrid = 1019739
+operator = Røysing barnehage Sa
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1019739</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1019739"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/64.02718/11.6677"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1019739"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/64.02718/11.6677"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=64.02718&lon=11.6677&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1019739" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1019739, 64.02718, 11.6677, null)</script></td>
+    </tr>
+    <tr>
+      <td>Lerkehaug barnehage</td>
+      <td><pre>ADDRESS = Kvernhusvegen 7, 7713 STEINKJER
+amenity = kindergarten
+capacity = 29
+contact:website = http://www.lerkehaug.barnehage.no
+max_age = 5
+min_age = 1
+name = Lerkehaug barnehage
+no-barnehage:nsrid = 1020297
+operator = Lerkehaug barnehage
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1020297</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1020297"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/63.99007/11.50225"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1020297"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/63.99007/11.50225"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=63.99007&lon=11.50225&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1020297" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1020297, 63.99007, 11.50225, null)</script></td>
+    </tr>
+    <tr>
+      <td>Følling barnehage</td>
+      <td><pre>ADDRESS = Kvamsvegen 1444, 7732 STEINKJER
+amenity = kindergarten
+capacity = 27
+max_age = 5
+min_age = 1
+name = Følling barnehage
+no-barnehage:nsrid = 1019505
+operator = Følling barnehage
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1019505</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1019505"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/64.10992/11.57027"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1019505"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/64.10992/11.57027"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=64.10992&lon=11.57027&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1019505" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1019505, 64.10992, 11.57027, null)</script></td>
+    </tr>
+    <tr>
+      <td>Follafoss barnehage</td>
+      <td><pre>ADDRESS = Rønningvegen 20, 7796 FOLLAFOSS
+amenity = kindergarten
+capacity = 25
+max_age = 5
+min_age = 1
+name = Follafoss barnehage
+no-barnehage:nsrid = 1019958
+operator = Follafoss barnehage Sa
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1019958</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1019958"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/63.98913/11.10915"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1019958"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/63.98913/11.10915"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=63.98913&lon=11.10915&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1019958" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1019958, 63.98913, 11.10915, null)</script></td>
+    </tr>
+    <tr>
+      <td>Sør-beitstad barnehage</td>
+      <td><pre>ADDRESS = Sør-Beistad, 7724 STEINKJER
+amenity = kindergarten
+capacity = 23
+contact:website = http://sor-beitstad.barnehage.no
+max_age = 5
+min_age = 1
+name = Sør-beitstad barnehage
+no-barnehage:nsrid = 1020197
+operator = Sør-Beitstad barnehage Sa
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1020197</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1020197"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/64.03331/11.37317"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1020197"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/64.03331/11.37317"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=64.03331&lon=11.37317&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1020197" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1020197, 64.03331, 11.37317, null)</script></td>
+    </tr>
+    <tr>
+      <td>Kvam barnehage</td>
+      <td><pre>ADDRESS = Kvamskjerkvegen 5, 7732 STEINKJER
+amenity = kindergarten
+capacity = 22
+contact:website = http://kvam.barnehageside.no
+max_age = 5
+min_age = 1
+name = Kvam barnehage
+no-barnehage:nsrid = 1020499
+operator = Kvam barnehage Sa
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1020499</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1020499"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/64.13921/11.7348"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1020499"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/64.13921/11.7348"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=64.13921&lon=11.7348&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1020499" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1020499, 64.13921, 11.7348, null)</script></td>
+    </tr>
+    <tr>
+      <td>Nord Studentsamskipnad avd. studentbarnehagen Steinkjer</td>
+      <td><pre>ADDRESS = Steinkjersannan 6, 7713 STEINKJER
+amenity = kindergarten
+capacity = 20
+max_age = 5
+min_age = 1
+name = Nord Studentsamskipnad avd. studentbarnehagen Steinkjer
+no-barnehage:nsrid = 1015994
+operator = Nord Studentsamskipnad
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1015994</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1015994"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/64.01102/11.503"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1015994"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/64.01102/11.503"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=64.01102&lon=11.503&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1015994" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1015994, 64.01102, 11.503, null)</script></td>
+    </tr>
+    <tr>
+      <td>Jåddåren gårdsbarnehage</td>
+      <td><pre>ADDRESS = Tessemvegen 56, 7730 BEITSTAD
+amenity = kindergarten
+capacity = 15
+max_age = 5
+min_age = 1
+name = Jåddåren gårdsbarnehage
+no-barnehage:nsrid = 1022240
+operator = Jåddåren Gårdsbarnehage AS
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1022240</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1022240"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/64.09158/11.45275"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1022240"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/64.09158/11.45275"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=64.09158&lon=11.45275&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1022240" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1022240, 64.09158, 11.45275, null)</script></td>
+    </tr>
+    <tr>
+      <td>Vålen barnehage</td>
+      <td><pre>ADDRESS = Nordvegen 885, 7718 STEINKJER
+amenity = kindergarten
+capacity = 14
+contact:website = http://www.valenbhg.no
+max_age = 5
+min_age = 1
+name = Vålen barnehage
+no-barnehage:nsrid = 1019498
+operator = Vålen barnehage Sa
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1019498</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1019498"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/64.00217/11.87313"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1019498"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/64.00217/11.87313"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=64.00217&lon=11.87313&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1019498" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1019498, 64.00217, 11.87313, null)</script></td>
+    </tr>
+    <tr>
+      <td>Mære gårdsbarnehage</td>
+      <td><pre>ADDRESS = Rabben Nord, 7710 SPARBU
+amenity = kindergarten
+capacity = 13
+max_age = 5
+min_age = 1
+name = Mære gårdsbarnehage
+no-barnehage:nsrid = 1021469
+operator = Mære Gårdsbarnehage AS
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1021469</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1021469"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/64.00305/11.60192"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1021469"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/64.00305/11.60192"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=64.00305&lon=11.60192&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1021469" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1021469, 64.00305, 11.60192, null)</script></td>
+    </tr>
+    <tr>
+      <td>Nordsihaugen familiebarnehage</td>
+      <td><pre>ADDRESS = Martensvegen 11, 7715 STEINKJER
+amenity = kindergarten
+capacity = 9
+max_age = 2
+min_age = 1
+name = Nordsihaugen familiebarnehage
+no-barnehage:nsrid = 1021448
+operator = Nordsihaugen Familiebarnehage AS
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1021448</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1021448"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/64.02039/11.49796"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1021448"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/64.02039/11.49796"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=64.02039&lon=11.49796&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1021448" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1021448, 64.02039, 11.49796, null)</script></td>
+    </tr>
+    <tr>
+      <td>Lykke Liten familiebarnehage Trude Brandtzæg</td>
+      <td><pre>ADDRESS = Einar Solstads Veg 31, 7715 STEINKJER
+amenity = kindergarten
+capacity = 8
+max_age = 2
+min_age = 1
+name = Lykke Liten familiebarnehage Trude Brandtzæg
+no-barnehage:nsrid = 1021851
+operator = Lykke Liten Familiebarnehage Trude Brandtzæg
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1021851</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1021851"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/64.02212/11.50133"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1021851"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/64.02212/11.50133"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=64.02212&lon=11.50133&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1021851" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1021851, 64.02212, 11.50133, null)</script></td>
+    </tr>
+    <tr>
+      <td>Risgropa familiebarnehage</td>
+      <td><pre>ADDRESS = Risgropa 18, 7716 STEINKJER
+amenity = kindergarten
+capacity = 5
+max_age = 2
+min_age = 1
+name = Risgropa familiebarnehage
+no-barnehage:nsrid = 1020957
+operator = Karin Wahl Oldren
+operator:type = private
+</pre></td>
+      <td>Fant ingen openstreetmap objekt med no-barnehage:nsrid = 1020957</td>
+      <td><pre><a href="http://barnehagefakta.no/barnehage/1020957"
+title="Du blir sendt til barnehagens side på barnehagefakta.no">Besøk på barnehagefakta.no</a>
+<a href="http://www.openstreetmap.org/#map=17/64.02122/11.54056"
+title="Se posisjonen i openstreetmap">Besøk på openstreetmap.org</a>
+<a href="https://nbr.udir.no/status/rapporterfeil/1020957"
+title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vurder også å melde fra til kommunen.">Meld feil til NBR</a>
+<a href="http://www.openstreetmap.org/note/new#map=17/64.02122/11.54056"
+title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
+<a href="http://www.openstreetmap.org/edit?editor=id&lat=64.02122&lon=11.54056&zoom=17"
+title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
+      <td><div id="map1020957" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map1020957, 64.02122, 11.54056, null)</script></td>
+    </tr>
+    </tbody>
+  </table>
+
+  
+  
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">This page is maintained by <a href="https://github.com/obtitus">obtitus</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>	
+        <p class="copyright">Map data &copy;<a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>	
+	</p>
+	<p class="copyright">NBR data &copy;<a href="http://data.udir.no/baf/">Utdanningsdirektoratet</a>, <a href="http://data.norge.no/nlod/en/1.0">NLOD</a>	
+	</p>
+      </footer>
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-2401814-5");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+    
+
+  </body>
+</html>

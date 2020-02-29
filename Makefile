@@ -1,8 +1,9 @@
-python=/opt/local/bin/python2.7
+python=. venv/bin/activate; python
 git=/usr/bin/git
 
+# /opt/local/bin/python2.7
+
 all:
-	which python
 	$(MAKE) update_data
 	$(MAKE) update_osm_batch
 	$(MAKE) update_html
