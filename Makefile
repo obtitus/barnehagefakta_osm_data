@@ -27,7 +27,7 @@ push_html:
 	-$(git) push
 
 update_poi:
-	(cd ..;./to_poi_importer.sh)
+	(. venv/bin/activate;cd ..;./to_poi_importer.sh)
 
 rotate_logs:
 	/opt/local/sbin/logrotate logrotate.conf --state=logrotate.state
