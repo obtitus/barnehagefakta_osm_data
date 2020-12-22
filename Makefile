@@ -8,7 +8,7 @@ all:
 	$(MAKE) update_osm_batch
 	$(MAKE) update_html
 	$(MAKE) push_html
-	$(MAKE) update_poi
+	#$(MAKE) update_poi
 	$(MAKE) rotate_logs
 
 update_data:
