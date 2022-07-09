@@ -15,7 +15,7 @@ update_data:
 	$(python) ../barnehagefakta_osm.py --kommune ALL --update_kommune -q
 
 update_osm_batch:
-	$(python) ../update_osm.py --batch --log_filename="/Users/ob/Library/Logs/local.barnahagefakta.update_osm.log"
+	$(python) ../update_osm.py --batch --log_filename="/home/ob/Programming/Python/osm/barnehagefakta_osm/barnehagefakta_osm_data/local.barnahagefakta.update_osm.log"
 update_osm:
 	$(python) ../update_osm.py -v
 
@@ -30,4 +30,4 @@ update_poi:
 	(. venv/bin/activate;cd ..;./to_poi_importer.sh)
 
 rotate_logs:
-	/opt/local/sbin/logrotate logrotate.conf --state=logrotate.state
+	logrotate logrotate.conf --state=logrotate.state
