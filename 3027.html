@@ -7,7 +7,7 @@
     <meta name="description" content="Barnehagefakta til openstreetmap : Data for import/fletting av barnehageinformasjon til openstreetmap">
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-    <!-- <link href="https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.css" rel="stylesheet" /> -->    
+    <!-- <link href="https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.css" rel="stylesheet" /> -->
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/leaflet.css"/>
 
     <title>Barnehagefakta til openstreetmap 3027</title>
@@ -15,39 +15,40 @@
 
   <body>
 
-    <!-- <script src='https://api.mapbox.com/mapbox.js/v2.2.2/mapbox.js'></script> -->
-    <script src="javascripts/mapbox.js"></script>
-    <!-- For ajax call -->
-    <!-- <script src='https://code.jquery.com/jquery-1.11.0.min.js'></script> -->
-    <!-- <script src="javascripts/jquery-1.11.0.min.js"></script> -->
-    <!-- <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-osm/v0.1.0/leaflet-osm.js'></script> -->    
+    <script src="javascripts/mapbox-gl.js"></script>
     <script src="javascripts/leaflet-osm.js"></script>
 
     <script>
-    function create_map(name, lat, lon, osm_url) {
-	L.mapbox.accessToken = 'pk.eyJ1Ijoib2J0aXR1cyIsImEiOiJjaWYzbXF1M3IwMGtuc3ZsdmhhYXR4d2hpIn0.tQQLwWt3e_NhGtTdUYLzwQ'
-	var map = L.mapbox.map(name, 'obtitus.7bc4b48e');
-	map.setView([lat, lon], 17);
+      function create_map(name, lat, lon, osm_url, id) {
+	mapboxgl.accessToken = 'pk.eyJ1Ijoib2J0aXR1cyIsImEiOiJjaWYzbXF1M3IwMGtuc3ZsdmhhYXR4d2hpIn0.tQQLwWt3e_NhGtTdUYLzwQ'
+	var map = new mapboxgl.Map({
+	    container: 'map' + id, // container ID
+	    style: 'mapbox://styles/obtitus/clpn7lylp00yg01pk6tda2ijx', // style URL
+	    center: [lon, lat], // starting position [lng, lat]
+	    zoom: 17 // starting zoom
+	});
+	  // FIXME: Update after API update
+	//map.setView([lat, lon], 17);
 
 	// Highlight osm object
 	// Fixme use the overpass xml:
 	// if ((typeof osm_xml !== 'undefined') && (osm_xml !== null)) {
 	//     var layer = new L.OSM.DataLayer(osm_xml).addTo(map);
 	// }
-	
-	if ((typeof osm_url !== 'undefined') && (osm_url !== null)) {
-	    $.ajax({
-		url: osm_url, // on the form: "https://www.openstreetmap.org/api/0.6/[node/way/relation]/<id>[/full]"
-		dataType: "xml",
-		success: function (xml) {
-		    var layer = new L.OSM.DataLayer(xml).addTo(map);
-		    map.fitBounds(layer.getBounds(), {maxZoom:17});
-		}
-	    });
-	}
+
+	// if ((typeof osm_url !== 'undefined') && (osm_url !== null)) {
+	//     $.ajax({
+	// 	url: osm_url, // on the form: "https://www.openstreetmap.org/api/0.6/[node/way/relation]/<id>[/full]"
+	// 	dataType: "xml",
+	// 	success: function (xml) {
+	// 	    var layer = new L.OSM.DataLayer(xml).addTo(map);
+	// 	    map.fitBounds(layer.getBounds(), {maxZoom:17});
+	// 	}
+	//     });
+	// }
     }
     </script>
-    
+
 
     <!-- HEADER -->
     <div id="header_wrap" class="outer">
@@ -71,7 +72,7 @@
         <h1>
 	  Barnehager i Rælingen kommune (3027)
 	</h1>
-	
+
 	<p>Under finner du alle barnehagene i Rælingen kommune, sist oppdatert 2023-12-01 22:12.</p>
 	<p>Tag-verdier på barnehager, som blir lagt inn i openstreetmap med taggen
 	  <a href="http://wiki.openstreetmap.org/wiki/Key:no-barnehage:nsrid" title="Informasjon om taggen no-barnehage:nsrid på den engelske openstreetmap wikien.">no-barnehage:nsrid</a>
@@ -83,7 +84,7 @@
 	<p>NBR dataene kan inneholde feil, særlig i posisjon,
 	  det er derfor viktig å være litt lokalkjent når man legger inn data.
 	OBS: Vær spesielt varsom hvis du besøker barnehagen i åpningstid, med kamera (og gps), din adfærd kan misforståes...</p>
-	
+
 	<h3>
 	  Åpne i JOSM (Java OpenStreetmap Editor)
 	</h3>
@@ -101,7 +102,7 @@ title="Trykk for å laste ned 3027_barnehagefakta_familiebarnehager.osm">
         <tr>
             <th>Navn</th>
             <th>Tags fra NBR</th>
-            <th>Tags fra OSM</th>	    
+            <th>Tags fra OSM</th>
 	    <th>Linker</th>
 	    <th>Kart</th>
         </tr>
@@ -130,7 +131,7 @@ title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vur
 title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
 <a href="http://www.openstreetmap.org/edit?editor=id&lat=59.90249&lon=11.08425&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
-      <td><div id="map818722192" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map818722192, 59.90249, 11.08425, null)</script></td>
+      <td><div id="map818722192" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map818722192, 59.90249, 11.08425, null, 818722192)</script></td>
     </tr>
     <tr>
       <td>Hektneråsen FUS barnehage</td>
@@ -158,7 +159,7 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til 
 title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a>
 <a href="http://www.hektnerasen.bhg.no"
 title="website">Barnehagens webside</a></pre></td>
-      <td><div id="map992336943" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map992336943, 59.90264, 11.0892, null)</script></td>
+      <td><div id="map992336943" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map992336943, 59.90264, 11.0892, null, 992336943)</script></td>
     </tr>
     <tr>
       <td>Smestadtoppen barnehage</td>
@@ -186,7 +187,7 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til 
 title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a>
 <a href="http://www.ralingen.kommune.no"
 title="website">Barnehagens webside</a></pre></td>
-      <td><div id="map987067276" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map987067276, 59.90656, 11.09152, null)</script></td>
+      <td><div id="map987067276" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map987067276, 59.90656, 11.09152, null, 987067276)</script></td>
     </tr>
     <tr>
       <td>Sannum barnehage</td>
@@ -211,7 +212,7 @@ title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vur
 title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
 <a href="http://www.openstreetmap.org/edit?editor=id&lat=59.93049&lon=11.06305&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
-      <td><div id="map874586552" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map874586552, 59.93049, 11.06305, null)</script></td>
+      <td><div id="map874586552" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map874586552, 59.93049, 11.06305, null, 874586552)</script></td>
     </tr>
     <tr>
       <td>Østre Strøm FUS barnehage</td>
@@ -236,7 +237,7 @@ title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vur
 title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
 <a href="http://www.openstreetmap.org/edit?editor=id&lat=59.9474&lon=11.0294&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
-      <td><div id="map990259909" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map990259909, 59.9474, 11.0294, null)</script></td>
+      <td><div id="map990259909" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map990259909, 59.9474, 11.0294, null, 990259909)</script></td>
     </tr>
     <tr>
       <td>Løvlia barnehage</td>
@@ -261,7 +262,7 @@ title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vur
 title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
 <a href="http://www.openstreetmap.org/edit?editor=id&lat=59.93595&lon=11.02664&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
-      <td><div id="map974586606" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map974586606, 59.93595, 11.02664, null)</script></td>
+      <td><div id="map974586606" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map974586606, 59.93595, 11.02664, null, 974586606)</script></td>
     </tr>
     <tr>
       <td>Torva barnehage</td>
@@ -286,7 +287,7 @@ title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vur
 title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
 <a href="http://www.openstreetmap.org/edit?editor=id&lat=59.94715&lon=11.0506&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
-      <td><div id="map988860298" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map988860298, 59.94715, 11.0506, null)</script></td>
+      <td><div id="map988860298" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map988860298, 59.94715, 11.0506, null, 988860298)</script></td>
     </tr>
     <tr>
       <td>Blåbærgrenda barnehage</td>
@@ -311,7 +312,7 @@ title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vur
 title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
 <a href="http://www.openstreetmap.org/edit?editor=id&lat=59.93633&lon=11.05468&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
-      <td><div id="map984035179" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map984035179, 59.93633, 11.05468, null)</script></td>
+      <td><div id="map984035179" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map984035179, 59.93633, 11.05468, null, 984035179)</script></td>
     </tr>
     <tr>
       <td>Tomter FUS barnehage</td>
@@ -336,7 +337,7 @@ title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vur
 title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
 <a href="http://www.openstreetmap.org/edit?editor=id&lat=59.86303&lon=11.09452&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
-      <td><div id="map991298207" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map991298207, 59.86303, 11.09452, null)</script></td>
+      <td><div id="map991298207" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map991298207, 59.86303, 11.09452, null, 991298207)</script></td>
     </tr>
     <tr>
       <td>Løvenstad barnehage</td>
@@ -361,7 +362,7 @@ title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vur
 title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
 <a href="http://www.openstreetmap.org/edit?editor=id&lat=59.93546&lon=11.02641&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
-      <td><div id="map974586568" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map974586568, 59.93546, 11.02641, null)</script></td>
+      <td><div id="map974586568" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map974586568, 59.93546, 11.02641, null, 974586568)</script></td>
     </tr>
     <tr>
       <td>Heimen barnehage</td>
@@ -386,7 +387,7 @@ title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vur
 title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
 <a href="http://www.openstreetmap.org/edit?editor=id&lat=59.94699&lon=11.03729&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
-      <td><div id="map992818727" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map992818727, 59.94699, 11.03729, null)</script></td>
+      <td><div id="map992818727" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map992818727, 59.94699, 11.03729, null, 992818727)</script></td>
     </tr>
     <tr>
       <td>Lilleborg barnehage</td>
@@ -411,7 +412,7 @@ title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vur
 title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
 <a href="http://www.openstreetmap.org/edit?editor=id&lat=59.94896&lon=11.03548&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
-      <td><div id="map974586584" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map974586584, 59.94896, 11.03548, null)</script></td>
+      <td><div id="map974586584" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map974586584, 59.94896, 11.03548, null, 974586584)</script></td>
     </tr>
     <tr>
       <td>Blystadlia barnehage</td>
@@ -436,7 +437,7 @@ title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vur
 title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
 <a href="http://www.openstreetmap.org/edit?editor=id&lat=59.93129&lon=11.04069&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
-      <td><div id="map913988833" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map913988833, 59.93129, 11.04069, null)</script></td>
+      <td><div id="map913988833" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map913988833, 59.93129, 11.04069, null, 913988833)</script></td>
     </tr>
     <tr>
       <td>Petrine barnehage</td>
@@ -461,7 +462,7 @@ title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vur
 title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
 <a href="http://www.openstreetmap.org/edit?editor=id&lat=59.9468&lon=11.03559&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
-      <td><div id="map972517038" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map972517038, 59.9468, 11.03559, null)</script></td>
+      <td><div id="map972517038" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map972517038, 59.9468, 11.03559, null, 972517038)</script></td>
     </tr>
     <tr>
       <td>Tangen barnehage</td>
@@ -489,7 +490,7 @@ title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til 
 title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a>
 <a href="http://www.tangenbarnehage.no"
 title="website">Barnehagens webside</a></pre></td>
-      <td><div id="map872215492" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map872215492, 59.93296, 11.06922, null)</script></td>
+      <td><div id="map872215492" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map872215492, 59.93296, 11.06922, null, 872215492)</script></td>
     </tr>
     <tr>
       <td>Bjørnehi private familiebarnehage Leonora Hasani</td>
@@ -514,13 +515,13 @@ title="Du blir sendt til nbr.uio.no hvor du kan melde om feil i data-settet. Vur
 title="Gjør openstreetmap mappere oppmerksom på feil i kartet.">Meld feil til OSM</a>
 <a href="http://www.openstreetmap.org/edit?editor=id&lat=59.94135&lon=11.05293&zoom=17"
 title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
-      <td><div id="map989962655" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map989962655, 59.94135, 11.05293, null)</script></td>
+      <td><div id="map989962655" style="width: 256px; height: 256px;position: relative"></div><script>create_map(map989962655, 59.94135, 11.05293, null, 989962655)</script></td>
     </tr>
     </tbody>
   </table>
 
   
-  
+
       </section>
     </div>
 
@@ -528,10 +529,10 @@ title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
     <div id="footer_wrap" class="outer">
       <footer class="inner">
         <p class="copyright">This page is maintained by <a href="https://github.com/obtitus">obtitus</a></p>
-        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>	
-        <p class="copyright">Map data &copy;<a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>	
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+        <p class="copyright">Map data &copy;<a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>
 	</p>
-	<p class="copyright">NBR data &copy;<a href="http://data.udir.no/baf/">Utdanningsdirektoratet</a>, <a href="http://data.norge.no/nlod/en/1.0">NLOD</a>	
+	<p class="copyright">NBR data &copy;<a href="http://data.udir.no/baf/">Utdanningsdirektoratet</a>, <a href="http://data.norge.no/nlod/en/1.0">NLOD</a>
 	</p>
       </footer>
     </div>
@@ -547,7 +548,7 @@ title="Du blir sendt til openstreetmap sin web-editor">Editer OSM</a></pre></td>
             } catch(err) {}
           </script>
 
-    
+
 
   </body>
 </html>
